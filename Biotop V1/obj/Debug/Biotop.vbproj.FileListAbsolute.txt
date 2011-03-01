@@ -1,0 +1,57 @@
+D:\Patrick\Biotop\Biotop\bin\Debug\Biotop.exe
+D:\Patrick\Biotop\Biotop\bin\Debug\Biotop.pdb
+D:\Patrick\Biotop\Biotop\bin\Debug\Biotop.xml
+D:\Patrick\Biotop\Biotop\obj\Debug\ResolveAssemblyReference.cache
+D:\Patrick\Biotop\Biotop\obj\Debug\Biotop.Form1.resources
+D:\Patrick\Biotop\Biotop\obj\Debug\Biotop.Resources.resources
+D:\Patrick\Biotop\Biotop\obj\Debug\Biotop.vbproj.GenerateResource.Cache
+D:\Patrick\Biotop\Biotop\obj\Debug\Biotop.exe
+D:\Patrick\Biotop\Biotop\obj\Debug\Biotop.xml
+D:\Patrick\Biotop\Biotop\obj\Debug\Biotop.pdb
+D:\Patrick\Biotop\Biotop - Copy\obj\Debug\Biotop.exe
+D:\Patrick\Biotop\Biotop - Copy\obj\Debug\Biotop.xml
+D:\Patrick\Biotop\Biotop - Copy\obj\Debug\Biotop.pdb
+D:\Patrick\Biotop\Biotop - Copy\bin\Debug\Biotop.exe
+D:\Patrick\Biotop\Biotop - Copy\bin\Debug\Biotop.pdb
+D:\Patrick\Biotop\Biotop - Copy\bin\Debug\Biotop.xml
+D:\Patrick\Biotop\Biotop - Copy\bin\Debug\TabStripControlLibrary.pdb
+D:\Patrick\Biotop\Biotop - Copy\obj\Debug\ResolveAssemblyReference.cache
+D:\Patrick\Biotop\Biotop - Copy\obj\Debug\Biotop.Form1.resources
+D:\Patrick\Biotop\Biotop - Copy\obj\Debug\Biotop.Resources.resources
+D:\Patrick\Biotop\Biotop - Copy\obj\Debug\Biotop.vbproj.GenerateResource.Cache
+D:\Patrick\Biotop\obj\Debug\Biotop.exe
+D:\Patrick\Biotop\obj\Debug\Biotop.xml
+D:\Patrick\Biotop\obj\Debug\Biotop.pdb
+D:\Patrick\Biotop\bin\Debug\Biotop.exe
+D:\Patrick\Biotop\bin\Debug\Biotop.pdb
+D:\Patrick\Biotop\bin\Debug\Biotop.xml
+D:\Patrick\Biotop\obj\Debug\ResolveAssemblyReference.cache
+D:\Patrick\Biotop\obj\Debug\Biotop.Form1.resources
+D:\Patrick\Biotop\obj\Debug\Biotop.Resources.resources
+D:\Patrick\Biotop\obj\Debug\Biotop.vbproj.GenerateResource.Cache
+D:\Patrick\Biotop\Biotop\bin\Debug\de-DE\Biotop.resources.dll
+D:\Patrick\Biotop\Biotop\obj\Debug\Biotop.Form1.de-DE.resources
+D:\Patrick\Biotop\Biotop\obj\Debug\de-DE\Biotop.resources.dll
+D:\Patrick\Biotop\bin\Debug\de-DE\Biotop.resources.dll
+D:\Patrick\Biotop\obj\Debug\Biotop.Form1.de-DE.resources
+D:\Patrick\Biotop\obj\Debug\de-DE\Biotop.resources.dll
+D:\Patrick\Biotop\Biotop\obj\Debug\Biotop.FormRes.resources
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Debug\Biotop.xml
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Debug\Biotop.pdb
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Debug\ResolveAssemblyReference.cache
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Debug\Biotop.FormFilter.resources
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Debug\Biotop.Form1.resources
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Debug\Biotop.FormRes.resources
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Debug\Biotop.Resources.resources
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Debug\Biotop.Form1.de-DE.resources
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Debug\Biotop.vbproj.GenerateResource.Cache
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\bin\Debug\Biotop.exe
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\bin\Debug\Biotop.pdb
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\bin\Debug\Biotop.xml
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\bin\Debug\de-DE\Biotop.resources.dll
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\bin\Debug\ZedGraph.dll
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\bin\Debug\ZedGraph.Web.dll
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\bin\Debug\ZedGraph.xml
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\bin\Debug\ZedGraph.Web.xml
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Debug\de-DE\Biotop.resources.dll
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Debug\Biotop.exe
