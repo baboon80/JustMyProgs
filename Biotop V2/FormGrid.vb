@@ -1,17 +1,17 @@
 ﻿Public Class FormGrid
-    Private cCoupData As clsCoupData
+    Private arr As ArrayList
 
-    Public Property CoupData() As clsCoupData
+    Public Property CoupData() As ArrayList
         Get
             ' The Get property procedure is called when the value
             ' of a property is retrieved.
-            Return cCoupData
+            Return arr
         End Get
-        Set(ByVal value As clsCoupData)
+        Set(ByVal value As ArrayList)
             ' The Set property procedure is called when the value 
             ' of a property is modified.  The value to be assigned
             ' is passed in the argument to Set.
-            cCoupData = value
+            arr = value
         End Set
     End Property
 
@@ -118,16 +118,16 @@
         Call ReadINIColSize()
         Call SetSizeLabelColPos()
 
-        If CoupData.myarraylist.Count > 0 Then
-            For I As Integer = 0 To CoupData.myarraylist.Count - 1
-                Dim localInstanceofMyClass As clsCoupData.myStruct = CType(cCoupData.myarraylist(I), clsCoupData.myStruct)
+        If arr.Count > 0 Then
+            For I As Integer = 0 To arr.Count - 1
 
+                Dim localInstanceofMyClass = CType(arr(I), clsCoupData)
                 With Me.DataGridView1.Rows
-                    .Add(localInstanceofMyClass.dLdf, localInstanceofMyClass.dCoup _
-                         , localInstanceofMyClass.dTP, localInstanceofMyClass.dTM, localInstanceofMyClass.dTPS, localInstanceofMyClass.dTPI, localInstanceofMyClass.dTPR, localInstanceofMyClass.dTPR7, localInstanceofMyClass.dTPRS _
-                         , localInstanceofMyClass.dTMS, localInstanceofMyClass.dTMI, localInstanceofMyClass.dTMR, localInstanceofMyClass.dTMR7, localInstanceofMyClass.dTMRS _
-                         , localInstanceofMyClass.dS, localInstanceofMyClass.dR, localInstanceofMyClass.dSS, localInstanceofMyClass.dSI, localInstanceofMyClass.dSR, localInstanceofMyClass.dSR7, localInstanceofMyClass.dSRS _
-                         , localInstanceofMyClass.dRS, localInstanceofMyClass.dRI, localInstanceofMyClass.dRR, localInstanceofMyClass.dRR7, localInstanceofMyClass.dRRS)
+                    .Add(localInstanceofMyClass.Ldf, localInstanceofMyClass.Coup _
+                         , localInstanceofMyClass.TP, localInstanceofMyClass.TM, localInstanceofMyClass.TPS, localInstanceofMyClass.TPI, localInstanceofMyClass.TPR, localInstanceofMyClass.TPR7, localInstanceofMyClass.TPRS _
+                         , localInstanceofMyClass.TmS, localInstanceofMyClass.TmI, localInstanceofMyClass.TmR, localInstanceofMyClass.TmR7, localInstanceofMyClass.TmRS _
+                         , localInstanceofMyClass.S, localInstanceofMyClass.R, localInstanceofMyClass.SS, localInstanceofMyClass.SI, localInstanceofMyClass.SR, localInstanceofMyClass.SR7, localInstanceofMyClass.SRS _
+                         , localInstanceofMyClass.RS, localInstanceofMyClass.RI, localInstanceofMyClass.RR, localInstanceofMyClass.RR7, localInstanceofMyClass.RRS)
                 End With
             Next I
         End If
@@ -259,5 +259,40 @@
             INI.WertSchreiben("ColSize", "RR6", .Columns(ColNum.eRR7).Width)
             INI.WertSchreiben("ColSize", "RRS", .Columns(ColNum.eRRS).Width)
         End With
+    End Sub
+
+    Private Function GetColWidth() As Integer
+        Dim width As Integer = DataGridView1.Columns.Item(ColNum.eLdf).Width + _
+        DataGridView1.Columns.Item(ColNum.eCoup).Width + _
+        DataGridView1.Columns.Item(ColNum.eTP).Width + _
+        DataGridView1.Columns.Item(ColNum.eTM).Width + _
+        DataGridView1.Columns.Item(ColNum.eTPS).Width + _
+        DataGridView1.Columns.Item(ColNum.eTPI).Width + _
+        DataGridView1.Columns.Item(ColNum.eTPR).Width + _
+        DataGridView1.Columns.Item(ColNum.eTPR7).Width + _
+        DataGridView1.Columns.Item(ColNum.eTPRS).Width + _
+        DataGridView1.Columns.Item(ColNum.eTMS).Width + _
+        DataGridView1.Columns.Item(ColNum.eTMI).Width + _
+        DataGridView1.Columns.Item(ColNum.eTMR).Width + _
+        DataGridView1.Columns.Item(ColNum.eTMR7).Width + _
+        DataGridView1.Columns.Item(ColNum.eTMRS).Width + _
+        DataGridView1.Columns.Item(ColNum.eS).Width + _
+        DataGridView1.Columns.Item(ColNum.eR).Width + _
+        DataGridView1.Columns.Item(ColNum.eSS).Width + _
+        DataGridView1.Columns.Item(ColNum.eSI).Width + _
+        DataGridView1.Columns.Item(ColNum.eSR).Width + _
+        DataGridView1.Columns.Item(ColNum.eSR7).Width + _
+        DataGridView1.Columns.Item(ColNum.eSRS).Width + _
+        DataGridView1.Columns.Item(ColNum.eRS).Width + _
+        DataGridView1.Columns.Item(ColNum.eRI).Width + _
+        DataGridView1.Columns.Item(ColNum.eRR).Width + _
+        DataGridView1.Columns.Item(ColNum.eRR7).Width + _
+        DataGridView1.Columns.Item(ColNum.eRRS).Width
+        GetColWidth = width + 20
+    End Function
+
+    Private Sub Form1_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
+        DataGridView1.Width = Me.Width - DataGridView1.Left - 30
+        DataGridView1.Height = Me.Height - DataGridView1.Top - 70
     End Sub
 End Class

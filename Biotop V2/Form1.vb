@@ -29,7 +29,10 @@ Public Class Form1
     Private ResTxt As String
     Private InvertRegel As Boolean = False
     Private gesSaldoVerlaufhalbZero As String = ""
-    Private cCoupData As New clsCoupData
+    Public myarraylist As New ArrayList
+
+    'Private cCoupData As New clsCoupData("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")
+    Private cCoupData As clsCoupData
 
     Private Enum ColNum As Integer
         eLdf = 0
@@ -60,90 +63,6 @@ Public Class Form1
         eRRS = 25
     End Enum
 
-    Private Sub ReadINIColSize()
-        Dim INI As New ClsINI
-
-        INI.Pfad = System.AppDomain.CurrentDomain.BaseDirectory & "Option.ini"
-        With DataGridView1
-            .Columns(ColNum.eLdf).Width = INI.WertLesen("ColSize", "Ldf", "49")
-            .Columns(ColNum.eCoup).Width = INI.WertLesen("ColSize", "Coup", "26")
-
-            .Columns(ColNum.eTP).Width = INI.WertLesen("ColSize", "TP", "38")
-            .Columns(ColNum.eTM).Width = INI.WertLesen("ColSize", "TM", "38")
-
-            .Columns(ColNum.eTPS).Width = INI.WertLesen("ColSize", "TPS", "30")
-            .Columns(ColNum.eTPI).Width = INI.WertLesen("ColSize", "TPI", "30")
-            .Columns(ColNum.eTPR).Width = INI.WertLesen("ColSize", "TPR", "35")
-            .Columns(ColNum.eTPR7).Width = INI.WertLesen("ColSize", "TPR6", "65")
-            .Columns(ColNum.eTPRS).Width = INI.WertLesen("ColSize", "TPRS", "75")
-
-            .Columns(ColNum.eTMS).Width = INI.WertLesen("ColSize", "TMS", "30")
-            .Columns(ColNum.eTMI).Width = INI.WertLesen("ColSize", "TMI", "30")
-            .Columns(ColNum.eTMR).Width = INI.WertLesen("ColSize", "TMR", "35")
-            .Columns(ColNum.eTMR7).Width = INI.WertLesen("ColSize", "TMR6", "65")
-            .Columns(ColNum.eTMRS).Width = INI.WertLesen("ColSize", "TMRS", "75")
-
-
-            .Columns(ColNum.eS).Width = INI.WertLesen("ColSize", "S", "38")
-            .Columns(ColNum.eR).Width = INI.WertLesen("ColSize", "R", "38")
-
-            .Columns(ColNum.eSS).Width = INI.WertLesen("ColSize", "SS", "30")
-            .Columns(ColNum.eSI).Width = INI.WertLesen("ColSize", "SI", "30")
-            .Columns(ColNum.eSR).Width = INI.WertLesen("ColSize", "SR", "35")
-            .Columns(ColNum.eSR7).Width = INI.WertLesen("ColSize", "SR6", "65")
-            .Columns(ColNum.eSRS).Width = INI.WertLesen("ColSize", "SRS", "75")
-
-            .Columns(ColNum.eRS).Width = INI.WertLesen("ColSize", "RS", "30")
-            .Columns(ColNum.eRI).Width = INI.WertLesen("ColSize", "RI", "30")
-            .Columns(ColNum.eRR).Width = INI.WertLesen("ColSize", "RR", "35")
-            .Columns(ColNum.eRR7).Width = INI.WertLesen("ColSize", "RR6", "65")
-            .Columns(ColNum.eRRS).Width = INI.WertLesen("ColSize", "RRS", "75")
-        End With
-    End Sub
-
-    Private Sub WriteINIColSize()
-        Dim INI As New ClsINI
-
-        INI.Pfad = System.AppDomain.CurrentDomain.BaseDirectory & "Option.ini"
-        With DataGridView1
-            INI.WertSchreiben("ColSize", "Ldf", .Columns(ColNum.eLdf).Width)
-            INI.WertSchreiben("ColSize", "Coup", .Columns(ColNum.eCoup).Width)
-
-            INI.WertSchreiben("ColSize", "TP", .Columns(ColNum.eTP).Width)
-            INI.WertSchreiben("ColSize", "TM", .Columns(ColNum.eTM).Width)
-
-            INI.WertSchreiben("ColSize", "TPS", .Columns(ColNum.eTPS).Width)
-            INI.WertSchreiben("ColSize", "TPI", .Columns(ColNum.eTPI).Width)
-            INI.WertSchreiben("ColSize", "TPR", .Columns(ColNum.eTPR).Width)
-            INI.WertSchreiben("ColSize", "TPR6", .Columns(ColNum.eTPR7).Width)
-            INI.WertSchreiben("ColSize", "TPRS", .Columns(ColNum.eTPRS).Width)
-
-            INI.WertSchreiben("ColSize", "TMS", .Columns(ColNum.eTMS).Width)
-            INI.WertSchreiben("ColSize", "TMI", .Columns(ColNum.eTMI).Width)
-            INI.WertSchreiben("ColSize", "TMR", .Columns(ColNum.eTMR).Width)
-            INI.WertSchreiben("ColSize", "TMR6", .Columns(ColNum.eTMR7).Width)
-            INI.WertSchreiben("ColSize", "TMRS", .Columns(ColNum.eTMRS).Width)
-
-            INI.WertSchreiben("ColSize", "S", .Columns(ColNum.eS).Width)
-            INI.WertSchreiben("ColSize", "R", .Columns(ColNum.eR).Width)
-
-            INI.WertSchreiben("ColSize", "SS", .Columns(ColNum.eSS).Width)
-            INI.WertSchreiben("ColSize", "SI", .Columns(ColNum.eSI).Width)
-            INI.WertSchreiben("ColSize", "SR", .Columns(ColNum.eSR).Width)
-            INI.WertSchreiben("ColSize", "SR6", .Columns(ColNum.eSR7).Width)
-            INI.WertSchreiben("ColSize", "SRS", .Columns(ColNum.eSRS).Width)
-
-            INI.WertSchreiben("ColSize", "RS", .Columns(ColNum.eRS).Width)
-            INI.WertSchreiben("ColSize", "RI", .Columns(ColNum.eRI).Width)
-            INI.WertSchreiben("ColSize", "RR", .Columns(ColNum.eRR).Width)
-            INI.WertSchreiben("ColSize", "RR6", .Columns(ColNum.eRR7).Width)
-            INI.WertSchreiben("ColSize", "RRS", .Columns(ColNum.eRRS).Width)
-        End With
-    End Sub
-
-    Private Sub Form1_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
-        Call WriteINIColSize()
-    End Sub
 
     Private Sub Form1_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
         If e.KeyCode = Windows.Forms.Keys.F Then
@@ -162,79 +81,13 @@ Public Class Form1
 
     Private Sub Form1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
-        With DataGridView1
-            .EditMode = False
-            .AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None
-            .ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Raised
-            .CellBorderStyle = DataGridViewCellBorderStyle.Single
-            .GridColor = SystemColors.ActiveBorder
-            .RowHeadersVisible = False
+        
 
-            .Columns.Add("No", "Nr.")
-            .Columns.Add("Coup", "Zahl")
-            .Columns.Add("TransfPlus", "+")
-            .Columns.Add("TransfMinus", "-")
-            .Columns.Add("TransfPlusSerie", "Ser.")
-            .Columns.Add("TransfPlusIntermit", "Int.")
-            .Columns.Add("TransfPlusRap", "Rap.")
-            .Columns.Add("TransfPlusRap5", "+Rap.(last 3-7)")
-            .Columns.Add("TransfPlusRapS", "Satz")
-            .Columns.Add("TransfMinusSerie", "Ser.")
-            .Columns.Add("TransfMinusIntermit", "Int.")
-            .Columns.Add("TransfMinusRap", "Rap.")
-            .Columns.Add("TransfMinusRap5", "-Rap.(last 3-7)")
-            .Columns.Add("TransfMinusRapS", "Satz")
-            .Columns.Add("Schwarz", "S")
-            .Columns.Add("Rot", "R")
-            .Columns.Add("SchwarzSerie", "Ser.")
-            .Columns.Add("SchwarzIntermit", "Int.")
-            .Columns.Add("SchwarzRap", "Rap.")
-            .Columns.Add("SchwarzRap5", "+Rap.(last 3-7)")
-            .Columns.Add("SchwarzRapS", "Satz")
-            .Columns.Add("RotSerie", "Ser.")
-            .Columns.Add("RotIntermit", "Int.")
-            .Columns.Add("RotRap", "Rap.")
-            .Columns.Add("RotRap5", "-Rap.(last 3-7)")
-            .Columns.Add("RotRapS", "Satz")
-            .Columns(ColNum.eLdf).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eCoup).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eTP).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eTM).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eTPS).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eTPI).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eTPR).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eTPR7).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eTPRS).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eTMS).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eTMI).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eTMR).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eTMR7).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eTMRS).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eS).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eR).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eSS).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eSI).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eSR).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eSR7).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eSRS).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eRS).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eRI).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eRR).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eRR7).SortMode = DataGridViewColumnSortMode.Programmatic
-            .Columns(ColNum.eRRS).SortMode = DataGridViewColumnSortMode.Programmatic
 
-            .MultiSelect = False
-            .BackgroundColor = Color.Honeydew
-            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
-        End With
-
-        Call ReadINIColSize()
-
-        Call SetSizeLabelColPos()
 
         ToolStripStatusLabel1.Text = "Bitte wählen Sie zum auswerten eine Permanenz Datei aus, oder geben Sie manuell Zahlen ein!"
 
-        Label8.BackColor = System.Drawing.Color.FromArgb(255, 162, 15, 15)
+
 
         ToolStripProgressBar1.Visible = False
 
@@ -242,40 +95,7 @@ Public Class Form1
         loaded = True
     End Sub
 
-    Private Sub SetSizeLabelColPos()
-        DataGridView1.Update()
-
-        Label9.Left = DataGridView1.GetCellDisplayRectangle(ColNum.eLdf, -1, True).Left + 10
-        Label9.Top = DataGridView1.Top - Label3.Height
-        Label9.Width = DataGridView1.Columns.Item(ColNum.eLdf).Width + DataGridView1.Columns.Item(ColNum.eCoup).Width
-
-        Label2.Left = DataGridView1.GetCellDisplayRectangle(ColNum.eTP, -1, True).Left + 10
-        Label2.Top = DataGridView1.Top - Label2.Height
-        Label2.Width = DataGridView1.Columns.Item(ColNum.eTP).Width + DataGridView1.Columns.Item(ColNum.eTM).Width
-
-        Label3.Left = DataGridView1.GetCellDisplayRectangle(ColNum.eTPS, -1, True).Left + 10
-        Label3.Top = DataGridView1.Top - Label3.Height
-        Label3.Width = DataGridView1.Columns.Item(ColNum.eTPS).Width + DataGridView1.Columns.Item(ColNum.eTPI).Width + DataGridView1.Columns.Item(ColNum.eTPR).Width + DataGridView1.Columns.Item(ColNum.eTPR7).Width + DataGridView1.Columns.Item(ColNum.eTPRS).Width
-
-        Label4.Left = DataGridView1.GetCellDisplayRectangle(ColNum.eTMS, -1, True).Left + 10
-        Label4.Top = DataGridView1.Top - Label4.Height
-        Label4.Width = DataGridView1.Columns.Item(ColNum.eTMS).Width + DataGridView1.Columns.Item(ColNum.eTMI).Width + DataGridView1.Columns.Item(ColNum.eTMR).Width + DataGridView1.Columns.Item(ColNum.eTMR7).Width + DataGridView1.Columns.Item(ColNum.eTMRS).Width
-
-
-        Label6.Left = DataGridView1.GetCellDisplayRectangle(ColNum.eS, -1, True).Left + 10
-        Label6.Top = DataGridView1.Top - Label2.Height
-        Label6.Width = DataGridView1.Columns.Item(ColNum.eS).Width + DataGridView1.Columns.Item(ColNum.eR).Width
-
-        Label7.Left = DataGridView1.GetCellDisplayRectangle(ColNum.eSS, -1, True).Left + 10
-        Label7.Top = DataGridView1.Top - Label3.Height
-        Label7.Width = DataGridView1.Columns.Item(ColNum.eSS).Width + DataGridView1.Columns.Item(ColNum.eSI).Width + DataGridView1.Columns.Item(ColNum.eSR).Width + DataGridView1.Columns.Item(ColNum.eSR7).Width + DataGridView1.Columns.Item(ColNum.eSRS).Width
-
-        Label8.Left = DataGridView1.GetCellDisplayRectangle(ColNum.eRS, -1, True).Left + 10
-        Label8.Top = DataGridView1.Top - Label4.Height
-        Label8.Width = DataGridView1.Columns.Item(ColNum.eRS).Width + DataGridView1.Columns.Item(ColNum.eRI).Width + DataGridView1.Columns.Item(ColNum.eRR).Width + DataGridView1.Columns.Item(ColNum.eRR7).Width + DataGridView1.Columns.Item(ColNum.eRRS).Width
-
-        'Me.Width = DataGridView1.Width + 30
-    End Sub
+    
 
 
     Private Sub StartAuswertung()
@@ -319,9 +139,9 @@ Public Class Form1
         lastsaldo = 0
         gesSaldoVerlaufhalbZero = ""
 
-        cCoupData.myarraylist.Clear()
+        myarraylist.Clear()
 
-        DataGridView1.Rows.Clear()
+
         Using r As StreamReader = New StreamReader(TextBox1.Text)
             line = r.ReadLine
             Do While (Not line Is Nothing)
@@ -424,9 +244,8 @@ Public Class Form1
                             nextDay = False
                             TmpMaxSaldo = 0
                             GesMaxloss = 0
-                            DataGridView1.DataSource = "null"
-                            DataGridView1.DataSource = Nothing
-                            cCoupData.myarraylist.Clear()
+                            
+                            myarraylist.Clear()
 
                             RowCount = 0
 
@@ -463,10 +282,7 @@ Public Class Form1
             End If
         End Using
 
-        If RowCount > 0 Then
-            DataGridView1.FirstDisplayedScrollingRowIndex = RowCount - 1
-            Me.DataGridView1.Rows(RowCount - 1).Selected = True
-        End If
+        
         ToolStripProgressBar1.Visible = False
         Me.Cursor = Cursors.Default
 
@@ -482,246 +298,180 @@ Public Class Form1
         lNewCoup = NewCoup
         Col = CheckCollong(lNewCoup) 'prüft die Farbe
 
-        With Me.DataGridView1.Rows
-            .Add(RowCount + 1, NewCoup)
-        End With
+        cCoupData = New clsCoupData()
 
-        With cCoupData.InstanceofMyClass
-            .dLdf = RowCount + 1
-            .dCoup = NewCoup
-            .dTP = ""
-            .dTM = ""
-            .dTPS = ""
-            .dTPI = ""
-            .dTPR = ""
-            .dTPR7 = ""
-            .dTPRS = ""
-            .dTMS = ""
-            .dTMI = ""
-            .dTMR = ""
-            .dTMR7 = ""
-            .dTMRS = ""
-            .dS = ""
-            .dR = ""
-            .dSS = ""
-            .dSI = ""
-            .dSR = ""
-            .dSR7 = ""
-            .dSRS = ""
-            .dRS = ""
-            .dRI = ""
-            .dRR = ""
-            .dRR7 = ""
-            .dRRS = ""
-        End With
+        cCoupData.Ldf = RowCount + 1
+        cCoupData.Coup = NewCoup
 
-        R1 = DataGridView1.Rows(RowCount)
+
 
         If lNewCoup = 0 Then
-            R1.Cells(ColNum.eCoup).Style.ForeColor = Color.White
-            R1.Cells(ColNum.eCoup).Style.BackColor = Color.Green
+            'nichts tun
         Else
             If Col = 1 Then
-                R1.Cells(ColNum.eCoup).Style.ForeColor = Color.Black
-                R1.Cells(ColNum.eS).Value = "S"
-                R1.Cells(ColNum.eS).Style.ForeColor = Color.Black
-
-                cCoupData.InstanceofMyClass.dS = "S"
+                cCoupData.S = "S"
             Else
-                R1.Cells(ColNum.eCoup).Style.ForeColor = System.Drawing.Color.FromArgb(255, 162, 15, 15)
-                R1.Cells(ColNum.eR).Value = "R"
-                R1.Cells(ColNum.eR).Style.ForeColor = System.Drawing.Color.FromArgb(255, 162, 15, 15)
-
-                cCoupData.InstanceofMyClass.dR = "R"
+                cCoupData.R = "R"
             End If
 
             Call SetTransformator(R1)
 
-            Call fillSelektorPlus()
+            'Call fillSelektorPlus()
             Call fillSelektorPlusX()
 
-            Call fillSelektorMinus()
+            'Call fillSelektorMinus()
             Call fillSelektorMinusX()
 
-            Call fillSelektorPlusRap()
+            'Call fillSelektorPlusRap()
             Call fillSelektorPlusRapX()
 
-            Call fillSelektorMinusRap()
+            'Call fillSelektorMinusRap()
             Call fillSelektorMinusRapX()
 
-            Call fillSelektorSchwarz()
+            'Call fillSelektorSchwarz()
+
             Call fillSelektorSchwarzX()
-            Call fillSelektorRot()
+            'Call fillSelektorRot()
             Call fillSelektorRotX()
 
-            Call fillSelektorSchwarzRap()
+            'Call fillSelektorSchwarzRap()
             Call fillSelektorSchwarzRapX()
-            Call fillSelektorRotRap()
+            'Call fillSelektorRotRap()
             Call fillSelektorRotRapX()
 
             If dummySet = True Then Exit Sub
 
-            R1.Cells(ColNum.eTPRS).Value = FillSatz(ColNum.eTPR7)
-            cCoupData.InstanceofMyClass.dTPRS = FillSatzX(ColNum.eTPR7)
+            'R1.Cells(ColNum.eTPRS).Value = FillSatz(ColNum.eTPR7)
+            cCoupData.TPRS = FillSatzX(ColNum.eTPR7)
             'R1.Cells(ColNum.eTMRS).Value = FillSatz(ColNum.eTMR7)
-            'cCoupData.InstanceofMyClass.dTMRS = FillSatzX(ColNum.eTPR7)
+            cCoupData.TmRS = FillSatzX(ColNum.eTMR7)
             'R1.Cells(ColNum.eSRS).Value = FillSatz(ColNum.eSR7)
+            cCoupData.SRS = FillSatzX(ColNum.eSR7)
             'R1.Cells(ColNum.eRRS).Value = FillSatz(ColNum.eRR7)
+            cCoupData.RRS = FillSatzX(ColNum.eRR7)
         End If
 
         If dummySet = True Then Exit Sub
 
-        Call CanISetPlus()
-        'Call CanISetPlusX()
-        Call CanISetMinus()
-        'Call CanISetMinusX()
-        Call CanISetSchwarz()
-        'Call CanISetSchwarzX()
-        Call CanISetRot()
-        'Call CanISetRotX()
+        'Call CanISetPlus()
+        Call CanISetPlusX()
+        'Call CanISetMinus()
+        Call CanISetMinusX()
+        'call CanISetSchwarz()
+        Call CanISetSchwarzX()
+        'Call CanISetRot()
+        Call CanISetRotX()
 
-        Call CalkSaldo()
-
-        R1.Cells(ColNum.eTP).Style.BackColor = Label2.BackColor
-        R1.Cells(ColNum.eTM).Style.BackColor = Label2.BackColor
-
-        R1.Cells(ColNum.eTPS).Style.BackColor = Label3.BackColor
-        R1.Cells(ColNum.eTPI).Style.BackColor = Label3.BackColor
-        R1.Cells(ColNum.eTPR).Style.BackColor = Label3.BackColor
-        R1.Cells(ColNum.eTPR7).Style.BackColor = Label3.BackColor
-
-        R1.Cells(ColNum.eTMS).Style.BackColor = Label4.BackColor
-        R1.Cells(ColNum.eTMI).Style.BackColor = Label4.BackColor
-        R1.Cells(ColNum.eTMR).Style.BackColor = Label4.BackColor
-        R1.Cells(ColNum.eTMR7).Style.BackColor = Label4.BackColor
-
-        R1.Cells(ColNum.eS).Style.BackColor = Label6.BackColor
-        R1.Cells(ColNum.eR).Style.BackColor = Label6.BackColor
-
-        R1.Cells(ColNum.eSS).Style.BackColor = Label7.BackColor
-        R1.Cells(ColNum.eSI).Style.BackColor = Label7.BackColor
-        R1.Cells(ColNum.eSR).Style.BackColor = Label7.BackColor
-        R1.Cells(ColNum.eSR7).Style.BackColor = Label7.BackColor
-        R1.Cells(ColNum.eSS).Style.ForeColor = Color.White
-        R1.Cells(ColNum.eSI).Style.ForeColor = Color.White
-        R1.Cells(ColNum.eSR).Style.ForeColor = Color.White
-        R1.Cells(ColNum.eSR7).Style.ForeColor = Color.White
-
-        R1.Cells(ColNum.eRS).Style.BackColor = Label8.BackColor
-        R1.Cells(ColNum.eRI).Style.BackColor = Label8.BackColor
-        R1.Cells(ColNum.eRR).Style.BackColor = Label8.BackColor
-        R1.Cells(ColNum.eRR7).Style.BackColor = Label8.BackColor
-        R1.Cells(ColNum.eRS).Style.ForeColor = Color.White
-        R1.Cells(ColNum.eRI).Style.ForeColor = Color.White
-        R1.Cells(ColNum.eRR).Style.ForeColor = Color.White
-        R1.Cells(ColNum.eRR7).Style.ForeColor = Color.White
+        'Call CalkSaldo()
+        Call CalkSaldoX()
 
         RowCount = RowCount + 1
 
-        cCoupData.myarraylist.Add(cCoupData.InstanceofMyClass)
+        myarraylist.Add(cCoupData)
     End Sub
 
     Private Sub SetTransformator(ByRef R1 As DataGridViewRow)
 
-        Dim Erg As Integer = SetTransformatorRegel1()
-        If Erg = 1 Then
-            R1.Cells(ColNum.eTP).Value = "+ (R1)"
-        ElseIf Erg = 2 Then
-            R1.Cells(ColNum.eTM).Value = "- (R1)"
-        End If
-        If Erg = 0 Then
-            Erg = SetTransformatorRegel2()
-            If Erg = 1 Then
-                R1.Cells(ColNum.eTP).Value = "+ (R2)"
-            ElseIf Erg = 2 Then
-                R1.Cells(ColNum.eTM).Value = "- (R2)"
-            End If
-        End If
-        If Erg = 0 Then
-            Erg = SetTransformatorRegel3()
-            If Erg = 1 Then
-                R1.Cells(ColNum.eTP).Value = "+ (R3)"
-            ElseIf Erg = 2 Then
-                R1.Cells(ColNum.eTM).Value = "- (R3)"
-            End If
-        End If
-        If Erg = 0 Then
-            Erg = SetTransformatorRegel4()
-            If Erg = 1 Then
-                R1.Cells(ColNum.eTP).Value = "+ (R4)"
-            ElseIf Erg = 2 Then
-                R1.Cells(ColNum.eTM).Value = "- (R4)"
-            End If
-        End If
-        If Erg = 0 And RowCount > 3 Then
-            Erg = SetTransformatorRegel5()
-            If Erg = 1 Then
-                R1.Cells(ColNum.eTP).Value = "+ (R5)"
-            ElseIf Erg = 2 Then
-                R1.Cells(ColNum.eTM).Value = "- (R5)"
-            End If
-        End If
-        If Erg = 0 Then
-            Erg = SetTransformatorRegel5_1()
-            If Erg = 1 Then
-                R1.Cells(ColNum.eTP).Value = "+ (R5)"
-            ElseIf Erg = 2 Then
-                R1.Cells(ColNum.eTM).Value = "- (R5)"
-            End If
-        End If
+        'Dim Erg As Integer = SetTransformatorRegel1()
+        'If Erg = 1 Then
+        '    R1.Cells(ColNum.eTP).Value = "+ (R1)"
+        'ElseIf Erg = 2 Then
+        '    R1.Cells(ColNum.eTM).Value = "- (R1)"
+        'End If
+        'If Erg = 0 Then
+        '    Erg = SetTransformatorRegel2()
+        '    If Erg = 1 Then
+        '        R1.Cells(ColNum.eTP).Value = "+ (R2)"
+        '    ElseIf Erg = 2 Then
+        '        R1.Cells(ColNum.eTM).Value = "- (R2)"
+        '    End If
+        'End If
+        'If Erg = 0 Then
+        '    Erg = SetTransformatorRegel3()
+        '    If Erg = 1 Then
+        '        R1.Cells(ColNum.eTP).Value = "+ (R3)"
+        '    ElseIf Erg = 2 Then
+        '        R1.Cells(ColNum.eTM).Value = "- (R3)"
+        '    End If
+        'End If
+        'If Erg = 0 Then
+        '    Erg = SetTransformatorRegel4()
+        '    If Erg = 1 Then
+        '        R1.Cells(ColNum.eTP).Value = "+ (R4)"
+        '    ElseIf Erg = 2 Then
+        '        R1.Cells(ColNum.eTM).Value = "- (R4)"
+        '    End If
+        'End If
+        'If Erg = 0 And RowCount > 3 Then
+        '    Erg = SetTransformatorRegel5()
+        '    If Erg = 1 Then
+        '        R1.Cells(ColNum.eTP).Value = "+ (R5)"
+        '    ElseIf Erg = 2 Then
+        '        R1.Cells(ColNum.eTM).Value = "- (R5)"
+        '    End If
+        'End If
+        'If Erg = 0 Then
+        '    Erg = SetTransformatorRegel5_1()
+        '    If Erg = 1 Then
+        '        R1.Cells(ColNum.eTP).Value = "+ (R5)"
+        '    ElseIf Erg = 2 Then
+        '        R1.Cells(ColNum.eTM).Value = "- (R5)"
+        '    End If
+        'End If
 
         '***************************************************
 
         Dim Erg1 As Integer = SetTransformatorRegel1_2()
         If Erg1 = 1 Then
-            cCoupData.InstanceofMyClass.dTP = "+ (R1)"
+            cCoupData.TP = "+ (R1)"
         ElseIf Erg1 = 2 Then
-            cCoupData.InstanceofMyClass.dTM = "- (R1)"
+            cCoupData.TM = "- (R1)"
         End If
         If Erg1 = 0 Then
             Erg1 = SetTransformatorRegel2_2()
             If Erg1 = 1 Then
-                cCoupData.InstanceofMyClass.dTP = "+ (R2)"
+                cCoupData.TP = "+ (R2)"
             ElseIf Erg1 = 2 Then
-                cCoupData.InstanceofMyClass.dTM = "- (R2)"
+                cCoupData.TM = "- (R2)"
             End If
         End If
         If Erg1 = 0 Then
             Erg1 = SetTransformatorRegel3_2()
             If Erg1 = 1 Then
-                cCoupData.InstanceofMyClass.dTP = "+ (R3)"
+                cCoupData.TP = "+ (R3)"
             ElseIf Erg1 = 2 Then
-                cCoupData.InstanceofMyClass.dTM = "- (R3)"
+                cCoupData.TM = "- (R3)"
             End If
         End If
         If Erg1 = 0 Then
             Erg1 = SetTransformatorRegel4_2()
             If Erg1 = 1 Then
-                cCoupData.InstanceofMyClass.dTP = "+ (R4)"
+                cCoupData.TP = "+ (R4)"
             ElseIf Erg1 = 2 Then
-                cCoupData.InstanceofMyClass.dTM = "- (R4)"
+                cCoupData.TM = "- (R4)"
             End If
         End If
         If Erg1 = 0 And RowCount > 3 Then
             Erg1 = SetTransformatorRegel5_2()
             If Erg1 = 1 Then
-                cCoupData.InstanceofMyClass.dTP = "+ (R5)"
+                cCoupData.TP = "+ (R5)"
             ElseIf Erg1 = 2 Then
-                cCoupData.InstanceofMyClass.dTM = "- (R5)"
+                cCoupData.TM = "- (R5)"
             End If
         End If
         If Erg1 = 0 Then
             Erg1 = SetTransformatorRegel5_3()
             If Erg1 = 1 Then
-                cCoupData.InstanceofMyClass.dTP = "+ (R5)"
+                cCoupData.TP = "+ (R5)"
             ElseIf Erg1 = 2 Then
-                cCoupData.InstanceofMyClass.dTM = "- (R5)"
+                cCoupData.TM = "- (R5)"
             End If
         End If
 
     End Sub
 
-    Private Sub CalkSaldo()
+    
+    Private Sub CalkSaldoX()
         Dim SetTo As String = ""
         Dim Res As String = ""
         Dim tmpsaldo As Integer = 0
@@ -731,18 +481,23 @@ Public Class Form1
         Dim stmp3 As String = ""
         Dim stmp4 As String = ""
         Dim stmp5 As String = ""
+        Dim stmpges As String = ""
         Dim cnt As Integer = 0
         Dim play As Boolean = True
         Dim played As Boolean = False
+        Dim arraylistCnt As Integer = myarraylist.Count
 
-        If RowCount = 0 Then Exit Sub
+
+        If myarraylist.Count = 0 Then Exit Sub
+        Dim localInstanceofMyClass = CType(myarraylist(arraylistCnt - 1), clsCoupData)
         tmpsaldo = saldo
 
+        If localInstanceofMyClass.Ldf = 128 Then arraylistCnt = arraylistCnt
 
-        stmp1 = DataGridView1.Rows(RowCount - 1).Cells(ColNum.eTPRS).Value
-        stmp2 = DataGridView1.Rows(RowCount - 1).Cells(ColNum.eTMRS).Value
-        stmp3 = DataGridView1.Rows(RowCount - 1).Cells(ColNum.eSRS).Value
-        stmp4 = DataGridView1.Rows(RowCount - 1).Cells(ColNum.eRRS).Value
+        stmp1 = localInstanceofMyClass.TPRS
+        stmp2 = localInstanceofMyClass.TmRS
+        stmp3 = localInstanceofMyClass.SRS
+        stmp4 = localInstanceofMyClass.RRS
 
         If stmp1 <> "" Then
             If stmp1.Substring(0, 3) = "Sat" Then
@@ -773,13 +528,13 @@ Public Class Form1
         End If
 
         If cnt > 1 Then 'überprüfen ob alle auf das gleich sätzen wollen.
-            stmp1 = stmp1 & stmp2 & stmp3 & stmp4
+            stmpges = stmp1 & stmp2 & stmp3 & stmp4
 
-            For k As Integer = 0 To stmp1.Length - 1
+            For k As Integer = 0 To stmpges.Length - 1
                 If k = 0 Then
-                    stmp5 = stmp1.Substring(0, 1)
+                    stmp5 = stmpges.Substring(0, 1)
                 Else
-                    If stmp5 <> stmp1.Substring(k, 1) Then
+                    If stmp5 <> stmpges.Substring(k, 1) Then
                         play = False
                         Exit For
                     End If
@@ -788,134 +543,133 @@ Public Class Form1
             Next k
         End If
 
-
-        SetTo = DataGridView1.Rows(RowCount - 1).Cells(ColNum.eTPRS).Value
+        SetTo = localInstanceofMyClass.TPRS
         If SetTo <> "" Then
             If SetTo.Substring(0, 3) = "Sat" Then
-
                 If play = False Then
-                    DataGridView1.Rows(RowCount - 1).Cells(ColNum.eTPRS).Value = "Kein Satz(S&R)"
+                    localInstanceofMyClass.TPRS = "Kein Satz(S&R)"
                 Else
                     If played = False Then
                         played = True
-                        If DataGridView1.Rows(RowCount).Cells(ColNum.eTPR).Value = "" Then 'zero Verlust
+                        If cCoupData.TPR = "" Then
                             zeroCnt = zeroCnt + 1
                         End If
 
-                        If SetTo.Substring(InStr(SetTo, "("), 1) = DataGridView1.Rows(RowCount).Cells(ColNum.eTPR).Value Then
+                        If SetTo.Substring(InStr(SetTo, "("), 1) = cCoupData.TPR Then
                             saldo = saldo + 1
-                            DataGridView1.Rows(RowCount - 1).Cells(ColNum.eTPRS).Value = SetTo & " +1/" & saldo
+                            localInstanceofMyClass.TPRS = SetTo & " +1/" & saldo
                             Maxloss = 0
                         Else
                             saldo = saldo - 1
                             Maxloss = Maxloss + 1
-                            If DataGridView1.Rows(RowCount).Cells(ColNum.eTPR).Value = "" Then
-                                DataGridView1.Rows(RowCount - 1).Cells(ColNum.eTPRS).Value = SetTo & " -0.5/" & saldo
+                            If cCoupData.TPR = "" Then
+                                localInstanceofMyClass.TPRS = SetTo & " -0.5/" & saldo
                             Else
-                                DataGridView1.Rows(RowCount - 1).Cells(ColNum.eTPRS).Value = SetTo & " -1/" & saldo
+                                localInstanceofMyClass.TPRS = SetTo & " -1/" & saldo
                             End If
                         End If
                         SatzCnt = SatzCnt + 1
                     Else
-                        DataGridView1.Rows(RowCount - 1).Cells(ColNum.eTPRS).Value = "bereits gesetzt"
-                    End If
-                End If
-
-            End If
-        End If
-
-
-        SetTo = DataGridView1.Rows(RowCount - 1).Cells(ColNum.eTMRS).Value
-        If SetTo <> "" Then
-            If SetTo.Substring(0, 3) = "Sat" Then
-                If play = False Then
-                    DataGridView1.Rows(RowCount - 1).Cells(ColNum.eTMRS).Value = "Kein Satz(S&R)"
-                Else
-                    If played = False Then
-                        played = True
-                        If DataGridView1.Rows(RowCount).Cells(ColNum.eTMR).Value = "" Then 'zero Verlust
-                            zeroCnt = zeroCnt + 1
-                        End If
-                        If SetTo.Substring(InStr(SetTo, "("), 1) = DataGridView1.Rows(RowCount).Cells(ColNum.eTMR).Value Then
-                            saldo = saldo + 1
-                            DataGridView1.Rows(RowCount - 1).Cells(ColNum.eTMRS).Value = SetTo & " +1/" & saldo
-                            Maxloss = 0
-                        Else
-                            saldo = saldo - 1
-                            Maxloss = Maxloss + 1
-                            If DataGridView1.Rows(RowCount).Cells(ColNum.eTMR).Value = "" Then
-                                DataGridView1.Rows(RowCount - 1).Cells(ColNum.eTMRS).Value = SetTo & " -0.5/" & saldo
-                            Else
-                                DataGridView1.Rows(RowCount - 1).Cells(ColNum.eTMRS).Value = SetTo & " -1/" & saldo
-                            End If
-                        End If
-                        SatzCnt = SatzCnt + 1
-                    Else
-                        DataGridView1.Rows(RowCount - 1).Cells(ColNum.eTMRS).Value = "bereits gesetzt"
+                        localInstanceofMyClass.TPRS = "bereits gesetzt"
                     End If
                 End If
             End If
         End If
 
-        SetTo = DataGridView1.Rows(RowCount - 1).Cells(ColNum.eSRS).Value
+        SetTo = localInstanceofMyClass.TmRS
         If SetTo <> "" Then
             If SetTo.Substring(0, 3) = "Sat" Then
                 If play = False Then
-                    DataGridView1.Rows(RowCount - 1).Cells(ColNum.eSRS).Value = "Kein Satz(S&R)"
+                    localInstanceofMyClass.TmRS = "Kein Satz(S&R)"
                 Else
                     If played = False Then
                         played = True
-                        If DataGridView1.Rows(RowCount).Cells(ColNum.eSR).Value = "" Then 'zero Verlust
+                        If cCoupData.TmR = "" Then
                             zeroCnt = zeroCnt + 1
                         End If
-                        If SetTo.Substring(InStr(SetTo, "("), 1) = DataGridView1.Rows(RowCount).Cells(ColNum.eSR).Value Then
+
+                        If SetTo.Substring(InStr(SetTo, "("), 1) = cCoupData.TmR Then
                             saldo = saldo + 1
-                            DataGridView1.Rows(RowCount - 1).Cells(ColNum.eSRS).Value = SetTo & " +1/" & saldo
+                            localInstanceofMyClass.TmRS = SetTo & " +1/" & saldo
                             Maxloss = 0
                         Else
                             saldo = saldo - 1
                             Maxloss = Maxloss + 1
-                            If DataGridView1.Rows(RowCount).Cells(ColNum.eSR).Value = "" Then
-                                DataGridView1.Rows(RowCount - 1).Cells(ColNum.eSRS).Value = SetTo & " -0.5/" & saldo
+                            If cCoupData.TmR = "" Then
+                                localInstanceofMyClass.TmRS = SetTo & " -0.5/" & saldo
                             Else
-                                DataGridView1.Rows(RowCount - 1).Cells(ColNum.eSRS).Value = SetTo & " -1/" & saldo
+                                localInstanceofMyClass.TmRS = SetTo & " -1/" & saldo
                             End If
                         End If
                         SatzCnt = SatzCnt + 1
                     Else
-                        DataGridView1.Rows(RowCount - 1).Cells(ColNum.eSRS).Value = "bereits gesetzt"
+                        localInstanceofMyClass.TmRS = "bereits gesetzt"
                     End If
                 End If
             End If
         End If
 
-        SetTo = DataGridView1.Rows(RowCount - 1).Cells(ColNum.eRRS).Value
+        SetTo = localInstanceofMyClass.SRS
         If SetTo <> "" Then
             If SetTo.Substring(0, 3) = "Sat" Then
                 If play = False Then
-                    DataGridView1.Rows(RowCount - 1).Cells(ColNum.eRRS).Value = "Kein Satz(S&R)"
+                    localInstanceofMyClass.SRS = "Kein Satz(S&R)"
                 Else
                     If played = False Then
                         played = True
-                        If DataGridView1.Rows(RowCount).Cells(ColNum.eRR).Value = "" Then 'zero Verlust
+                        If cCoupData.SR = "" Then
                             zeroCnt = zeroCnt + 1
                         End If
-                        If SetTo.Substring(InStr(SetTo, "("), 1) = DataGridView1.Rows(RowCount).Cells(ColNum.eRR).Value Then
+
+                        If SetTo.Substring(InStr(SetTo, "("), 1) = cCoupData.SR Then
                             saldo = saldo + 1
-                            DataGridView1.Rows(RowCount - 1).Cells(ColNum.eRRS).Value = SetTo & " +1/" & saldo
+                            localInstanceofMyClass.SRS = SetTo & " +1/" & saldo
                             Maxloss = 0
                         Else
                             saldo = saldo - 1
                             Maxloss = Maxloss + 1
-                            If DataGridView1.Rows(RowCount).Cells(ColNum.eRR).Value = "" Then
-                                DataGridView1.Rows(RowCount - 1).Cells(ColNum.eRRS).Value = SetTo & " -0.5/" & saldo
+                            If cCoupData.SR = "" Then
+                                localInstanceofMyClass.SRS = SetTo & " -0.5/" & saldo
                             Else
-                                DataGridView1.Rows(RowCount - 1).Cells(ColNum.eRRS).Value = SetTo & " -1/" & saldo
+                                localInstanceofMyClass.SRS = SetTo & " -1/" & saldo
                             End If
                         End If
                         SatzCnt = SatzCnt + 1
                     Else
-                        DataGridView1.Rows(RowCount - 1).Cells(ColNum.eRRS).Value = "bereits gesetzt"
+                        localInstanceofMyClass.SRS = "bereits gesetzt"
+                    End If
+                End If
+            End If
+        End If
+
+        SetTo = localInstanceofMyClass.RRS
+        If SetTo <> "" Then
+            If SetTo.Substring(0, 3) = "Sat" Then
+                If play = False Then
+                    localInstanceofMyClass.RRS = "Kein Satz(S&R)"
+                Else
+                    If played = False Then
+                        played = True
+                        If cCoupData.RR = "" Then
+                            zeroCnt = zeroCnt + 1
+                        End If
+
+                        If SetTo.Substring(InStr(SetTo, "("), 1) = cCoupData.RR Then
+                            saldo = saldo + 1
+                            localInstanceofMyClass.RRS = SetTo & " +1/" & saldo
+                            Maxloss = 0
+                        Else
+                            saldo = saldo - 1
+                            Maxloss = Maxloss + 1
+                            If cCoupData.RR = "" Then
+                                localInstanceofMyClass.RRS = SetTo & " -0.5/" & saldo
+                            Else
+                                localInstanceofMyClass.RRS = SetTo & " -1/" & saldo
+                            End If
+                        End If
+                        SatzCnt = SatzCnt + 1
+                    Else
+                        localInstanceofMyClass.RRS = "bereits gesetzt"
                     End If
                 End If
             End If
@@ -936,67 +690,6 @@ Public Class Form1
 
     End Sub
 
-    Private Sub CanISetPlus()
-        Dim Rap As String
-        Dim Ser As String
-        Dim Int As String
-        Dim SerInt As String = ""
-        Dim SerIntCnt As Integer = 0
-        Dim sAkt As String = ""
-        Dim sLast As String = ""
-        Dim coup As String = ""
-
-        If SatzPlus <> "" Then
-            Rap = DataGridView1.Rows(RowCount).Cells(ColNum.eTPR).Value
-            If Rap <> "" Then Exit Sub
-
-            For I As Integer = 0 To RowCount
-                Ser = DataGridView1.Rows(RowCount - I).Cells(ColNum.eTPS).Value
-                Int = DataGridView1.Rows(RowCount - I).Cells(ColNum.eTPI).Value
-
-                If Ser <> "" Then
-                    SerInt = "S" + SerInt
-                    SerIntCnt = SerIntCnt + 1
-                End If
-
-                If Int <> "" Then
-                    SerInt = "I" + SerInt
-                    SerIntCnt = SerIntCnt + 1
-                End If
-
-                If SerIntCnt = 3 Then Exit For
-            Next
-
-            If SerInt = "SII" Or SerInt = "ISS" Then 'now set?
-                sAkt = DataGridView1.Rows(RowCount).Cells(ColNum.eTP).Value
-                For I As Integer = 1 To RowCount
-                    coup = DataGridView1.Rows(RowCount - I).Cells(ColNum.eCoup).Value
-                    If coup <> "00" And coup <> "0" Then
-                        sLast = DataGridView1.Rows(RowCount - I).Cells(ColNum.eTP).Value
-                        If sAkt <> "" And sLast = "" Then 'And coup <> "0" Then                            
-                            RowCount = RowCount + 1
-                            InsertNewCoup("1", True)
-
-                            If DataGridView1.Rows(RowCount).Cells(ColNum.eTPR).Value = SatzPlus Then
-                                'red                                
-                                DataGridView1.Rows(RowCount - 1).Cells(ColNum.eTPRS).Value = "Satz auf (" & SatzPlus & "/R)"
-                            Else
-                                'black                                
-                                DataGridView1.Rows(RowCount - 1).Cells(ColNum.eTPRS).Value = "Satz auf (" & SatzPlus & "/S)"
-                            End If
-
-                            DeletelastDummyCoup()
-                            SatzPlus = ""
-                        End If
-                        Exit For
-                    Else
-                        testCnt = testCnt + 1
-                    End If
-                Next
-            End If
-        End If
-    End Sub
-
     Private Sub CanISetPlusX()
         Dim Rap As String
         Dim Ser As String
@@ -1006,15 +699,15 @@ Public Class Form1
         Dim sAkt As String = ""
         Dim sLast As String = ""
         Dim coup As String = ""
-        Dim arraylistCnt As Integer = cCoupData.myarraylist.Count
-        Dim localInstanceofMyClass As clsCoupData.myStruct
+        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim localInstanceofMyClass As clsCoupData
 
         If SatzPlus <> "" Then
-            Rap = cCoupData.InstanceofMyClass.dTPR
+            Rap = cCoupData.TPR
             If Rap <> "" Then Exit Sub
 
-            Ser = cCoupData.InstanceofMyClass.dTPS
-            Int = cCoupData.InstanceofMyClass.dTPI
+            Ser = cCoupData.TPS
+            Int = cCoupData.TPI
 
             If Ser <> "" Then
                 SerInt = "S" + SerInt
@@ -1026,10 +719,10 @@ Public Class Form1
                 SerIntCnt = SerIntCnt + 1
             End If
 
-            For I As Integer = 0 To cCoupData.myarraylist.Count - 1
-                localInstanceofMyClass = CType(cCoupData.myarraylist(arraylistCnt - I - 1), clsCoupData.myStruct)
-                Ser = localInstanceofMyClass.dTPS
-                Int = localInstanceofMyClass.dTPI
+            For I As Integer = 0 To myarraylist.Count - 1
+                localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+                Ser = localInstanceofMyClass.TPS
+                Int = localInstanceofMyClass.TPI
 
                 If Ser <> "" Then
                     SerInt = "S" + SerInt
@@ -1045,26 +738,26 @@ Public Class Form1
             Next
 
             If SerInt = "SII" Or SerInt = "ISS" Then 'now set?
-                sAkt = cCoupData.InstanceofMyClass.dTP
+                sAkt = cCoupData.TP
                 For I As Integer = 1 To arraylistCnt - 1
-                    localInstanceofMyClass = CType(cCoupData.myarraylist(arraylistCnt - I), clsCoupData.myStruct)
-                    coup = localInstanceofMyClass.dCoup
-                    sLast = localInstanceofMyClass.dTP
+                    localInstanceofMyClass = CType(myarraylist(arraylistCnt - I), clsCoupData)
+                    coup = localInstanceofMyClass.Coup
+                    sLast = localInstanceofMyClass.TP
 
                     If coup <> "00" And coup <> "0" Then
                         If sAkt <> "" And sLast = "" Then 'And coup <> "0" Then                            
-                            Dim tmpCopyStruct As clsCoupData.myStruct = cCoupData.InstanceofMyClass
-                            cCoupData.myarraylist.Add(cCoupData.InstanceofMyClass) 'momentaner Datensatz in array
+                            Dim tmpCopyStruct As clsCoupData = cCoupData
+                            myarraylist.Add(cCoupData) 'momentaner Datensatz in array
                             InsertNewCoup("1", True)
-                            If cCoupData.InstanceofMyClass.dTPR = SatzPlus Then
-                                tmpCopyStruct.dTPRS = "Satz auf (" & SatzPlus & "/R)"
+                            If cCoupData.TPR = SatzPlus Then
+                                tmpCopyStruct.TPRS = "Satz auf (" & SatzPlus & "/R)"
                             Else
-                                tmpCopyStruct.dTPRS = "Satz auf (" & SatzPlus & "/S)"
+                                tmpCopyStruct.TPRS = "Satz auf (" & SatzPlus & "/S)"
                             End If
 
-                            ''zurückschreiben
-                            cCoupData.InstanceofMyClass = tmpCopyStruct
                             DeletelastDummyCoupX()
+                            ''zurückschreiben
+                            cCoupData = tmpCopyStruct
                             SatzPlus = ""
                         End If
                         Exit For
@@ -1076,75 +769,11 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub DeletelastDummyCoup()
-        DataGridView1.Rows.Remove(DataGridView1.Rows.Item(RowCount))
-        RowCount = RowCount - 1
-    End Sub
     Private Sub DeletelastDummyCoupX()
-        Dim ArraylistCnt As Integer = cCoupData.myarraylist.Count
-        cCoupData.myarraylist.Remove(cCoupData.myarraylist(ArraylistCnt - 1))
+        Dim ArraylistCnt As Integer = myarraylist.Count
+        myarraylist.Remove(myarraylist(ArraylistCnt - 1))
     End Sub
 
-    Private Sub CanISetMinus()
-        Dim Rap As String
-        Dim Ser As String
-        Dim Int As String
-        Dim SerInt As String = ""
-        Dim SerIntCnt As Integer = 0
-        Dim sAkt As String = ""
-        Dim sLast As String = ""
-        Dim coup As String = ""
-
-        If SatzMinus <> "" Then
-            Rap = DataGridView1.Rows(RowCount).Cells(ColNum.eTMR).Value
-            If Rap <> "" Then Exit Sub
-
-            For I As Integer = 0 To RowCount
-                Ser = DataGridView1.Rows(RowCount - I).Cells(ColNum.eTMS).Value
-                Int = DataGridView1.Rows(RowCount - I).Cells(ColNum.eTMI).Value
-
-                If Ser <> "" Then
-                    SerInt = "S" + SerInt
-                    SerIntCnt = SerIntCnt + 1
-                End If
-
-                If Int <> "" Then
-                    SerInt = "I" + SerInt
-                    SerIntCnt = SerIntCnt + 1
-                End If
-
-                If SerIntCnt = 3 Then Exit For
-            Next
-
-            If SerInt = "SII" Or SerInt = "ISS" Then 'now set?
-                sAkt = DataGridView1.Rows(RowCount).Cells(ColNum.eTM).Value
-                For I As Integer = 1 To RowCount
-                    coup = DataGridView1.Rows(RowCount - I).Cells(ColNum.eCoup).Value
-                    If coup <> "00" And coup <> "0" Then
-                        sLast = DataGridView1.Rows(RowCount - I).Cells(ColNum.eTM).Value
-                        If sAkt <> "" And sLast = "" Then 'And coup <> "0" Then
-                            RowCount = RowCount + 1
-                            InsertNewCoup("1", True)                            
-
-                            If DataGridView1.Rows(RowCount).Cells(ColNum.eTMR).Value = SatzMinus Then
-                                'red
-                                DataGridView1.Rows(RowCount - 1).Cells(ColNum.eTMRS).Value = "Satz auf (" & SatzMinus & "/R)"
-                            Else
-                                'black
-                                DataGridView1.Rows(RowCount - 1).Cells(ColNum.eTMRS).Value = "Satz auf (" & SatzMinus & "/S)"
-                            End If
-
-                            DeletelastDummyCoup()
-                            SatzMinus = ""
-                        End If
-                        Exit For
-                    Else
-                        testCnt = testCnt + 1
-                    End If
-                Next
-            End If
-        End If
-    End Sub
 
     Private Sub CanISetMinusX()
         Dim Rap As String
@@ -1155,15 +784,15 @@ Public Class Form1
         Dim sAkt As String = ""
         Dim sLast As String = ""
         Dim coup As String = ""
-        Dim arraylistCnt As Integer = cCoupData.myarraylist.Count
-        Dim localInstanceofMyClass As clsCoupData.myStruct
+        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim localInstanceofMyClass As clsCoupData
 
         If SatzMinus <> "" Then
-            Rap = cCoupData.InstanceofMyClass.dTMR
+            Rap = cCoupData.TmR
             If Rap <> "" Then Exit Sub
 
-            Ser = cCoupData.InstanceofMyClass.dTMS
-            Int = cCoupData.InstanceofMyClass.dTMI
+            Ser = cCoupData.TmS
+            Int = cCoupData.TmI
 
             If Ser <> "" Then
                 SerInt = "S" + SerInt
@@ -1175,10 +804,10 @@ Public Class Form1
                 SerIntCnt = SerIntCnt + 1
             End If
 
-            For I As Integer = 0 To cCoupData.myarraylist.Count - 1
-                localInstanceofMyClass = CType(cCoupData.myarraylist(arraylistCnt - I - 1), clsCoupData.myStruct)
-                Ser = localInstanceofMyClass.dTMS
-                Int = localInstanceofMyClass.dTMI
+            For I As Integer = 0 To myarraylist.Count - 1
+                localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+                Ser = localInstanceofMyClass.TmS
+                Int = localInstanceofMyClass.TmI
 
                 If Ser <> "" Then
                     SerInt = "S" + SerInt
@@ -1194,86 +823,27 @@ Public Class Form1
             Next
 
             If SerInt = "SII" Or SerInt = "ISS" Then 'now set?
-                sAkt = cCoupData.InstanceofMyClass.dTM
+                sAkt = cCoupData.TM
                 For I As Integer = 1 To arraylistCnt - 1
-                    localInstanceofMyClass = CType(cCoupData.myarraylist(arraylistCnt - I), clsCoupData.myStruct)
-                    coup = localInstanceofMyClass.dCoup
-                    sLast = localInstanceofMyClass.dTM
+                    localInstanceofMyClass = CType(myarraylist(arraylistCnt - I), clsCoupData)
+                    coup = localInstanceofMyClass.Coup
+                    sLast = localInstanceofMyClass.TM
 
                     If coup <> "00" And coup <> "0" Then
                         If sAkt <> "" And sLast = "" Then 'And coup <> "0" Then                            
-                            Dim tmpCopyStruct As clsCoupData.myStruct = cCoupData.InstanceofMyClass
-                            cCoupData.myarraylist.Add(cCoupData.InstanceofMyClass) 'momentaner Datensatz in array
+                            Dim tmpCopyStruct As clsCoupData = cCoupData
+                            myarraylist.Add(cCoupData) 'momentaner Datensatz in array
                             InsertNewCoup("1", True)
-                            If cCoupData.InstanceofMyClass.dTMR = SatzMinus Then
-                                tmpCopyStruct.dTMRS = "Satz auf (" & SatzMinus & "/R)"
+                            If cCoupData.TmR = SatzMinus Then
+                                tmpCopyStruct.TmRS = "Satz auf (" & SatzMinus & "/R)"
                             Else
-                                tmpCopyStruct.dTMRS = "Satz auf (" & SatzMinus & "/S)"
+                                tmpCopyStruct.TmRS = "Satz auf (" & SatzMinus & "/S)"
                             End If
 
-                            ''zurückschreiben
-                            cCoupData.InstanceofMyClass = tmpCopyStruct
                             DeletelastDummyCoupX()
+                            ''zurückschreiben
+                            cCoupData = tmpCopyStruct
                             SatzMinus = ""
-                        End If
-                        Exit For
-                    Else
-                        testCnt = testCnt + 1
-                    End If
-                Next
-            End If
-        End If
-    End Sub
-
-    Private Sub CanISetSchwarz()
-        Dim Rap As String
-        Dim Ser As String
-        Dim Int As String
-        Dim SerInt As String = ""
-        Dim SerIntCnt As Integer = 0
-        Dim sAkt As String = ""
-        Dim sLast As String = ""
-        Dim coup As String = ""
-
-        If SatzSchwarz <> "" Then
-            Rap = DataGridView1.Rows(RowCount).Cells(ColNum.eSR).Value
-            If Rap <> "" Then Exit Sub
-
-            For I As Integer = 0 To RowCount
-                Ser = DataGridView1.Rows(RowCount - I).Cells(ColNum.eSS).Value
-                Int = DataGridView1.Rows(RowCount - I).Cells(ColNum.eSI).Value
-
-                If Ser <> "" Then
-                    SerInt = "S" + SerInt
-                    SerIntCnt = SerIntCnt + 1
-                End If
-
-                If Int <> "" Then
-                    SerInt = "I" + SerInt
-                    SerIntCnt = SerIntCnt + 1
-                End If
-
-                If SerIntCnt = 3 Then Exit For
-            Next
-
-            If SerInt = "SII" Or SerInt = "ISS" Then 'now set?
-                sAkt = DataGridView1.Rows(RowCount).Cells(ColNum.eS).Value
-                For I As Integer = 1 To RowCount
-                    coup = DataGridView1.Rows(RowCount - I).Cells(ColNum.eCoup).Value
-                    If coup <> "00" And coup <> "0" Then
-                        sLast = DataGridView1.Rows(RowCount - I).Cells(ColNum.eS).Value
-                        If sAkt <> "" And sLast = "" Then 'And coup <> "0" Then
-                            RowCount = RowCount + 1
-                            InsertNewCoup("1", True)
-                            If DataGridView1.Rows(RowCount).Cells(ColNum.eSR).Value = SatzSchwarz Then
-                                'red
-                                DataGridView1.Rows(RowCount - 1).Cells(ColNum.eSRS).Value = "Satz auf (" & SatzSchwarz & "/R)"
-                            Else
-                                'black
-                                DataGridView1.Rows(RowCount - 1).Cells(ColNum.eSRS).Value = "Satz auf (" & SatzSchwarz & "/S)"
-                            End If
-                            DeletelastDummyCoup()
-                            SatzSchwarz = ""
                         End If
                         Exit For
                     Else
@@ -1293,15 +863,15 @@ Public Class Form1
         Dim sAkt As String = ""
         Dim sLast As String = ""
         Dim coup As String = ""
-        Dim arraylistCnt As Integer = cCoupData.myarraylist.Count
-        Dim localInstanceofMyClass As clsCoupData.myStruct
+        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim localInstanceofMyClass As clsCoupData
 
         If SatzSchwarz <> "" Then
-            Rap = cCoupData.InstanceofMyClass.dSR
+            Rap = cCoupData.SR
             If Rap <> "" Then Exit Sub
 
-            Ser = cCoupData.InstanceofMyClass.dSS
-            Int = cCoupData.InstanceofMyClass.dSI
+            Ser = cCoupData.SS
+            Int = cCoupData.SI
 
             If Ser <> "" Then
                 SerInt = "S" + SerInt
@@ -1313,10 +883,10 @@ Public Class Form1
                 SerIntCnt = SerIntCnt + 1
             End If
 
-            For I As Integer = 0 To cCoupData.myarraylist.Count - 1
-                localInstanceofMyClass = CType(cCoupData.myarraylist(arraylistCnt - I - 1), clsCoupData.myStruct)
-                Ser = localInstanceofMyClass.dSS
-                Int = localInstanceofMyClass.dSI
+            For I As Integer = 0 To myarraylist.Count - 1
+                localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+                Ser = localInstanceofMyClass.SS
+                Int = localInstanceofMyClass.SI
 
                 If Ser <> "" Then
                     SerInt = "S" + SerInt
@@ -1332,86 +902,27 @@ Public Class Form1
             Next
 
             If SerInt = "SII" Or SerInt = "ISS" Then 'now set?
-                sAkt = cCoupData.InstanceofMyClass.dS
+                sAkt = cCoupData.S
                 For I As Integer = 1 To arraylistCnt - 1
-                    localInstanceofMyClass = CType(cCoupData.myarraylist(arraylistCnt - I), clsCoupData.myStruct)
-                    coup = localInstanceofMyClass.dCoup
-                    sLast = localInstanceofMyClass.dS
+                    localInstanceofMyClass = CType(myarraylist(arraylistCnt - I), clsCoupData)
+                    coup = localInstanceofMyClass.Coup
+                    sLast = localInstanceofMyClass.S
 
                     If coup <> "00" And coup <> "0" Then
                         If sAkt <> "" And sLast = "" Then 'And coup <> "0" Then                            
-                            Dim tmpCopyStruct As clsCoupData.myStruct = cCoupData.InstanceofMyClass
-                            cCoupData.myarraylist.Add(cCoupData.InstanceofMyClass) 'momentaner Datensatz in array
+                            Dim tmpCopyStruct As clsCoupData = cCoupData
+                            myarraylist.Add(cCoupData) 'momentaner Datensatz in array
                             InsertNewCoup("1", True)
-                            If cCoupData.InstanceofMyClass.dSR = SatzSchwarz Then
-                                tmpCopyStruct.dSRS = "Satz auf (" & SatzSchwarz & "/R)"
+                            If cCoupData.SR = SatzSchwarz Then
+                                tmpCopyStruct.SRS = "Satz auf (" & SatzSchwarz & "/R)"
                             Else
-                                tmpCopyStruct.dSRS = "Satz auf (" & SatzSchwarz & "/S)"
+                                tmpCopyStruct.SRS = "Satz auf (" & SatzSchwarz & "/S)"
                             End If
 
-                            ''zurückschreiben
-                            cCoupData.InstanceofMyClass = tmpCopyStruct
                             DeletelastDummyCoupX()
+                            ''zurückschreiben
+                            cCoupData = tmpCopyStruct
                             SatzSchwarz = ""
-                        End If
-                        Exit For
-                    Else
-                        testCnt = testCnt + 1
-                    End If
-                Next
-            End If
-        End If
-    End Sub
-
-    Private Sub CanISetRot()
-        Dim Rap As String
-        Dim Ser As String
-        Dim Int As String
-        Dim SerInt As String = ""
-        Dim SerIntCnt As Integer = 0
-        Dim sAkt As String = ""
-        Dim sLast As String = ""
-        Dim coup As String = ""
-
-        If SatzRot <> "" Then
-            Rap = DataGridView1.Rows(RowCount).Cells(ColNum.eRR).Value
-            If Rap <> "" Then Exit Sub
-
-            For I As Integer = 0 To RowCount
-                Ser = DataGridView1.Rows(RowCount - I).Cells(ColNum.eRS).Value
-                Int = DataGridView1.Rows(RowCount - I).Cells(ColNum.eRI).Value
-
-                If Ser <> "" Then
-                    SerInt = "S" + SerInt
-                    SerIntCnt = SerIntCnt + 1
-                End If
-
-                If Int <> "" Then
-                    SerInt = "I" + SerInt
-                    SerIntCnt = SerIntCnt + 1
-                End If
-
-                If SerIntCnt = 3 Then Exit For
-            Next
-
-            If SerInt = "SII" Or SerInt = "ISS" Then 'now set?
-                sAkt = DataGridView1.Rows(RowCount).Cells(ColNum.eR).Value
-                For I As Integer = 1 To RowCount
-                    coup = DataGridView1.Rows(RowCount - I).Cells(ColNum.eCoup).Value
-                    If coup <> "00" And coup <> "0" Then
-                        sLast = DataGridView1.Rows(RowCount - I).Cells(ColNum.eR).Value
-                        If sAkt <> "" And sLast = "" Then 'And coup <> "0" Then
-                            RowCount = RowCount + 1
-                            InsertNewCoup("1", True)
-                            If DataGridView1.Rows(RowCount).Cells(ColNum.eRR).Value = SatzRot Then
-                                'red
-                                DataGridView1.Rows(RowCount - 1).Cells(ColNum.eRRS).Value = "Satz auf (" & SatzRot & "/R)"
-                            Else
-                                'black
-                                DataGridView1.Rows(RowCount - 1).Cells(ColNum.eRRS).Value = "Satz auf (" & SatzRot & "/S)"
-                            End If
-                            DeletelastDummyCoup()
-                            SatzRot = ""
                         End If
                         Exit For
                     Else
@@ -1431,15 +942,15 @@ Public Class Form1
         Dim sAkt As String = ""
         Dim sLast As String = ""
         Dim coup As String = ""
-        Dim arraylistCnt As Integer = cCoupData.myarraylist.Count
-        Dim localInstanceofMyClass As clsCoupData.myStruct
+        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim localInstanceofMyClass As clsCoupData
 
         If SatzRot <> "" Then
-            Rap = cCoupData.InstanceofMyClass.dRR
+            Rap = cCoupData.RR
             If Rap <> "" Then Exit Sub
 
-            Ser = cCoupData.InstanceofMyClass.dRS
-            Int = cCoupData.InstanceofMyClass.dRI
+            Ser = cCoupData.RS
+            Int = cCoupData.RI
 
             If Ser <> "" Then
                 SerInt = "S" + SerInt
@@ -1451,10 +962,10 @@ Public Class Form1
                 SerIntCnt = SerIntCnt + 1
             End If
 
-            For I As Integer = 0 To cCoupData.myarraylist.Count - 1
-                localInstanceofMyClass = CType(cCoupData.myarraylist(arraylistCnt - I - 1), clsCoupData.myStruct)
-                Ser = localInstanceofMyClass.dRS
-                Int = localInstanceofMyClass.dRI
+            For I As Integer = 0 To myarraylist.Count - 1
+                localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+                Ser = localInstanceofMyClass.RS
+                Int = localInstanceofMyClass.RI
 
                 If Ser <> "" Then
                     SerInt = "S" + SerInt
@@ -1470,26 +981,26 @@ Public Class Form1
             Next
 
             If SerInt = "SII" Or SerInt = "ISS" Then 'now set?
-                sAkt = cCoupData.InstanceofMyClass.dR
+                sAkt = cCoupData.R
                 For I As Integer = 1 To arraylistCnt - 1
-                    localInstanceofMyClass = CType(cCoupData.myarraylist(arraylistCnt - I), clsCoupData.myStruct)
-                    coup = localInstanceofMyClass.dCoup
-                    sLast = localInstanceofMyClass.dR
+                    localInstanceofMyClass = CType(myarraylist(arraylistCnt - I), clsCoupData)
+                    coup = localInstanceofMyClass.Coup
+                    sLast = localInstanceofMyClass.R
 
                     If coup <> "00" And coup <> "0" Then
                         If sAkt <> "" And sLast = "" Then 'And coup <> "0" Then                            
-                            Dim tmpCopyStruct As clsCoupData.myStruct = cCoupData.InstanceofMyClass
-                            cCoupData.myarraylist.Add(cCoupData.InstanceofMyClass) 'momentaner Datensatz in array
+                            Dim tmpCopyStruct As clsCoupData = cCoupData
+                            myarraylist.Add(cCoupData) 'momentaner Datensatz in array
                             InsertNewCoup("1", True)
-                            If cCoupData.InstanceofMyClass.dRR = SatzRot Then
-                                tmpCopyStruct.dRRS = "Satz auf (" & SatzRot & "/R)"
+                            If cCoupData.RR = SatzRot Then
+                                tmpCopyStruct.RRS = "Satz auf (" & SatzRot & "/R)"
                             Else
-                                tmpCopyStruct.dRRS = "Satz auf (" & SatzRot & "/S)"
+                                tmpCopyStruct.RRS = "Satz auf (" & SatzRot & "/S)"
                             End If
 
-                            ''zurückschreiben
-                            cCoupData.InstanceofMyClass = tmpCopyStruct
                             DeletelastDummyCoupX()
+                            ''zurückschreiben
+                            cCoupData = tmpCopyStruct
                             SatzRot = ""
                         End If
                         Exit For
@@ -1501,43 +1012,6 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub fillSelektorPlus(Optional ByVal fiktiv As Boolean = False)
-
-        Dim Plus1 As String = ""
-        Dim Plus2 As String = ""
-        Dim Plus3 As String = ""
-        Dim PlusTmp As String = ""
-        Dim countPlus As Integer = 1
-        Dim coup As Integer
-
-        For I As Integer = 0 To RowCount
-            coup = DataGridView1.Rows(RowCount - I).Cells(ColNum.eCoup).Value
-            If coup <> 0 Then
-                PlusTmp = DataGridView1.Rows(RowCount - I).Cells(ColNum.eTP).Value
-                Select Case countPlus
-                    Case 1
-                        Plus1 = PlusTmp
-                        countPlus = 2
-                    Case 2
-                        Plus2 = PlusTmp
-                        countPlus = 3
-                    Case 3
-                        Plus3 = PlusTmp
-                        countPlus = 4
-                End Select
-            End If
-            If countPlus = 4 Then Exit For
-        Next
-
-        If Plus1 <> "" And Plus2 <> "" And Plus3 = "" Then 'Serie
-            DataGridView1.Rows(RowCount).Cells(ColNum.eTPS).Value = "X"
-        End If
-
-        If Plus1 = "" And Plus2 <> "" And Plus3 = "" Then 'Intermittenz
-            DataGridView1.Rows(RowCount).Cells(ColNum.eTPI).Value = "X"
-        End If
-    End Sub
-
     Private Sub fillSelektorPlusX(Optional ByVal fiktiv As Boolean = False)
 
         Dim Plus1 As String = ""
@@ -1546,21 +1020,21 @@ Public Class Form1
         Dim PlusTmp As String = ""
         Dim countPlus As Integer = 1
         Dim coup As Integer
-        Dim arraylistCnt As Integer = cCoupData.myarraylist.Count
-        Dim localInstanceofMyClass As clsCoupData.myStruct
+        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim localInstanceofMyClass As clsCoupData
 
-        coup = cCoupData.InstanceofMyClass.dCoup
+        coup = cCoupData.Coup
         If coup <> 0 Then
-            Plus1 = cCoupData.InstanceofMyClass.dTP
+            Plus1 = cCoupData.TP
         End If
 
         If arraylistCnt = 0 Then Exit Sub
 
-        For I As Integer = 0 To cCoupData.myarraylist.Count - 1
-            localInstanceofMyClass = CType(cCoupData.myarraylist(arraylistCnt - I - 1), clsCoupData.myStruct)
-            coup = localInstanceofMyClass.dCoup
+        For I As Integer = 0 To myarraylist.Count - 1
+            localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+            coup = localInstanceofMyClass.Coup
             If coup <> 0 Then
-                PlusTmp = localInstanceofMyClass.dTP
+                PlusTmp = localInstanceofMyClass.TP
                 Select Case countPlus
                     Case 1
                         Plus2 = PlusTmp
@@ -1574,11 +1048,11 @@ Public Class Form1
         Next
 
         If Plus1 <> "" And Plus2 <> "" And Plus3 = "" Then 'Serie            
-            cCoupData.InstanceofMyClass.dTPS = "X"
+            cCoupData.TPS = "X"
         End If
 
         If Plus1 = "" And Plus2 <> "" And Plus3 = "" Then 'Intermittenz            
-            cCoupData.InstanceofMyClass.dTPI = "X"
+            cCoupData.TPI = "X"
         End If
     End Sub
 
@@ -1590,21 +1064,21 @@ Public Class Form1
         Dim MinusTmp As String = ""
         Dim countMinus As Integer = 1
         Dim coup As Integer
-        Dim arraylistCnt As Integer = cCoupData.myarraylist.Count
-        Dim localInstanceofMyClass As clsCoupData.myStruct
+        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim localInstanceofMyClass As clsCoupData
 
-        coup = cCoupData.InstanceofMyClass.dCoup
+        coup = cCoupData.Coup
         If coup <> 0 Then
-            Minus1 = cCoupData.InstanceofMyClass.dTM
+            Minus1 = cCoupData.TM
         End If
 
         If arraylistCnt = 0 Then Exit Sub
 
-        For I As Integer = 0 To cCoupData.myarraylist.Count - 1
-            localInstanceofMyClass = CType(cCoupData.myarraylist(arraylistCnt - I - 1), clsCoupData.myStruct)
-            coup = localInstanceofMyClass.dCoup
+        For I As Integer = 0 To myarraylist.Count - 1
+            localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+            coup = localInstanceofMyClass.Coup
             If coup <> 0 Then
-                MinusTmp = localInstanceofMyClass.dTM
+                MinusTmp = localInstanceofMyClass.TM
                 Select Case countMinus
                     Case 1
                         Minus2 = MinusTmp
@@ -1618,49 +1092,11 @@ Public Class Form1
         Next
 
         If Minus1 <> "" And Minus2 <> "" And Minus3 = "" Then 'Serie            
-            cCoupData.InstanceofMyClass.dTMS = "X"
+            cCoupData.TmS = "X"
         End If
 
         If Minus1 = "" And Minus2 <> "" And Minus3 = "" Then 'Intermittenz            
-            cCoupData.InstanceofMyClass.dTMI = "X"
-        End If
-    End Sub
-
-
-    Private Sub fillSelektorSchwarz()
-
-        Dim Schwarz1 As String = ""
-        Dim Schwarz2 As String = ""
-        Dim Schwarz3 As String = ""
-        Dim SchwarzTmp As String = ""
-        Dim countSchwarz As Integer = 1
-        Dim coup As Integer
-
-        For I As Integer = 0 To RowCount
-            coup = DataGridView1.Rows(RowCount - I).Cells(ColNum.eCoup).Value
-            If coup <> 0 Then
-                SchwarzTmp = DataGridView1.Rows(RowCount - I).Cells(ColNum.eS).Value
-                Select Case countSchwarz
-                    Case 1
-                        Schwarz1 = SchwarzTmp
-                        countSchwarz = 2
-                    Case 2
-                        Schwarz2 = SchwarzTmp
-                        countSchwarz = 3
-                    Case 3
-                        Schwarz3 = SchwarzTmp
-                        countSchwarz = 4
-                End Select
-            End If
-            If countSchwarz = 4 Then Exit For
-        Next
-
-        If Schwarz1 <> "" And Schwarz2 <> "" And Schwarz3 = "" Then 'Serie
-            DataGridView1.Rows(RowCount).Cells(ColNum.eSS).Value = "X"
-        End If
-
-        If Schwarz1 = "" And Schwarz2 <> "" And Schwarz3 = "" Then 'Intermittenz
-            DataGridView1.Rows(RowCount).Cells(ColNum.eSI).Value = "X"
+            cCoupData.TmI = "X"
         End If
     End Sub
 
@@ -1672,21 +1108,21 @@ Public Class Form1
         Dim SchwarzTmp As String = ""
         Dim countSchwarz As Integer = 1
         Dim coup As Integer
-        Dim arraylistCnt As Integer = cCoupData.myarraylist.Count
-        Dim localInstanceofMyClass As clsCoupData.myStruct
+        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim localInstanceofMyClass As clsCoupData
 
-        coup = cCoupData.InstanceofMyClass.dCoup
+        coup = cCoupData.Coup
         If coup <> 0 Then
-            Schwarz1 = cCoupData.InstanceofMyClass.dS
+            Schwarz1 = cCoupData.S
         End If
 
         If arraylistCnt = 0 Then Exit Sub
 
-        For I As Integer = 0 To cCoupData.myarraylist.Count - 1
-            localInstanceofMyClass = CType(cCoupData.myarraylist(arraylistCnt - I - 1), clsCoupData.myStruct)
-            coup = localInstanceofMyClass.dCoup
+        For I As Integer = 0 To myarraylist.Count - 1
+            localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+            coup = localInstanceofMyClass.Coup
             If coup <> 0 Then
-                SchwarzTmp = localInstanceofMyClass.dS
+                SchwarzTmp = localInstanceofMyClass.S
                 Select Case countSchwarz
                     Case 1
                         Schwarz2 = SchwarzTmp
@@ -1700,48 +1136,11 @@ Public Class Form1
         Next
 
         If Schwarz1 <> "" And Schwarz2 <> "" And Schwarz3 = "" Then 'Serie            
-            cCoupData.InstanceofMyClass.dSS = "X"
+            cCoupData.SS = "X"
         End If
 
         If Schwarz1 = "" And Schwarz2 <> "" And Schwarz3 = "" Then 'Intermittenz            
-            cCoupData.InstanceofMyClass.dSI = "X"
-        End If
-    End Sub
-
-    Private Sub fillSelektorRot()
-
-        Dim Rot1 As String = ""
-        Dim Rot2 As String = ""
-        Dim Rot3 As String = ""
-        Dim RotTmp As String = ""
-        Dim countRot As Integer = 1
-        Dim coup As Integer
-
-        For I As Integer = 0 To RowCount
-            coup = DataGridView1.Rows(RowCount - I).Cells(ColNum.eCoup).Value
-            If coup <> 0 Then
-                RotTmp = DataGridView1.Rows(RowCount - I).Cells(ColNum.eR).Value
-                Select Case countRot
-                    Case 1
-                        Rot1 = RotTmp
-                        countRot = 2
-                    Case 2
-                        Rot2 = RotTmp
-                        countRot = 3
-                    Case 3
-                        Rot3 = RotTmp
-                        countRot = 4
-                End Select
-            End If
-            If countRot = 4 Then Exit For
-        Next
-
-        If Rot1 <> "" And Rot2 <> "" And Rot3 = "" Then 'Serie
-            DataGridView1.Rows(RowCount).Cells(ColNum.eRS).Value = "X"
-        End If
-
-        If Rot1 = "" And Rot2 <> "" And Rot3 = "" Then 'Intermittenz
-            DataGridView1.Rows(RowCount).Cells(ColNum.eRI).Value = "X"
+            cCoupData.SI = "X"
         End If
     End Sub
 
@@ -1753,21 +1152,21 @@ Public Class Form1
         Dim RotTmp As String = ""
         Dim countRot As Integer = 1
         Dim coup As Integer
-        Dim arraylistCnt As Integer = cCoupData.myarraylist.Count
-        Dim localInstanceofMyClass As clsCoupData.myStruct
+        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim localInstanceofMyClass As clsCoupData
 
-        coup = cCoupData.InstanceofMyClass.dCoup
+        coup = cCoupData.Coup
         If coup <> 0 Then
-            Rot1 = cCoupData.InstanceofMyClass.dR
+            Rot1 = cCoupData.R
         End If
 
         If arraylistCnt = 0 Then Exit Sub
 
-        For I As Integer = 0 To cCoupData.myarraylist.Count - 1
-            localInstanceofMyClass = CType(cCoupData.myarraylist(arraylistCnt - I - 1), clsCoupData.myStruct)
-            coup = localInstanceofMyClass.dCoup
+        For I As Integer = 0 To myarraylist.Count - 1
+            localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+            coup = localInstanceofMyClass.Coup
             If coup <> 0 Then
-                RotTmp = localInstanceofMyClass.dR
+                RotTmp = localInstanceofMyClass.R
                 Select Case countRot
                     Case 1
                         Rot2 = RotTmp
@@ -1781,91 +1180,11 @@ Public Class Form1
         Next
 
         If Rot1 <> "" And Rot2 <> "" And Rot3 = "" Then 'Serie            
-            cCoupData.InstanceofMyClass.dRS = "X"
+            cCoupData.RS = "X"
         End If
 
         If Rot1 = "" And Rot2 <> "" And Rot3 = "" Then 'Intermittenz            
-            cCoupData.InstanceofMyClass.dRI = "X"
-        End If
-    End Sub
-
-    Private Sub fillSelektorPlusRap()
-
-        Dim PlusSerie As String = ""
-        Dim PlusIntermit As String = ""
-        Dim PlusRap1 As String = ""
-        Dim PlusRap2 As String = ""
-        Dim PlusRap3 As String = ""
-        Dim PlusRap4 As String = ""
-        Dim PlusSum As String = ""
-        Dim coup As Integer
-        Dim Rap As String = ""
-
-        PlusSerie = DataGridView1.Rows(RowCount).Cells(ColNum.eTPS).Value
-        PlusIntermit = DataGridView1.Rows(RowCount).Cells(ColNum.eTPI).Value
-
-        If PlusSerie = "" And PlusIntermit = "" Then Exit Sub
-
-        For I As Integer = 0 To RowCount
-            coup = DataGridView1.Rows(RowCount - I).Cells(ColNum.eCoup).Value
-            If coup <> 0 Then
-                PlusSerie = DataGridView1.Rows(RowCount - I).Cells(ColNum.eTPS).Value
-                PlusIntermit = DataGridView1.Rows(RowCount - I).Cells(ColNum.eTPI).Value
-                If PlusSerie <> "" Then
-                    If PlusRap4 = "" Then
-                        PlusRap4 = "S"
-                    Else
-                        If PlusRap3 = "" Then
-                            PlusRap3 = "S"
-                        Else
-                            If PlusRap2 = "" Then
-                                PlusRap2 = "S"
-                            Else
-                                If PlusRap1 = "" Then
-                                    PlusRap1 = "S"
-                                End If
-                            End If
-                        End If
-                    End If
-                ElseIf PlusIntermit <> "" Then
-                    If PlusRap4 = "" Then
-                        PlusRap4 = "I"
-                    Else
-                        If PlusRap3 = "" Then
-                            PlusRap3 = "I"
-                        Else
-                            If PlusRap2 = "" Then
-                                PlusRap2 = "I"
-                            Else
-                                If PlusRap1 = "" Then
-                                    PlusRap1 = "I"
-                                End If
-                            End If
-                        End If
-                    End If
-                    If PlusRap1 <> "" And PlusRap2 <> "" And PlusRap3 <> "" Then Exit For
-                End If
-                If PlusRap1 <> "" And PlusRap2 <> "" And PlusRap3 <> "" And PlusRap4 <> "" Then Exit For
-            End If
-        Next
-
-        PlusSum = PlusRap1 & PlusRap2 & PlusRap3 & PlusRap4
-
-        Select Case PlusSum
-            Case "ISSI"
-                Rap = "O"
-            Case "SIIS"
-                Rap = "O"
-            Case "SIII"
-                Rap = "X"
-            Case "ISSS"
-                Rap = "X"
-        End Select
-
-        DataGridView1.Rows(RowCount).Cells(ColNum.eTPR).Value = Rap
-
-        If Rap <> "" Then
-            DataGridView1.Rows(RowCount).Cells(ColNum.eTPR7).Value = GetRapLast7(ColNum.eTPR)
+            cCoupData.RI = "X"
         End If
     End Sub
 
@@ -1880,13 +1199,13 @@ Public Class Form1
         Dim PlusSum As String = ""
         Dim coup As Integer
         Dim Rap As String = ""
-        Dim arraylistCnt As Integer = cCoupData.myarraylist.Count
-        Dim localInstanceofMyClass As clsCoupData.myStruct
+        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim localInstanceofMyClass As clsCoupData
 
-        PlusSerie = cCoupData.InstanceofMyClass.dTPS
-        PlusIntermit = cCoupData.InstanceofMyClass.dTPI
-        coup = cCoupData.InstanceofMyClass.dCoup
-        
+        PlusSerie = cCoupData.TPS
+        PlusIntermit = cCoupData.TPI
+        coup = cCoupData.Coup
+
         If (PlusSerie = "" And PlusIntermit = "") Or coup = 0 Then Exit Sub
         If PlusSerie <> "" Then
             PlusRap4 = "S"
@@ -1894,13 +1213,13 @@ Public Class Form1
             PlusRap4 = "I"
         End If
 
-        For I As Integer = 0 To cCoupData.myarraylist.Count - 1
-            localInstanceofMyClass = CType(cCoupData.myarraylist(arraylistCnt - I - 1), clsCoupData.myStruct)
+        For I As Integer = 0 To myarraylist.Count - 1
+            localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
 
-            coup = localInstanceofMyClass.dCoup
+            coup = localInstanceofMyClass.Coup
             If coup <> 0 Then
-                PlusSerie = localInstanceofMyClass.dTPS
-                PlusIntermit = localInstanceofMyClass.dTPI
+                PlusSerie = localInstanceofMyClass.TPS
+                PlusIntermit = localInstanceofMyClass.TPI
                 If PlusSerie <> "" Then
                     If PlusRap3 = "" Then
                         PlusRap3 = "S"
@@ -1944,10 +1263,10 @@ Public Class Form1
                 Rap = "X"
         End Select
 
-        cCoupData.InstanceofMyClass.dTPR = Rap
+        cCoupData.TPR = Rap
 
         If Rap <> "" Then
-            cCoupData.InstanceofMyClass.dTPR7 = GetRapLast7X(ColNum.eTPR)
+            cCoupData.TPR7 = GetRapLast7X(ColNum.eTPR)
         End If
     End Sub
 
@@ -1962,12 +1281,12 @@ Public Class Form1
         Dim MinusSum As String = ""
         Dim coup As Integer
         Dim Rap As String = ""
-        Dim arraylistCnt As Integer = cCoupData.myarraylist.Count
-        Dim localInstanceofMyClass As clsCoupData.myStruct
+        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim localInstanceofMyClass As clsCoupData
 
-        MinusSerie = cCoupData.InstanceofMyClass.dTMS
-        MinusIntermit = cCoupData.InstanceofMyClass.dTMI
-        coup = cCoupData.InstanceofMyClass.dCoup
+        MinusSerie = cCoupData.TmS
+        MinusIntermit = cCoupData.TmI
+        coup = cCoupData.Coup
 
         If (MinusSerie = "" And MinusIntermit = "") Or coup = 0 Then Exit Sub
         If MinusSerie <> "" Then
@@ -1976,13 +1295,13 @@ Public Class Form1
             MinusRap4 = "I"
         End If
 
-        For I As Integer = 0 To cCoupData.myarraylist.Count - 1
-            localInstanceofMyClass = CType(cCoupData.myarraylist(arraylistCnt - I - 1), clsCoupData.myStruct)
+        For I As Integer = 0 To myarraylist.Count - 1
+            localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
 
-            coup = localInstanceofMyClass.dCoup
+            coup = localInstanceofMyClass.Coup
             If coup <> 0 Then
-                MinusSerie = localInstanceofMyClass.dTMS
-                MinusIntermit = localInstanceofMyClass.dTMI
+                MinusSerie = localInstanceofMyClass.TmS
+                MinusIntermit = localInstanceofMyClass.TmI
                 If MinusSerie <> "" Then
                     If MinusRap3 = "" Then
                         MinusRap3 = "S"
@@ -2026,90 +1345,10 @@ Public Class Form1
                 Rap = "X"
         End Select
 
-        cCoupData.InstanceofMyClass.dTMR = Rap
+        cCoupData.TmR = Rap
 
         If Rap <> "" Then
-            cCoupData.InstanceofMyClass.dTMR7 = GetRapLast7X(ColNum.eTMR)
-        End If
-    End Sub
-
-    Private Sub fillSelektorSchwarzRap()
-
-        Dim SchwarzSerie As String = ""
-        Dim SchwarzIntermit As String = ""
-        Dim SchwarzRap1 As String = ""
-        Dim SchwarzRap2 As String = ""
-        Dim SchwarzRap3 As String = ""
-        Dim SchwarzRap4 As String = ""
-        Dim SchwarzSum As String = ""
-        Dim coup As Integer
-        Dim Rap As String = ""
-
-        SchwarzSerie = DataGridView1.Rows(RowCount).Cells(ColNum.eSS).Value
-        SchwarzIntermit = DataGridView1.Rows(RowCount).Cells(ColNum.eSI).Value
-
-        If SchwarzSerie = "" And SchwarzIntermit = "" Then Exit Sub
-
-        For I As Integer = 0 To RowCount
-            coup = DataGridView1.Rows(RowCount - I).Cells(ColNum.eCoup).Value
-            If coup <> 0 Then
-                SchwarzSerie = DataGridView1.Rows(RowCount - I).Cells(ColNum.eSS).Value
-                SchwarzIntermit = DataGridView1.Rows(RowCount - I).Cells(ColNum.eSI).Value
-                If SchwarzSerie <> "" Then
-                    If SchwarzRap4 = "" Then
-                        SchwarzRap4 = "S"
-                    Else
-                        If SchwarzRap3 = "" Then
-                            SchwarzRap3 = "S"
-                        Else
-                            If SchwarzRap2 = "" Then
-                                SchwarzRap2 = "S"
-                            Else
-                                If SchwarzRap1 = "" Then
-                                    SchwarzRap1 = "S"
-                                End If
-                            End If
-                        End If
-                    End If
-                ElseIf SchwarzIntermit <> "" Then
-                    If SchwarzRap4 = "" Then
-                        SchwarzRap4 = "I"
-                    Else
-                        If SchwarzRap3 = "" Then
-                            SchwarzRap3 = "I"
-                        Else
-                            If SchwarzRap2 = "" Then
-                                SchwarzRap2 = "I"
-                            Else
-                                If SchwarzRap1 = "" Then
-                                    SchwarzRap1 = "I"
-                                End If
-                            End If
-                        End If
-                    End If
-                    If SchwarzRap1 <> "" And SchwarzRap2 <> "" And SchwarzRap3 <> "" Then Exit For
-                End If
-                If SchwarzRap1 <> "" And SchwarzRap2 <> "" And SchwarzRap3 <> "" And SchwarzRap4 <> "" Then Exit For
-            End If
-        Next
-
-        SchwarzSum = SchwarzRap1 & SchwarzRap2 & SchwarzRap3 & SchwarzRap4
-
-        Select Case SchwarzSum
-            Case "ISSI"
-                Rap = "O"
-            Case "SIIS"
-                Rap = "O"
-            Case "SIII"
-                Rap = "X"
-            Case "ISSS"
-                Rap = "X"
-        End Select
-
-        DataGridView1.Rows(RowCount).Cells(ColNum.eSR).Value = Rap
-
-        If Rap <> "" Then
-            DataGridView1.Rows(RowCount).Cells(ColNum.eSR7).Value = GetRapLast7(ColNum.eSR)
+            cCoupData.TmR7 = GetRapLast7X(ColNum.eTMR)
         End If
     End Sub
 
@@ -2124,12 +1363,12 @@ Public Class Form1
         Dim SchwarzSum As String = ""
         Dim coup As Integer
         Dim Rap As String = ""
-        Dim arraylistCnt As Integer = cCoupData.myarraylist.Count
-        Dim localInstanceofMyClass As clsCoupData.myStruct
+        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim localInstanceofMyClass As clsCoupData
 
-        SchwarzSerie = cCoupData.InstanceofMyClass.dSS
-        SchwarzIntermit = cCoupData.InstanceofMyClass.dSI
-        coup = cCoupData.InstanceofMyClass.dCoup
+        SchwarzSerie = cCoupData.SS
+        SchwarzIntermit = cCoupData.SI
+        coup = cCoupData.Coup
 
         If (SchwarzSerie = "" And SchwarzIntermit = "") Or coup = 0 Then Exit Sub
         If SchwarzSerie <> "" Then
@@ -2138,13 +1377,13 @@ Public Class Form1
             SchwarzRap4 = "I"
         End If
 
-        For I As Integer = 0 To cCoupData.myarraylist.Count - 1
-            localInstanceofMyClass = CType(cCoupData.myarraylist(arraylistCnt - I - 1), clsCoupData.myStruct)
+        For I As Integer = 0 To myarraylist.Count - 1
+            localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
 
-            coup = localInstanceofMyClass.dCoup
+            coup = localInstanceofMyClass.Coup
             If coup <> 0 Then
-                SchwarzSerie = localInstanceofMyClass.dSS
-                SchwarzIntermit = localInstanceofMyClass.dSI
+                SchwarzSerie = localInstanceofMyClass.SS
+                SchwarzIntermit = localInstanceofMyClass.SI
                 If SchwarzSerie <> "" Then
                     If SchwarzRap3 = "" Then
                         SchwarzRap3 = "S"
@@ -2188,92 +1427,10 @@ Public Class Form1
                 Rap = "X"
         End Select
 
-        cCoupData.InstanceofMyClass.dSR = Rap
+        cCoupData.SR = Rap
 
         If Rap <> "" Then
-            cCoupData.InstanceofMyClass.dSR7 = GetRapLast7X(ColNum.eSR)
-        End If
-    End Sub
-
-
-
-    Private Sub fillSelektorRotRap()
-
-        Dim RotSerie As String = ""
-        Dim RotIntermit As String = ""
-        Dim RotRap1 As String = ""
-        Dim RotRap2 As String = ""
-        Dim RotRap3 As String = ""
-        Dim RotRap4 As String = ""
-        Dim RotSum As String = ""
-        Dim coup As Integer
-        Dim Rap As String = ""
-
-        RotSerie = DataGridView1.Rows(RowCount).Cells(ColNum.eRS).Value
-        RotIntermit = DataGridView1.Rows(RowCount).Cells(ColNum.eRI).Value
-
-        If RotSerie = "" And RotIntermit = "" Then Exit Sub
-
-        For I As Integer = 0 To RowCount
-            coup = DataGridView1.Rows(RowCount - I).Cells(ColNum.eCoup).Value
-            If coup <> 0 Then
-                RotSerie = DataGridView1.Rows(RowCount - I).Cells(ColNum.eRS).Value
-                RotIntermit = DataGridView1.Rows(RowCount - I).Cells(ColNum.eRI).Value
-                If RotSerie <> "" Then
-                    If RotRap4 = "" Then
-                        RotRap4 = "S"
-                    Else
-                        If RotRap3 = "" Then
-                            RotRap3 = "S"
-                        Else
-                            If RotRap2 = "" Then
-                                RotRap2 = "S"
-                            Else
-                                If RotRap1 = "" Then
-                                    RotRap1 = "S"
-                                End If
-                            End If
-                        End If
-                    End If
-                ElseIf RotIntermit <> "" Then
-                    If RotRap4 = "" Then
-                        RotRap4 = "I"
-                    Else
-                        If RotRap3 = "" Then
-                            RotRap3 = "I"
-                        Else
-                            If RotRap2 = "" Then
-                                RotRap2 = "I"
-                            Else
-                                If RotRap1 = "" Then
-                                    RotRap1 = "I"
-                                End If
-                            End If
-                        End If
-                    End If
-                    If RotRap1 <> "" And RotRap2 <> "" And RotRap3 <> "" Then Exit For
-                End If
-                If RotRap1 <> "" And RotRap2 <> "" And RotRap3 <> "" And RotRap4 <> "" Then Exit For
-            End If
-        Next
-
-        RotSum = RotRap1 & RotRap2 & RotRap3 & RotRap4
-
-        Select Case RotSum
-            Case "ISSI"
-                Rap = "O"
-            Case "SIIS"
-                Rap = "O"
-            Case "SIII"
-                Rap = "X"
-            Case "ISSS"
-                Rap = "X"
-        End Select
-
-        DataGridView1.Rows(RowCount).Cells(ColNum.eRR).Value = Rap
-
-        If Rap <> "" Then
-            DataGridView1.Rows(RowCount).Cells(ColNum.eRR7).Value = GetRapLast7(ColNum.eRR)
+            cCoupData.SR7 = GetRapLast7X(ColNum.eSR)
         End If
     End Sub
 
@@ -2288,12 +1445,12 @@ Public Class Form1
         Dim RotSum As String = ""
         Dim coup As Integer
         Dim Rap As String = ""
-        Dim arraylistCnt As Integer = cCoupData.myarraylist.Count
-        Dim localInstanceofMyClass As clsCoupData.myStruct
+        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim localInstanceofMyClass As clsCoupData
 
-        RotSerie = cCoupData.InstanceofMyClass.dRS
-        RotIntermit = cCoupData.InstanceofMyClass.dRI
-        coup = cCoupData.InstanceofMyClass.dCoup
+        RotSerie = cCoupData.RS
+        RotIntermit = cCoupData.RI
+        coup = cCoupData.Coup
 
         If (RotSerie = "" And RotIntermit = "") Or coup = 0 Then Exit Sub
         If RotSerie <> "" Then
@@ -2302,13 +1459,13 @@ Public Class Form1
             RotRap4 = "I"
         End If
 
-        For I As Integer = 0 To cCoupData.myarraylist.Count - 1
-            localInstanceofMyClass = CType(cCoupData.myarraylist(arraylistCnt - I - 1), clsCoupData.myStruct)
+        For I As Integer = 0 To myarraylist.Count - 1
+            localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
 
-            coup = localInstanceofMyClass.dCoup
+            coup = localInstanceofMyClass.Coup
             If coup <> 0 Then
-                RotSerie = localInstanceofMyClass.dRS
-                RotIntermit = localInstanceofMyClass.dRI
+                RotSerie = localInstanceofMyClass.RS
+                RotIntermit = localInstanceofMyClass.RI
                 If RotSerie <> "" Then
                     If RotRap3 = "" Then
                         RotRap3 = "S"
@@ -2352,51 +1509,28 @@ Public Class Form1
                 Rap = "X"
         End Select
 
-        cCoupData.InstanceofMyClass.dRR = Rap
+        cCoupData.RR = Rap
 
         If Rap <> "" Then
-            cCoupData.InstanceofMyClass.dRR7 = GetRapLast7X(ColNum.eRR)
+            cCoupData.RR7 = GetRapLast7X(ColNum.eRR)
         End If
     End Sub
-
-    Private Function GetRapLast7(ByVal SelektorCol As Integer) As String
-        Dim Rap As String = ""
-        Dim RapTmp As String = ""
-        Dim count As Integer = 0
-
-        For I As Integer = 0 To RowCount
-            RapTmp = DataGridView1.Rows(RowCount - I).Cells(SelektorCol).Value
-
-            If RapTmp <> "" Then
-                count = count + 1
-                Rap = RapTmp + Rap
-            End If
-
-            If count = 7 Then Exit For
-        Next
-
-        If count >= 3 Then
-            GetRapLast7 = Rap
-        Else
-            GetRapLast7 = ""
-        End If
-    End Function
 
     Private Function GetRapLast7X(ByVal SelektorCol As Integer) As String
         Dim Rap As String = ""
         Dim RapTmp As String = ""
         Dim count As Integer = 0
-        Dim arraylistCnt As Integer = cCoupData.myarraylist.Count
-        Dim localInstanceofMyClass As clsCoupData.myStruct
+        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim localInstanceofMyClass As clsCoupData
 
         If SelektorCol = ColNum.eTPR Then
-            RapTmp = cCoupData.InstanceofMyClass.dTPR
+            RapTmp = cCoupData.TPR
         ElseIf SelektorCol = ColNum.eTMR Then
-            RapTmp = cCoupData.InstanceofMyClass.dTMR
+            RapTmp = cCoupData.TmR
         ElseIf SelektorCol = ColNum.eSR Then
-            RapTmp = cCoupData.InstanceofMyClass.dSR
+            RapTmp = cCoupData.SR
         ElseIf SelektorCol = ColNum.eRR Then
-            RapTmp = cCoupData.InstanceofMyClass.dRR
+            RapTmp = cCoupData.RR
         End If
 
         If RapTmp <> "" Then
@@ -2404,16 +1538,16 @@ Public Class Form1
             Rap = RapTmp + Rap
         End If
 
-        For I As Integer = 0 To cCoupData.myarraylist.Count - 1
-            localInstanceofMyClass = CType(cCoupData.myarraylist(arraylistCnt - I - 1), clsCoupData.myStruct)
+        For I As Integer = 0 To myarraylist.Count - 1
+            localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
             If SelektorCol = ColNum.eTPR Then
-                RapTmp = localInstanceofMyClass.dTPR
+                RapTmp = localInstanceofMyClass.TPR
             ElseIf SelektorCol = ColNum.eTMR Then
-                RapTmp = localInstanceofMyClass.dTMR
+                RapTmp = localInstanceofMyClass.TmR
             ElseIf SelektorCol = ColNum.eSR Then
-                RapTmp = localInstanceofMyClass.dSR
+                RapTmp = localInstanceofMyClass.SR
             ElseIf SelektorCol = ColNum.eRR Then
-                RapTmp = localInstanceofMyClass.dRR
+                RapTmp = localInstanceofMyClass.RR
             End If
 
             If RapTmp <> "" Then
@@ -2429,126 +1563,6 @@ Public Class Form1
         Else
             GetRapLast7X = ""
         End If
-    End Function
-
-    Private Function FillSatz(ByVal SelektorCol As Integer) As String
-        Dim Rap As String = ""
-        Dim RapTmp As String = ""
-        Dim count As Integer = 0
-        Dim I As Integer = 0
-
-        Dim s1 As String = ""
-        Dim s2 As String = ""
-        Dim s3 As String = ""
-        Dim s4 As String = ""
-        Dim s5 As String = ""
-        Dim s6 As String = ""
-        Dim s7 As String = ""
-        Dim ReturnStr As String = ""
-        Dim Satz As String = ""
-
-        RapTmp = DataGridView1.Rows(RowCount).Cells(SelektorCol).Value
-        If RapTmp <> "" Then
-            I = 7
-            Do Until I = 0
-                Select Case I
-                    Case 1
-                        s1 = RapTmp.Substring(RapTmp.Length - 7, 1)
-                    Case 2
-                        s2 = RapTmp.Substring(RapTmp.Length - 6, 1)
-                    Case 3
-                        s3 = RapTmp.Substring(RapTmp.Length - 5, 1)
-                    Case 4
-                        s4 = RapTmp.Substring(RapTmp.Length - 4, 1)
-                    Case 5
-                        s5 = RapTmp.Substring(RapTmp.Length - 3, 1)
-                    Case 6
-                        s6 = RapTmp.Substring(RapTmp.Length - 2, 1)
-                    Case 7
-                        s7 = RapTmp.Substring(RapTmp.Length - 1, 1)
-                End Select
-
-                I = I - 1
-
-                If 7 - I = RapTmp.Length Then Exit Do
-            Loop
-
-            ReturnStr = ""
-
-            If RapTmp.Length < 6 Then
-                FillSatz = ""
-                Exit Function
-            End If
-
-            ''Regel10 XXX(X) | OOO(O)
-            If (s7 = s6 And s7 = s5) Then
-                If (s7 <> s4) Then
-                    ReturnStr = "R10: " & s7 & s6 & s5 & "(" & s7 & ")"
-                    SatzCount = SatzCount + 1
-                    Call SetSatz(s7, SelektorCol)
-                Else
-                    ReturnStr = "R10: Not Aborted"
-                End If
-                FillSatz = ReturnStr
-                Exit Function
-            End If
-
-            ''Is R10 aborted?
-            If s3 <> "" And s4 <> "" And s5 <> "" Then
-                If s3 = s4 And s4 = s5 Then
-                    FillSatz = ""
-                    Exit Function
-                End If
-            End If
-
-            ''Regel11 OO XOX(O) | XX OXO(X) 
-            If (s7 <> s6 And s7 = s5 And s5 <> s4) Then
-                If s6 = s4 And s4 = s3 Then
-                    ReturnStr = "R11: " & s5 & s6 & s7 & "(" & s6 & ")"
-                    SatzCount = SatzCount + 1
-                    Call SetSatz(s6, SelektorCol)
-                Else
-                    ReturnStr = "R11: Not Aborted"
-                End If
-
-                FillSatz = ReturnStr
-                Exit Function
-            End If
-
-            ''Regel12 XXO(O) | OOX(X)
-            If (s7 <> s6 And s6 = s5) Then
-                If Not ((s4 = s7) And (s3 = s4)) Then
-                    ReturnStr = "R12: " & s5 & s6 & s7 & "(" & s7 & ")"
-                    SatzCount = SatzCount + 1
-                    Call SetSatz(s7, SelektorCol)
-                Else
-                    ReturnStr = "R12: Not Aborted"
-                End If
-
-                FillSatz = ReturnStr
-                Exit Function
-            End If
-
-            ''If RapTmp.Length = 5 Then
-            'Regel13 OXXOX(X) | XOOXO(O)
-            If (s7 <> s6 And s6 <> s5 And s5 = s4 And s4 <> s3) Then
-                ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s7 & ")"
-                SatzCount = SatzCount + 1
-                FillSatz = ReturnStr
-                Call SetSatz(s7, SelektorCol)
-                Exit Function
-                'XXOXX(O) | OOXOO(X)
-            ElseIf (s7 = s6 And s6 <> s5 And s5 <> s4 And s4 = s3) Then
-                ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s5 & ")"
-                SatzCount = SatzCount + 1
-                FillSatz = ReturnStr
-                Call SetSatz(s5, SelektorCol)
-                Exit Function
-            End If
-        End If
-
-        FillSatz = ReturnStr
-
     End Function
 
     Private Function FillSatzX(ByVal SelektorCol As Integer) As String
@@ -2567,14 +1581,14 @@ Public Class Form1
         Dim ReturnStr As String = ""
         Dim Satz As String = ""
 
-        If SelektorCol = ColNum.eTPR7 Then            
-            RapTmp = cCoupData.InstanceofMyClass.dTPR7
+        If SelektorCol = ColNum.eTPR7 Then
+            RapTmp = cCoupData.TPR7
         ElseIf SelektorCol = ColNum.eTMR7 Then
-            RapTmp = cCoupData.InstanceofMyClass.dTMR7
+            RapTmp = cCoupData.TmR7
         ElseIf SelektorCol = ColNum.eSR7 Then
-            RapTmp = cCoupData.InstanceofMyClass.dSR7
+            RapTmp = cCoupData.SR7
         ElseIf SelektorCol = ColNum.eRR7 Then
-            RapTmp = cCoupData.InstanceofMyClass.dRR7
+            RapTmp = cCoupData.RR7
         End If
 
         If RapTmp <> "" Then
@@ -2695,235 +1709,20 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub fillSelektorMinusRap()
-        Dim MinusSerie As String = ""
-        Dim MinusIntermit As String = ""
-        Dim MinusRap1 As String = ""
-        Dim MinusRap2 As String = ""
-        Dim MinusRap3 As String = ""
-        Dim MinusRap4 As String = ""
-        Dim MinusSum As String = ""
-        Dim coup As Integer
-        Dim Rap As String = ""
-
-        MinusSerie = DataGridView1.Rows(RowCount).Cells(ColNum.eTMS).Value
-        MinusIntermit = DataGridView1.Rows(RowCount).Cells(ColNum.eTMI).Value
-
-        If MinusSerie = "" And MinusIntermit = "" Then Exit Sub
-
-        For I As Integer = 0 To RowCount
-            coup = DataGridView1.Rows(RowCount - I).Cells(ColNum.eCoup).Value
-            If coup <> 0 Then
-                MinusSerie = DataGridView1.Rows(RowCount - I).Cells(ColNum.eTMS).Value
-                MinusIntermit = DataGridView1.Rows(RowCount - I).Cells(ColNum.eTMI).Value
-                If MinusSerie <> "" Then
-                    If MinusRap4 = "" Then
-                        MinusRap4 = "S"
-                    Else
-                        If MinusRap3 = "" Then
-                            MinusRap3 = "S"
-                        Else
-                            If MinusRap2 = "" Then
-                                MinusRap2 = "S"
-                            Else
-                                If MinusRap1 = "" Then
-                                    MinusRap1 = "S"
-                                End If
-                            End If
-                        End If
-                    End If
-                ElseIf MinusIntermit <> "" Then
-                    If MinusRap4 = "" Then
-                        MinusRap4 = "I"
-                    Else
-                        If MinusRap3 = "" Then
-                            MinusRap3 = "I"
-                        Else
-                            If MinusRap2 = "" Then
-                                MinusRap2 = "I"
-                            Else
-                                If MinusRap1 = "" Then
-                                    MinusRap1 = "I"
-                                End If
-                            End If
-                        End If
-                    End If
-                    If MinusRap1 <> "" And MinusRap2 <> "" And MinusRap3 <> "" Then Exit For
-                End If
-                If MinusRap1 <> "" And MinusRap2 <> "" And MinusRap3 <> "" And MinusRap4 <> "" Then Exit For
-            End If
-        Next
-
-        MinusSum = MinusRap1 & MinusRap2 & MinusRap3 & MinusRap4
-
-        Select Case MinusSum
-            Case "ISSI"
-                Rap = "O"
-            Case "SIIS"
-                Rap = "O"
-            Case "SIII"
-                Rap = "X"
-            Case "ISSS"
-                Rap = "X"
-        End Select
-
-        DataGridView1.Rows(RowCount).Cells(ColNum.eTMR).Value = Rap
-
-        If Rap <> "" Then
-            DataGridView1.Rows(RowCount).Cells(ColNum.eTMR7).Value = GetRapLast7(ColNum.eTMR)
-        End If
-
-    End Sub
-
-    Private Sub fillSelektorMinus()
-
-        Dim Minus1 As String = ""
-        Dim Minus2 As String = ""
-        Dim Minus3 As String = ""
-        Dim MinusTmp As String = ""
-        Dim countMinus As Integer = 1
-        Dim coup As Integer
-
-        For I As Integer = 0 To RowCount
-            coup = DataGridView1.Rows(RowCount - I).Cells(ColNum.eCoup).Value
-            If coup <> 0 Then
-                MinusTmp = DataGridView1.Rows(RowCount - I).Cells(ColNum.eTM).Value
-                Select Case countMinus
-                    Case 1
-                        Minus1 = MinusTmp
-                        countMinus = 2
-                    Case 2
-                        Minus2 = MinusTmp
-                        countMinus = 3
-                    Case 3
-                        Minus3 = MinusTmp
-                        countMinus = 4
-                End Select
-            End If
-            If countMinus = 4 Then Exit For
-        Next
-
-        If Minus1 <> "" And Minus2 <> "" And Minus3 = "" Then 'Serie
-            DataGridView1.Rows(RowCount).Cells(ColNum.eTMS).Value = "X"
-        End If
-
-        If Minus1 = "" And Minus2 <> "" And Minus3 = "" Then 'Intermittenz
-            DataGridView1.Rows(RowCount).Cells(ColNum.eTMI).Value = "X"
-        End If
-    End Sub
-
-    Private Function GetNextCol(ByRef pos As Integer, Optional ByVal AddCol As Boolean = True, Optional ByRef coup As Integer = 0) As Integer
-        Dim i As Integer
-
-        GetNextCol = 0
-
-        coup = DataGridView1.Rows(RowCount - pos).Cells(ColNum.eCoup).Value
-        If coup <> 0 Then
-            GetNextCol = CheckCollong(coup)
-        End If
-
-        If AddCol = True Then pos = i + 1 'damit gleich der nächst coup ausgewählt ist
-    End Function
-
     Private Function GetNextColX(ByRef pos As Integer, Optional ByVal AddCol As Boolean = True, Optional ByRef coup As Integer = 0) As Integer
         Dim i As Integer
-        Dim localInstanceofMyClass As clsCoupData.myStruct
+        Dim localInstanceofMyClass As clsCoupData
 
         GetNextColX = 0
 
-        localInstanceofMyClass = CType(cCoupData.myarraylist(cCoupData.myarraylist.Count - 1 - pos), clsCoupData.myStruct)
+        localInstanceofMyClass = CType(myarraylist(myarraylist.Count - 1 - pos), clsCoupData)
 
-        coup = localInstanceofMyClass.dCoup
+        coup = localInstanceofMyClass.Coup
         If coup <> 0 Then
             GetNextColX = CheckCollong(coup)
         End If
 
         If AddCol = True Then pos = i + 1 'damit gleich der nächst coup ausgewählt ist
-    End Function
-
-    Private Function GetPlus(ByRef pos As Integer, Optional ByVal AddCol As Boolean = True, Optional ByRef coup As Integer = 0) As String
-        Dim i As Integer
-
-        GetPlus = ""
-
-        coup = DataGridView1.Rows(RowCount - pos).Cells(ColNum.eCoup).Value
-        If coup <> 0 Then
-            GetPlus = DataGridView1.Rows(RowCount - pos).Cells(ColNum.eTM).Value
-        End If
-
-        If AddCol = True Then pos = i + 1 'damit gleich der nächst coup ausgewählt ist
-    End Function
-
-    Private Function SetTransformatorRegel1() As Integer
-        Dim IsCol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-        Dim col1 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-        Dim tmpcol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-
-        Dim IsBreaked As Boolean
-        Dim LastcolFound As Boolean = False
-        Dim pos As Integer = 1
-        Dim coup As Integer
-        Dim break As Boolean
-
-        If RowCount < 3 Then 'Regel 1 kann erst fühstens ab Coup 4 eintreten!
-            SetTransformatorRegel1 = 0
-            Exit Function
-        End If
-
-        For I As Integer = pos To RowCount
-            tmpcol = GetNextCol(I, False, coup)
-            If tmpcol <> 0 Then
-                If IsCol = 0 Then
-                    IsCol = tmpcol
-                Else
-                    If col1 = 0 Then
-                        col1 = tmpcol
-                    End If
-                End If
-            End If
-            If IsCol <> 0 And col1 <> 0 Then Exit For
-        Next
-
-        If (IsCol = col1) Then 'hier generelle Abfrage ob Regel2 überhaupt in Kraft treten kann
-            'Coup != letzter coup 
-            SetTransformatorRegel1 = 0
-            Exit Function
-        End If
-
-        IsBreaked = CheckIsBreaked()
-        For I As Integer = pos To RowCount
-            tmpcol = GetNextCol(I, False, coup)
-            If LastcolFound = True Then
-                If tmpcol <> 0 Then
-                    If tmpcol <> IsCol Then
-                        'Regel 1: Vorherige Farbe war Intermittenz: 
-                        'aktuelle Farbe abgebrochen -> +
-                        'aktuelle Farbe weitergelaufen -> -
-                        If IsBreaked = True Then
-                            SetTransformatorRegel1 = 1 '+
-                        Else
-                            SetTransformatorRegel1 = 2 '-
-                        End If
-                        Exit Function
-                    Else
-                        'Regel 1: nicht in Kraft getreten, Vorherige Farbe war keine Intermittenz
-                        SetTransformatorRegel1 = 0
-                        Exit Function
-                    End If
-                End If
-            Else
-                If tmpcol = IsCol And break = True Then
-                    LastcolFound = True
-                Else
-                    If tmpcol <> 0 And break = False Then
-                        If tmpcol <> IsCol Then
-                            break = True
-                        End If
-                    End If
-                End If
-            End If
-        Next I
-
     End Function
 
     Private Function SetTransformatorRegel1_2() As Integer
@@ -2937,12 +1736,12 @@ Public Class Form1
         Dim coup As Integer
         Dim break As Boolean
 
-        If cCoupData.myarraylist.Count < 3 Then 'Regel 1 kann erst fühstens ab Coup 4 eintreten!
+        If myarraylist.Count < 3 Then 'Regel 1 kann erst fühstens ab Coup 4 eintreten!
             SetTransformatorRegel1_2 = 0
             Exit Function
         End If
 
-        For I As Integer = pos To cCoupData.myarraylist.Count - 1
+        For I As Integer = pos To myarraylist.Count - 1
             tmpcol = GetNextColX(I, False, coup)
             If tmpcol <> 0 Then
                 If IsCol = 0 Then
@@ -2963,7 +1762,7 @@ Public Class Form1
         End If
 
         IsBreaked = CheckIsBreakedX()
-        For I As Integer = pos To cCoupData.myarraylist.Count - 1
+        For I As Integer = pos To myarraylist.Count - 1
             tmpcol = GetNextColX(I, False, coup)
             If LastcolFound = True Then
                 If tmpcol <> 0 Then
@@ -2998,88 +1797,6 @@ Public Class Form1
 
     End Function
 
-
-    Private Function SetTransformatorRegel2() As Integer
-        Dim IsCol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-        Dim col1 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-        Dim col2 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-        Dim tmpcol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-
-        Dim IsBreaked As Boolean
-        Dim LastcolFound As Boolean = False
-        Dim pos As Integer = 1
-        Dim coup As Integer
-        Dim break As Boolean
-
-        If RowCount < 5 Then 'Regel 2 kann erst fühstens ab Coup 6 eintreten!
-            SetTransformatorRegel2 = 0
-            Exit Function
-        End If
-
-        If RowCount = 6 Then
-            RowCount = RowCount
-        End If
-
-        For I As Integer = pos To RowCount
-            tmpcol = GetNextCol(I, False, coup)
-            If tmpcol <> 0 Then
-                If IsCol = 0 Then
-                    IsCol = tmpcol
-                Else
-                    If col1 = 0 Then
-                        col1 = tmpcol
-                    Else
-                        If col2 = 0 Then
-                            col2 = tmpcol
-                        End If
-                    End If
-                End If
-            End If
-            If IsCol <> 0 And col1 <> 0 And col2 <> 0 Then Exit For
-        Next
-
-        If Not ((IsCol = col1) And (col1 <> col2)) Then 'hier generelle Abfrage ob Regel2 überhaupt in Kraft treten kann
-            'letzer Coup = vorletzer coup und vorvorletzter coup != letzter coup
-            SetTransformatorRegel2 = 0
-            Exit Function
-        End If
-
-        IsBreaked = CheckIsBreaked()
-        For I As Integer = pos To RowCount
-            tmpcol = GetNextCol(I, False, coup)
-            If LastcolFound = True Then
-                If tmpcol <> 0 Then
-                    If tmpcol <> IsCol Then
-                        'Regel 1: Vorherige Farbe war Intermittenz: 
-                        'aktuelle Farbe abgebrochen -> +
-                        'aktuelle Farbe weitergelaufen -> -
-                        If IsBreaked = True Then
-                            SetTransformatorRegel2 = 1 '+
-                        Else
-                            SetTransformatorRegel2 = 2 '-
-                        End If
-                        Exit Function
-                    Else
-                        'Regel 1: nicht in Kraft getreten, Vorherige Farbe war keine Intermittenz
-                        SetTransformatorRegel2 = 0
-                        Exit Function
-                    End If
-                End If
-            Else
-                If tmpcol = IsCol And break = True Then
-                    LastcolFound = True
-                Else
-                    If tmpcol <> 0 And break = False Then
-                        If tmpcol <> IsCol Then
-                            break = True
-                        End If
-                    End If
-                End If
-            End If
-        Next I
-
-    End Function
-
     Private Function SetTransformatorRegel2_2() As Integer
         Dim IsCol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
         Dim col1 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
@@ -3092,12 +1809,12 @@ Public Class Form1
         Dim coup As Integer
         Dim break As Boolean
 
-        If cCoupData.myarraylist.Count < 5 Then 'Regel 2 kann erst fühstens ab Coup 6 eintreten!
+        If myarraylist.Count < 5 Then 'Regel 2 kann erst fühstens ab Coup 6 eintreten!
             SetTransformatorRegel2_2 = 0
             Exit Function
         End If
 
-        For I As Integer = pos To cCoupData.myarraylist.Count - 1
+        For I As Integer = pos To myarraylist.Count - 1
             tmpcol = GetNextColX(I, False, coup)
             If tmpcol <> 0 Then
                 If IsCol = 0 Then
@@ -3122,7 +1839,7 @@ Public Class Form1
         End If
 
         IsBreaked = CheckIsBreakedX()
-        For I As Integer = pos To cCoupData.myarraylist.Count - 1
+        For I As Integer = pos To myarraylist.Count - 1
             tmpcol = GetNextColX(I, False, coup)
             If LastcolFound = True Then
                 If tmpcol <> 0 Then
@@ -3157,86 +1874,6 @@ Public Class Form1
 
     End Function
 
-    Private Function SetTransformatorRegel3() As Integer
-        Dim IsCol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-        Dim col1 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-        Dim col2 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-        Dim tmpcol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-
-        Dim IsBreaked As Boolean
-        Dim LastcolFound As Boolean = False
-        Dim pos As Integer = 1
-        Dim coup As Integer
-        Dim break As Boolean
-
-        If RowCount < 5 Then 'Regel 3 kann erst fühstens ab Coup 6 eintreten!
-            SetTransformatorRegel3 = 0
-            Exit Function
-        End If
-
-        For I As Integer = pos To RowCount
-            tmpcol = GetNextCol(I, False, coup)
-            If tmpcol <> 0 Then
-                If IsCol = 0 Then
-                    IsCol = tmpcol
-                Else
-                    If col1 = 0 Then
-                        col1 = tmpcol
-                    End If
-                End If
-            End If
-            If IsCol <> 0 And col1 <> 0 Then Exit For
-        Next
-
-        If (IsCol = col1) Then 'hier generelle Abfrage ob Regel3 überhaupt in Kraft treten kann
-            'Coup != letzter coup 
-            SetTransformatorRegel3 = 0
-            Exit Function
-        End If
-
-        col1 = 0
-
-        IsBreaked = CheckIsBreaked()
-        For I As Integer = pos To RowCount
-            tmpcol = GetNextCol(I, False, coup)
-            If LastcolFound = True Then
-                If tmpcol <> 0 Then
-                    If col1 = 0 Then
-                        col1 = tmpcol
-                    Else
-                        col2 = tmpcol
-                        If ((IsCol = col1) And (col1 <> col2)) Then
-                            'Regel 3: Vorherige Farbe war 2er: 
-                            'aktuelle Farbe abgebrochen -> -
-                            'aktuelle Farbe weitergelaufen -> +
-                            If IsBreaked = True Then
-                                SetTransformatorRegel3 = 2 '-
-                            Else
-                                SetTransformatorRegel3 = 1 '+
-                            End If
-                            Exit Function
-                        Else
-                            'Regel 1: nicht in Kraft getreten, Vorherige Farbe war keine Intermittenz
-                            SetTransformatorRegel3 = 0
-                            Exit Function
-                        End If
-                    End If
-                End If
-            Else
-                If tmpcol = IsCol And break = True Then
-                    LastcolFound = True
-                Else
-                    If tmpcol <> 0 And break = False Then
-                        If tmpcol <> IsCol Then
-                            break = True
-                        End If
-                    End If
-                End If
-            End If
-        Next I
-
-    End Function
-
     Private Function SetTransformatorRegel3_2() As Integer
         Dim IsCol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
         Dim col1 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
@@ -3249,12 +1886,12 @@ Public Class Form1
         Dim coup As Integer
         Dim break As Boolean
 
-        If cCoupData.myarraylist.Count < 5 Then 'Regel 3 kann erst fühstens ab Coup 6 eintreten!
+        If myarraylist.Count < 5 Then 'Regel 3 kann erst fühstens ab Coup 6 eintreten!
             SetTransformatorRegel3_2 = 0
             Exit Function
         End If
 
-        For I As Integer = pos To cCoupData.myarraylist.Count - 1
+        For I As Integer = pos To myarraylist.Count - 1
             tmpcol = GetNextColX(I, False, coup)
             If tmpcol <> 0 Then
                 If IsCol = 0 Then
@@ -3277,7 +1914,7 @@ Public Class Form1
         col1 = 0
 
         IsBreaked = CheckIsBreakedX()
-        For I As Integer = pos To cCoupData.myarraylist.Count - 1
+        For I As Integer = pos To myarraylist.Count - 1
             tmpcol = GetNextColX(I, False, coup)
             If LastcolFound = True Then
                 If tmpcol <> 0 Then
@@ -3317,90 +1954,6 @@ Public Class Form1
 
     End Function
 
-    Private Function SetTransformatorRegel4() As Integer
-        Dim IsCol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-        Dim col1 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-        Dim col2 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-        Dim tmpcol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-
-        Dim IsBreaked As Boolean
-        Dim LastcolFound As Boolean = False
-        Dim pos As Integer = 1
-        Dim coup As Integer
-        Dim break As Boolean
-
-        If RowCount < 6 Then 'Regel 4 kann erst fühstens ab Coup 7 eintreten!
-            SetTransformatorRegel4 = 0
-            Exit Function
-        End If
-
-        For I As Integer = pos To RowCount
-            tmpcol = GetNextCol(I, False, coup)
-            If tmpcol <> 0 Then
-                If IsCol = 0 Then
-                    IsCol = tmpcol
-                Else
-                    If col1 = 0 Then
-                        col1 = tmpcol
-                    Else
-                        If col2 = 0 Then
-                            col2 = tmpcol
-                        End If
-                    End If
-                End If
-            End If
-            If IsCol <> 0 And col1 <> 0 And col2 <> 0 Then Exit For
-        Next
-
-        If Not ((IsCol = col1) And (col1 <> col2)) Then 'hier generelle Abfrage ob Regel2 überhaupt in Kraft treten kann
-            'letzer Coup = vorletzer coup und vorvorletzter coup != letzter coup
-            SetTransformatorRegel4 = 0
-            Exit Function
-        End If
-
-        col1 = 0
-
-        IsBreaked = CheckIsBreaked()
-        For I As Integer = pos To RowCount
-            tmpcol = GetNextCol(I, False, coup)
-            If LastcolFound = True Then
-                If tmpcol <> 0 Then
-                    If col1 = 0 Then
-                        col1 = tmpcol
-                    Else
-                        col2 = tmpcol
-                        If ((IsCol = col1) And (col1 <> col2)) Then
-                            'Regel 3: Vorherige Farbe war 2er: 
-                            'aktuelle Farbe abgebrochen -> -
-                            'aktuelle Farbe weitergelaufen -> +
-                            If IsBreaked = True Then
-                                SetTransformatorRegel4 = 1 '+
-                            Else
-                                SetTransformatorRegel4 = 2 '-
-                            End If
-                            Exit Function
-                        Else
-                            'Regel 1: nicht in Kraft getreten, Vorherige Farbe war keine Intermittenz
-                            SetTransformatorRegel4 = 0
-                            Exit Function
-                        End If
-                    End If
-                End If
-            Else
-                If tmpcol = IsCol And break = True Then
-                    LastcolFound = True
-                Else
-                    If tmpcol <> 0 And break = False Then
-                        If tmpcol <> IsCol Then
-                            break = True
-                        End If
-                    End If
-                End If
-            End If
-        Next I
-
-    End Function
-
     Private Function SetTransformatorRegel4_2() As Integer
         Dim IsCol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
         Dim col1 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
@@ -3413,12 +1966,12 @@ Public Class Form1
         Dim coup As Integer
         Dim break As Boolean
 
-        If cCoupData.myarraylist.Count < 6 Then 'Regel 4 kann erst fühstens ab Coup 7 eintreten!
+        If myarraylist.Count < 6 Then 'Regel 4 kann erst fühstens ab Coup 7 eintreten!
             SetTransformatorRegel4_2 = 0
             Exit Function
         End If
 
-        For I As Integer = pos To cCoupData.myarraylist.Count - 1
+        For I As Integer = pos To myarraylist.Count - 1
             tmpcol = GetNextColX(I, False, coup)
             If tmpcol <> 0 Then
                 If IsCol = 0 Then
@@ -3445,7 +1998,7 @@ Public Class Form1
         col1 = 0
 
         IsBreaked = CheckIsBreakedX()
-        For I As Integer = pos To cCoupData.myarraylist.Count - 1
+        For I As Integer = pos To myarraylist.Count - 1
             tmpcol = GetNextColX(I, False, coup)
             If LastcolFound = True Then
                 If tmpcol <> 0 Then
@@ -3485,60 +2038,6 @@ Public Class Form1
 
     End Function
 
-    Private Function SetTransformatorRegel5() As Integer
-        Dim IsCol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-        Dim col1 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-        Dim col2 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-        Dim tmpcol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-
-        Dim IsBreaked As Boolean
-        Dim pos As Integer = 1
-        Dim coup As Integer
-
-        If RowCount < 3 Then 'Regel 5 kann erst fühstens ab Coup 4 eintreten!
-            SetTransformatorRegel5 = 0
-            Exit Function
-        End If
-
-        If RowCount = 11 Then
-            RowCount = RowCount
-        End If
-
-        For I As Integer = pos To RowCount
-            tmpcol = GetNextCol(I, False, coup)
-            If tmpcol <> 0 Then
-                If IsCol = 0 Then
-                    IsCol = tmpcol
-                Else
-                    If col1 = 0 Then
-                        col1 = tmpcol
-                    Else
-                        If col2 = 0 Then
-                            col2 = tmpcol
-                        End If
-                    End If
-                End If
-            End If
-            If IsCol <> 0 And col1 <> 0 And col2 <> 0 Then Exit For
-        Next
-
-        If Not ((IsCol = col1) And (col1 = col2)) Then 'hier generelle Abfrage ob Regel5 überhaupt in Kraft treten kann
-            'letzer Coup = vorletzer coup = vorvorletzercoup
-            SetTransformatorRegel5 = 0
-            Exit Function
-        End If
-
-        col1 = 0
-
-        IsBreaked = CheckIsBreaked()
-        If IsBreaked = True Then
-            SetTransformatorRegel5 = 2 '-
-        Else
-            SetTransformatorRegel5 = 1 '+
-        End If
-
-    End Function
-
     Private Function SetTransformatorRegel5_2() As Integer
         Dim IsCol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
         Dim col1 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
@@ -3549,12 +2048,12 @@ Public Class Form1
         Dim pos As Integer = 0
         Dim coup As Integer
 
-        If cCoupData.myarraylist.Count < 3 Then 'Regel 5 kann erst fühstens ab Coup 4 eintreten!
+        If myarraylist.Count < 3 Then 'Regel 5 kann erst fühstens ab Coup 4 eintreten!
             SetTransformatorRegel5_2 = 0
             Exit Function
         End If
 
-        For I As Integer = pos To cCoupData.myarraylist.Count - 1
+        For I As Integer = pos To myarraylist.Count - 1
             tmpcol = GetNextColX(I, False, coup)
             If tmpcol <> 0 Then
                 If IsCol = 0 Then
@@ -3589,80 +2088,6 @@ Public Class Form1
 
     End Function
 
-    Private Function SetTransformatorRegel5_1() As Integer
-        Dim IsCol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-        Dim col1 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-        Dim col2 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-        Dim tmpcol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
-
-        Dim IsBreaked As Boolean
-        Dim LastcolFound As Boolean = False
-        Dim pos As Integer = 1
-        Dim coup As Integer
-        Dim break As Boolean = False
-
-        If RowCount < 6 Then 'Regel 5_1 kann erst fühstens ab Coup 6 eintreten!
-            SetTransformatorRegel5_1 = 0
-            Exit Function
-        End If
-
-        For I As Integer = pos To RowCount
-            tmpcol = GetNextCol(I, False, coup)
-            If tmpcol <> 0 Then
-                If IsCol = 0 Then
-                    IsCol = tmpcol
-                Else
-                    If col1 = 0 Then
-                        col1 = tmpcol
-                    End If
-                End If
-            End If
-            If IsCol <> 0 And col1 <> 0 Then Exit For
-        Next
-
-        col1 = 0
-        IsBreaked = CheckIsBreaked()
-
-        For I As Integer = pos To RowCount
-            tmpcol = GetNextCol(I, False, coup)
-            If LastcolFound = True Then
-                If tmpcol <> 0 Then
-                    If col1 = 0 Then
-                        col1 = tmpcol
-                    Else
-                        col2 = tmpcol
-                        If ((IsCol = col1) And (col1 = col2)) Then
-                            'Regel 5_1: Vorherige Farbe war mindestens 3er: 
-                            'aktuelle Farbe abgebrochen -> -
-                            'aktuelle Farbe weitergelaufen -> +
-                            If IsBreaked = True Then
-                                SetTransformatorRegel5_1 = 2 '-
-                            Else
-                                SetTransformatorRegel5_1 = 1 '+
-                            End If
-                            Exit Function
-                        Else
-                            'Regel 1: nicht in Kraft getreten, Vorherige Farbe war keine Intermittenz
-                            SetTransformatorRegel5_1 = 0
-                            Exit Function
-                        End If
-                    End If
-                End If
-            Else
-                If tmpcol = IsCol And break = True Then
-                    LastcolFound = True
-                Else
-                    If tmpcol <> 0 And break = False Then
-                        If tmpcol <> IsCol Then
-                            break = True
-                        End If
-                    End If
-                End If
-            End If
-        Next I
-
-    End Function
-
     Private Function SetTransformatorRegel5_3() As Integer
         Dim IsCol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
         Dim col1 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
@@ -3675,12 +2100,12 @@ Public Class Form1
         Dim coup As Integer
         Dim break As Boolean = False
 
-        If cCoupData.myarraylist.Count < 6 Then 'Regel 5_1 kann erst fühstens ab Coup 6 eintreten!
+        If myarraylist.Count < 6 Then 'Regel 5_1 kann erst fühstens ab Coup 6 eintreten!
             SetTransformatorRegel5_3 = 0
             Exit Function
         End If
 
-        For I As Integer = pos To cCoupData.myarraylist.Count - 1
+        For I As Integer = pos To myarraylist.Count - 1
             tmpcol = GetNextColX(I, False, coup)
             If tmpcol <> 0 Then
                 If IsCol = 0 Then
@@ -3697,7 +2122,7 @@ Public Class Form1
         col1 = 0
         IsBreaked = CheckIsBreakedX()
 
-        For I As Integer = pos To cCoupData.myarraylist.Count - 1
+        For I As Integer = pos To myarraylist.Count - 1
             tmpcol = GetNextColX(I, False, coup)
             If LastcolFound = True Then
                 If tmpcol <> 0 Then
@@ -3737,49 +2162,12 @@ Public Class Form1
 
     End Function
 
-    Private Function CheckIsBreaked()
-        If GetNextCol(0) = GetNextCol(1) Then
-            CheckIsBreaked = False
-        Else
-            CheckIsBreaked = True
-        End If
-    End Function
     Private Function CheckIsBreakedX()
-        If GetNextColX(0) = CheckCollong(cCoupData.InstanceofMyClass.dCoup) Then
+        If GetNextColX(0) = CheckCollong(cCoupData.Coup) Then
             CheckIsBreakedX = False
         Else
             CheckIsBreakedX = True
         End If
-    End Function
-
-    Private Function GetColWidth() As Integer
-        Dim width As Integer = DataGridView1.Columns.Item(ColNum.eLdf).Width + _
-        DataGridView1.Columns.Item(ColNum.eCoup).Width + _
-        DataGridView1.Columns.Item(ColNum.eTP).Width + _
-        DataGridView1.Columns.Item(ColNum.eTM).Width + _
-        DataGridView1.Columns.Item(ColNum.eTPS).Width + _
-        DataGridView1.Columns.Item(ColNum.eTPI).Width + _
-        DataGridView1.Columns.Item(ColNum.eTPR).Width + _
-        DataGridView1.Columns.Item(ColNum.eTPR7).Width + _
-        DataGridView1.Columns.Item(ColNum.eTPRS).Width + _
-        DataGridView1.Columns.Item(ColNum.eTMS).Width + _
-        DataGridView1.Columns.Item(ColNum.eTMI).Width + _
-        DataGridView1.Columns.Item(ColNum.eTMR).Width + _
-        DataGridView1.Columns.Item(ColNum.eTMR7).Width + _
-        DataGridView1.Columns.Item(ColNum.eTMRS).Width + _
-        DataGridView1.Columns.Item(ColNum.eS).Width + _
-        DataGridView1.Columns.Item(ColNum.eR).Width + _
-        DataGridView1.Columns.Item(ColNum.eSS).Width + _
-        DataGridView1.Columns.Item(ColNum.eSI).Width + _
-        DataGridView1.Columns.Item(ColNum.eSR).Width + _
-        DataGridView1.Columns.Item(ColNum.eSR7).Width + _
-        DataGridView1.Columns.Item(ColNum.eSRS).Width + _
-        DataGridView1.Columns.Item(ColNum.eRS).Width + _
-        DataGridView1.Columns.Item(ColNum.eRI).Width + _
-        DataGridView1.Columns.Item(ColNum.eRR).Width + _
-        DataGridView1.Columns.Item(ColNum.eRR7).Width + _
-        DataGridView1.Columns.Item(ColNum.eRRS).Width
-        GetColWidth = width + 20
     End Function
 
     Private Function CheckCollong(ByVal xNewCoup As Long) As Long 'Prüft die Farbe
@@ -3854,8 +2242,6 @@ Public Class Form1
                 Exit Sub
             Else
                 Call InsertNewCoup(key)
-                DataGridView1.FirstDisplayedScrollingRowIndex = RowCount - 1
-                Me.DataGridView1.Rows(RowCount - 1).Selected = True
                 Call SetToolTipStatus()
                 Me.Update()
             End If
@@ -3936,40 +2322,15 @@ Public Class Form1
         If key = "36" Then Return True
     End Function
 
-    Private Sub DataGridView1_ColumnWidthChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewColumnEventArgs) Handles DataGridView1.ColumnWidthChanged
-        If loaded = True Then Call SetSizeLabelColPos()
-    End Sub
+    'Private Sub DataGridView1_ColumnWidthChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewColumnEventArgs)
+    '    If loaded = True Then Call SetSizeLabelColPos()
+    'End Sub
 
-    Private Sub Label8_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles Label8.DoubleClick
-        Dim R1 As DataGridViewRow
-
-        If ColorDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
-            Label8.BackColor = ColorDialog1.Color
-            For I As Integer = 0 To RowCount - 1
-
-                R1 = DataGridView1.Rows(I)
-                With DataGridView1
-                    R1.Cells(ColNum.eRS).Style.BackColor = Label8.BackColor
-                    R1.Cells(ColNum.eRI).Style.BackColor = Label8.BackColor
-                    R1.Cells(ColNum.eRR).Style.BackColor = Label8.BackColor
-                    R1.Cells(ColNum.eRR7).Style.BackColor = Label8.BackColor
-                End With
-            Next I
-        End If
-    End Sub
 
     Private Sub Button6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button6.Click
         Call InsertManuell()
     End Sub
 
-    Private Sub DataGridView1_Scroll(ByVal sender As Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles DataGridView1.Scroll
-        Call SetSizeLabelColPos()
-    End Sub
-
-    Private Sub Form1_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
-        DataGridView1.Width = Me.Width - DataGridView1.Left - 30
-        DataGridView1.Height = Me.Height - DataGridView1.Top - 70
-    End Sub
 
     Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
@@ -3990,11 +2351,12 @@ Public Class Form1
         SatzMinus = ""
         SatzSchwarz = ""
         SatzRot = ""
+        cCoupData = New clsCoupData()
         Call StartAuswertung()
 
         Call SetToolTipStatus()
 
-        FormGrid.CoupData = cCoupData
+        FormGrid.CoupData = myarraylist
         FormGrid.ShowDialog()
         FormRes.prop1() = ResTxt
         FormRes.SaldoVerlaufhalbZero = gesSaldoVerlaufhalbZero
@@ -4003,8 +2365,6 @@ Public Class Form1
     End Sub
 
     Private Sub Button3_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
-        DataGridView1.DataSource = "null"
-        DataGridView1.DataSource = Nothing
         RowCount = 0
 
         Me.TextBox1.Focus()

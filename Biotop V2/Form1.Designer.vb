@@ -24,7 +24,6 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView
         Me.Panel1 = New System.Windows.Forms.Panel
         Me.Label11 = New System.Windows.Forms.Label
         Me.TextBox2 = New System.Windows.Forms.TextBox
@@ -37,21 +36,12 @@ Partial Class Form1
         Me.TextBox3 = New System.Windows.Forms.TextBox
         Me.Label10 = New System.Windows.Forms.Label
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.Label8 = New System.Windows.Forms.Label
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.Label9 = New System.Windows.Forms.Label
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip
         Me.ToolStripProgressBar1 = New System.Windows.Forms.ToolStripProgressBar
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel
         Me.Panel2 = New System.Windows.Forms.Panel
         Me.Button4 = New System.Windows.Forms.Button
         Me.Button3 = New System.Windows.Forms.Button
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.Panel3.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
@@ -61,18 +51,6 @@ Partial Class Form1
         'OpenFileDialog1
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
-        '
-        'DataGridView1
-        '
-        Me.DataGridView1.AllowUserToAddRows = False
-        Me.DataGridView1.AllowUserToDeleteRows = False
-        Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.DataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        resources.ApplyResources(Me.DataGridView1, "DataGridView1")
-        Me.DataGridView1.MultiSelect = False
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.ReadOnly = True
         '
         'Panel1
         '
@@ -149,73 +127,6 @@ Partial Class Form1
         resources.ApplyResources(Me.Label10, "Label10")
         Me.Label10.Name = "Label10"
         '
-        'Label2
-        '
-        Me.Label2.BackColor = System.Drawing.Color.SkyBlue
-        Me.Label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.ForeColor = System.Drawing.SystemColors.HighlightText
-        Me.Label2.Name = "Label2"
-        '
-        'Label3
-        '
-        Me.Label3.BackColor = System.Drawing.Color.LightSalmon
-        Me.Label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.ForeColor = System.Drawing.SystemColors.HighlightText
-        Me.Label3.Name = "Label3"
-        '
-        'Label4
-        '
-        Me.Label4.BackColor = System.Drawing.Color.LightGreen
-        Me.Label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Label4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        resources.ApplyResources(Me.Label4, "Label4")
-        Me.Label4.ForeColor = System.Drawing.SystemColors.HighlightText
-        Me.Label4.Name = "Label4"
-        '
-        'Label5
-        '
-        Me.Label5.AutoEllipsis = True
-        Me.Label5.BackColor = System.Drawing.Color.LightSalmon
-        Me.Label5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        resources.ApplyResources(Me.Label5, "Label5")
-        Me.Label5.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Label5.Name = "Label5"
-        '
-        'Label8
-        '
-        Me.Label8.BackColor = System.Drawing.Color.Red
-        Me.Label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        resources.ApplyResources(Me.Label8, "Label8")
-        Me.Label8.ForeColor = System.Drawing.SystemColors.HighlightText
-        Me.Label8.Name = "Label8"
-        '
-        'Label7
-        '
-        Me.Label7.BackColor = System.Drawing.Color.Gray
-        Me.Label7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Label7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        resources.ApplyResources(Me.Label7, "Label7")
-        Me.Label7.ForeColor = System.Drawing.SystemColors.HighlightText
-        Me.Label7.Name = "Label7"
-        '
-        'Label6
-        '
-        Me.Label6.BackColor = System.Drawing.Color.SkyBlue
-        Me.Label6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        resources.ApplyResources(Me.Label6, "Label6")
-        Me.Label6.ForeColor = System.Drawing.SystemColors.HighlightText
-        Me.Label6.Name = "Label6"
-        '
-        'Label9
-        '
-        Me.Label9.BackColor = System.Drawing.Color.Silver
-        Me.Label9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        resources.ApplyResources(Me.Label9, "Label9")
-        Me.Label9.ForeColor = System.Drawing.SystemColors.HighlightText
-        Me.Label9.Name = "Label9"
-        '
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripProgressBar1, Me.ToolStripStatusLabel1})
@@ -263,21 +174,11 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.StatusStrip1)
-        Me.Controls.Add(Me.Label9)
         Me.Controls.Add(Me.Panel3)
         Me.Controls.Add(Me.Panel1)
-        Me.Controls.Add(Me.Label6)
-        Me.Controls.Add(Me.Label7)
-        Me.Controls.Add(Me.Label8)
-        Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.Label4)
-        Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.DataGridView1)
         Me.KeyPreview = True
         Me.Name = "Form1"
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         Me.Panel3.ResumeLayout(False)
@@ -291,7 +192,6 @@ Partial Class Form1
     End Sub
     Friend WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
 
-    Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents Button1 As System.Windows.Forms.Button
@@ -302,14 +202,6 @@ Partial Class Form1
     Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents ColorDialog1 As System.Windows.Forms.ColorDialog
-    Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents Label5 As System.Windows.Forms.Label
-    Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents Label7 As System.Windows.Forms.Label
-    Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents Label9 As System.Windows.Forms.Label
     Friend WithEvents StatusStrip1 As System.Windows.Forms.StatusStrip
     Friend WithEvents ToolStripProgressBar1 As System.Windows.Forms.ToolStripProgressBar
     Friend WithEvents ToolStripStatusLabel1 As System.Windows.Forms.ToolStripStatusLabel
