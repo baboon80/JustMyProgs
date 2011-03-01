@@ -1,0 +1,89 @@
+D:\Patrick\Biotop\Biotop\bin\Release\Biotop.exe
+D:\Patrick\Biotop\Biotop\bin\Release\Biotop.pdb
+D:\Patrick\Biotop\Biotop\bin\Release\Biotop.xml
+D:\Patrick\Biotop\Biotop\bin\Release\de-DE\Biotop.resources.dll
+D:\Patrick\Biotop\Biotop\obj\Release\ResolveAssemblyReference.cache
+D:\Patrick\Biotop\Biotop\obj\Release\Biotop.Form1.resources
+D:\Patrick\Biotop\Biotop\obj\Release\Biotop.Resources.resources
+D:\Patrick\Biotop\Biotop\obj\Release\Biotop.Form1.de-DE.resources
+D:\Patrick\Biotop\Biotop\obj\Release\Biotop.vbproj.GenerateResource.Cache
+D:\Patrick\Biotop\Biotop\obj\Release\de-DE\Biotop.resources.dll
+D:\Patrick\Biotop\Biotop\obj\Release\Biotop.exe
+D:\Patrick\Biotop\Biotop\obj\Release\Biotop.xml
+D:\Patrick\Biotop\Biotop\obj\Release\Biotop.pdb
+D:\Patrick\Biotop\obj\Release\Biotop.exe
+D:\Patrick\Biotop\obj\Release\Biotop.xml
+D:\Patrick\Biotop\obj\Release\Biotop.pdb
+D:\Patrick\Biotop\bin\Release\Biotop.exe
+D:\Patrick\Biotop\bin\Release\Biotop.pdb
+D:\Patrick\Biotop\bin\Release\Biotop.xml
+D:\Patrick\Biotop\bin\Release\de-DE\Biotop.resources.dll
+D:\Patrick\Biotop\obj\Release\ResolveAssemblyReference.cache
+D:\Patrick\Biotop\obj\Release\Biotop.Form1.resources
+D:\Patrick\Biotop\obj\Release\Biotop.Resources.resources
+D:\Patrick\Biotop\obj\Release\Biotop.Form1.de-DE.resources
+D:\Patrick\Biotop\obj\Release\Biotop.vbproj.GenerateResource.Cache
+D:\Patrick\Biotop\obj\Release\de-DE\Biotop.resources.dll
+D:\Patrick\Biotop\Biotop\obj\Release\Biotop.FormRes.resources
+D:\Patrick\Biotop\Biotop\obj\Release\Biotop.FormFilter.resources
+D:\Patrick\Biotop\Biotop\bin\Release\ZedGraph.dll
+D:\Patrick\Biotop\Biotop\bin\Release\ZedGraph.Web.dll
+D:\Patrick\Biotop\Biotop\bin\Release\ZedGraph.xml
+D:\Patrick\Biotop\Biotop\bin\Release\ZedGraph.Web.xml
+D:\Patrick\Biotop\Biotop\bin\Release\de\ZedGraph.resources.dll
+D:\Patrick\Biotop\Biotop\bin\Release\es\ZedGraph.resources.dll
+D:\Patrick\Biotop\Biotop\bin\Release\fr\ZedGraph.resources.dll
+D:\Patrick\Biotop\Biotop\bin\Release\hu\ZedGraph.resources.dll
+D:\Patrick\Biotop\Biotop\bin\Release\it\ZedGraph.resources.dll
+D:\Patrick\Biotop\Biotop\bin\Release\ja\ZedGraph.resources.dll
+D:\Patrick\Biotop\Biotop\bin\Release\pt\ZedGraph.resources.dll
+D:\Patrick\Biotop\Biotop\bin\Release\ru\ZedGraph.resources.dll
+D:\Patrick\Biotop\Biotop\bin\Release\sv\ZedGraph.resources.dll
+D:\Patrick\Biotop\Biotop\bin\Release\tr\ZedGraph.resources.dll
+D:\Patrick\Biotop\Biotop\bin\Release\zh-cn\ZedGraph.resources.dll
+D:\Patrick\Biotop\Biotop\bin\Release\zh-tw\ZedGraph.resources.dll
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Release\Biotop.exe
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Release\Biotop.xml
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Release\Biotop.pdb
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\bin\Release\Biotop.exe
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\bin\Release\Biotop.pdb
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\bin\Release\Biotop.xml
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\bin\Release\de-DE\Biotop.resources.dll
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Release\ResolveAssemblyReference.cache
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Release\Biotop.FormFilter.resources
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Release\Biotop.Form1.resources
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Release\Biotop.FormRes.resources
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Release\Biotop.Resources.resources
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Release\Biotop.Form1.de-DE.resources
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Release\Biotop.vbproj.GenerateResource.Cache
+D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Release\de-DE\Biotop.resources.dll
+D:\Patrick\Souce\Biotop-Auswertung\obj\Release\Biotop.exe
+D:\Patrick\Souce\Biotop-Auswertung\obj\Release\Biotop.xml
+D:\Patrick\Souce\Biotop-Auswertung\obj\Release\Biotop.pdb
+D:\Patrick\Souce\Biotop-Auswertung\bin\Release\Biotop.exe
+D:\Patrick\Souce\Biotop-Auswertung\bin\Release\Biotop.pdb
+D:\Patrick\Souce\Biotop-Auswertung\bin\Release\Biotop.xml
+D:\Patrick\Souce\Biotop-Auswertung\bin\Release\de-DE\Biotop.resources.dll
+D:\Patrick\Souce\Biotop-Auswertung\obj\Release\ResolveAssemblyReference.cache
+D:\Patrick\Souce\Biotop-Auswertung\obj\Release\Biotop.FormFilter.resources
+D:\Patrick\Souce\Biotop-Auswertung\obj\Release\Biotop.Form1.resources
+D:\Patrick\Souce\Biotop-Auswertung\obj\Release\Biotop.FormRes.resources
+D:\Patrick\Souce\Biotop-Auswertung\obj\Release\Biotop.Resources.resources
+D:\Patrick\Souce\Biotop-Auswertung\obj\Release\Biotop.Form1.de-DE.resources
+D:\Patrick\Souce\Biotop-Auswertung\obj\Release\Biotop.vbproj.GenerateResource.Cache
+D:\Patrick\Souce\Biotop-Auswertung\obj\Release\de-DE\Biotop.resources.dll
+D:\Patrick\Programmierung\Biotop V2\obj\Release\Biotop.exe
+D:\Patrick\Programmierung\Biotop V2\obj\Release\Biotop.xml
+D:\Patrick\Programmierung\Biotop V2\obj\Release\Biotop.pdb
+D:\Patrick\Programmierung\Biotop V2\bin\Release\Biotop.exe
+D:\Patrick\Programmierung\Biotop V2\bin\Release\Biotop.pdb
+D:\Patrick\Programmierung\Biotop V2\bin\Release\Biotop.xml
+D:\Patrick\Programmierung\Biotop V2\bin\Release\de-DE\Biotop.resources.dll
+D:\Patrick\Programmierung\Biotop V2\obj\Release\ResolveAssemblyReference.cache
+D:\Patrick\Programmierung\Biotop V2\obj\Release\Biotop.FormFilter.resources
+D:\Patrick\Programmierung\Biotop V2\obj\Release\Biotop.Form1.resources
+D:\Patrick\Programmierung\Biotop V2\obj\Release\Biotop.FormRes.resources
+D:\Patrick\Programmierung\Biotop V2\obj\Release\Biotop.Resources.resources
+D:\Patrick\Programmierung\Biotop V2\obj\Release\Biotop.Form1.de-DE.resources
+D:\Patrick\Programmierung\Biotop V2\obj\Release\Biotop.vbproj.GenerateResource.Cache
+D:\Patrick\Programmierung\Biotop V2\obj\Release\de-DE\Biotop.resources.dll
