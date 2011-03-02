@@ -1,5 +1,8 @@
 ﻿Public Class FormGrid
     Private arr As ArrayList
+    Private SaldoVerlhalbZ As String
+    Private zed As New ZedGraph.ZedGraphControl
+    Private myPane As ZedGraph.GraphPane
 
     Public Property CoupData() As ArrayList
         Get
@@ -12,6 +15,20 @@
             ' of a property is modified.  The value to be assigned
             ' is passed in the argument to Set.
             arr = value
+        End Set
+    End Property
+
+    Public Property SaldoVerlaufhalbZero() As String
+        Get
+            ' The Get property procedure is called when the value
+            ' of a property is retrieved.
+            Return SaldoVerlhalbZ
+        End Get
+        Set(ByVal value As String)
+            ' The Set property procedure is called when the value 
+            ' of a property is modified.  The value to be assigned
+            ' is passed in the argument to Set.
+            SaldoVerlhalbZ = value
         End Set
     End Property
 
@@ -46,6 +63,7 @@
 
     Private Sub FormGrid_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         Call WriteINIColSize()
+        Me.Dispose()
     End Sub
 
     Private Sub FormGrid_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -117,8 +135,10 @@
 
         Call ReadINIColSize()
         Call SetSizeLabelColPos()
+        Label8.BackColor = System.Drawing.Color.FromArgb(255, 162, 15, 15)
 
         If arr.Count > 0 Then
+            Dim R1 As DataGridViewRow
             For I As Integer = 0 To arr.Count - 1
 
                 Dim localInstanceofMyClass = CType(arr(I), clsCoupData)
@@ -129,16 +149,82 @@
                          , localInstanceofMyClass.S, localInstanceofMyClass.R, localInstanceofMyClass.SS, localInstanceofMyClass.SI, localInstanceofMyClass.SR, localInstanceofMyClass.SR7, localInstanceofMyClass.SRS _
                          , localInstanceofMyClass.RS, localInstanceofMyClass.RI, localInstanceofMyClass.RR, localInstanceofMyClass.RR7, localInstanceofMyClass.RRS)
                 End With
+
+                R1 = DataGridView1.Rows(I)
+
+                R1.Cells(ColNum.eS).Style.ForeColor = Color.Black
+                R1.Cells(ColNum.eR).Style.ForeColor = System.Drawing.Color.FromArgb(255, 162, 15, 15)
+
+                R1.Cells(ColNum.eCoup).Style.ForeColor = Color.Black
+
+                R1.Cells(ColNum.eTP).Style.BackColor = Label2.BackColor
+                R1.Cells(ColNum.eTM).Style.BackColor = Label2.BackColor
+
+                R1.Cells(ColNum.eTPS).Style.BackColor = Label3.BackColor
+                R1.Cells(ColNum.eTPI).Style.BackColor = Label3.BackColor
+                R1.Cells(ColNum.eTPR).Style.BackColor = Label3.BackColor
+                R1.Cells(ColNum.eTPR7).Style.BackColor = Label3.BackColor
+                If localInstanceofMyClass.TPRS <> "" Then
+                    R1.Cells(ColNum.eTPRS).Style.BackColor = Label3.BackColor
+                End If
+
+                R1.Cells(ColNum.eTMS).Style.BackColor = Label4.BackColor
+                R1.Cells(ColNum.eTMI).Style.BackColor = Label4.BackColor
+                R1.Cells(ColNum.eTMR).Style.BackColor = Label4.BackColor
+                R1.Cells(ColNum.eTMR7).Style.BackColor = Label4.BackColor
+                If localInstanceofMyClass.TmRS <> "" Then
+                    R1.Cells(ColNum.eTMRS).Style.BackColor = Label4.BackColor
+                End If
+
+                R1.Cells(ColNum.eS).Style.BackColor = Label6.BackColor
+                R1.Cells(ColNum.eR).Style.BackColor = Label6.BackColor
+
+                R1.Cells(ColNum.eSS).Style.BackColor = Label7.BackColor
+                R1.Cells(ColNum.eSI).Style.BackColor = Label7.BackColor
+                R1.Cells(ColNum.eSR).Style.BackColor = Label7.BackColor
+                R1.Cells(ColNum.eSR7).Style.BackColor = Label7.BackColor
+                R1.Cells(ColNum.eSS).Style.ForeColor = Color.White
+                R1.Cells(ColNum.eSI).Style.ForeColor = Color.White
+                R1.Cells(ColNum.eSR).Style.ForeColor = Color.White
+                R1.Cells(ColNum.eSR7).Style.ForeColor = Color.White
+                If localInstanceofMyClass.SRS <> "" Then
+                    R1.Cells(ColNum.eSRS).Style.BackColor = Label7.BackColor
+                    R1.Cells(ColNum.eSRS).Style.ForeColor = Color.White
+                End If
+
+                R1.Cells(ColNum.eRS).Style.BackColor = Label8.BackColor
+                R1.Cells(ColNum.eRI).Style.BackColor = Label8.BackColor
+                R1.Cells(ColNum.eRR).Style.BackColor = Label8.BackColor
+                R1.Cells(ColNum.eRR7).Style.BackColor = Label8.BackColor
+                R1.Cells(ColNum.eRS).Style.ForeColor = Color.White
+                R1.Cells(ColNum.eRI).Style.ForeColor = Color.White
+                R1.Cells(ColNum.eRR).Style.ForeColor = Color.White
+                R1.Cells(ColNum.eRR7).Style.ForeColor = Color.White
+                If localInstanceofMyClass.RRS <> "" Then
+                    R1.Cells(ColNum.eRRS).Style.BackColor = Label8.BackColor
+                    R1.Cells(ColNum.eRRS).Style.ForeColor = Color.White
+                End If
+
             Next I
         End If
 
-        Label8.BackColor = System.Drawing.Color.FromArgb(255, 162, 15, 15)
 
+
+        zed = New ZedGraph.ZedGraphControl
+        zed.Parent = Me.Panel2
+        zed.Location = New Point(0, 0)
+
+        zed.Size = New Size(Panel2.Width - 8, Panel2.Height - 8)
+
+        CreateGraph()
     End Sub
 
     Private Sub FormGrid_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
-        DataGridView1.Width = Me.Width - DataGridView1.Left - 30
-        DataGridView1.Height = Me.Height - DataGridView1.Top - 70
+        DataGridView1.Width = Me.Width - DataGridView1.Left - 20
+        DataGridView1.Height = Me.Height - DataGridView1.Top - 60 - Panel2.Height
+        Panel2.Top = DataGridView1.Top + DataGridView1.Height + 10
+        Panel2.Width = DataGridView1.Width
+        zed.Size = New Size(Panel2.Width - 8, Panel2.Height - 8)
     End Sub
 
     Private Sub SetSizeLabelColPos()
@@ -173,7 +259,7 @@
         Label8.Top = DataGridView1.Top - Label4.Height
         Label8.Width = DataGridView1.Columns.Item(ColNum.eRS).Width + DataGridView1.Columns.Item(ColNum.eRI).Width + DataGridView1.Columns.Item(ColNum.eRR).Width + DataGridView1.Columns.Item(ColNum.eRR7).Width + DataGridView1.Columns.Item(ColNum.eRRS).Width
 
-        'Me.Width = DataGridView1.Width + 30
+        Me.Width = DataGridView1.Width + 30
     End Sub
 
     Private Sub FormGrid_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
@@ -291,8 +377,76 @@
         GetColWidth = width + 20
     End Function
 
-    Private Sub Form1_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
-        DataGridView1.Width = Me.Width - DataGridView1.Left - 30
-        DataGridView1.Height = Me.Height - DataGridView1.Top - 70
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        Me.Width = Me.Width
+    End Sub
+
+    Private Sub CreateGraph()
+
+
+        myPane = zed.GraphPane
+
+        myPane.Title.Text = "Saldo Verlauf"
+        myPane.XAxis.Title.Text = "Satz"
+        myPane.YAxis.Title.Text = "Saldo"
+
+        Dim x As Integer = 0
+        Dim y1 As Integer
+        Dim list1 As New ZedGraph.PointPairList
+        Dim CntS As Integer = 0
+        Dim x3 As Integer = 0
+        Dim y3 As Integer
+        Dim list3 As New ZedGraph.PointPairList
+        Dim CntS3 As Integer = 0
+
+
+        If Not SaldoVerlhalbZ = Nothing Then
+            Dim len As Integer = SaldoVerlhalbZ.Length
+            If SaldoVerlhalbZ <> "" Then
+                Do While CntS < len
+
+                    If SaldoVerlhalbZ.Substring(CntS, 1) = "+" Then
+                        y1 = y1 + 1
+                        x = x + 1
+                        list1.Add(x, y1)
+                    ElseIf SaldoVerlhalbZ.Substring(CntS, 1) = "-" Then
+                        y1 = y1 - 1
+                        x = x + 1
+                        list1.Add(x, y1)
+                    End If
+                    CntS = CntS + 1
+                Loop
+            End If
+
+            Dim len3 As Integer = SaldoVerlhalbZ.Length
+            If SaldoVerlhalbZ <> "" Then
+                Do While CntS3 < len3
+                    If SaldoVerlhalbZ.Substring(CntS3, 1) = "+" Then
+                        y3 = y3 + 1
+                        x3 = x3 + 1
+                        list3.Add(x3, y3)
+                    ElseIf SaldoVerlhalbZ.Substring(CntS3, 1) = "-" Then
+                        y3 = y3 - 1
+                        x3 = x3 + 1
+                        list3.Add(x3, y3)
+                    ElseIf SaldoVerlhalbZ.Substring(CntS3, 1) = "Z" Then
+                        y3 = y3 - 0.5
+                        x3 = x3 + 1
+                        list3.Add(x3, y3)
+                    End If
+                    CntS3 = CntS3 + 1
+                Loop
+            End If
+
+            Dim myCurve1 As ZedGraph.LineItem
+            Dim myCurve2 As ZedGraph.LineItem
+            myCurve1 = myPane.AddCurve("Saldo mit Zero", list3, Color.Orange, ZedGraph.SymbolType.None)
+            myCurve2 = myPane.AddCurve("Saldo ohne Zero", list1, Color.Green, ZedGraph.SymbolType.None)
+            zed.AxisChange()
+        End If
+    End Sub
+
+    Private Sub Button1_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        Me.Width = Me.Width
     End Sub
 End Class

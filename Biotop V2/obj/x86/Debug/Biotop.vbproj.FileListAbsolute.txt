@@ -11,3 +11,20 @@ D:\Patrick\Biotop\Biotop\obj\x86\Debug\de-DE\Biotop.resources.dll
 D:\Patrick\Biotop\Biotop\obj\x86\Debug\Biotop.exe
 D:\Patrick\Biotop\Biotop\obj\x86\Debug\Biotop.xml
 D:\Patrick\Biotop\Biotop\obj\x86\Debug\Biotop.pdb
+D:\Patrick\JustMyProgs\Biotop V2\obj\x86\Debug\Biotop.exe
+D:\Patrick\JustMyProgs\Biotop V2\obj\x86\Debug\Biotop.xml
+D:\Patrick\JustMyProgs\Biotop V2\obj\x86\Debug\Biotop.pdb
+D:\Patrick\JustMyProgs\Biotop V2\bin\x86\Debug\Biotop.exe
+D:\Patrick\JustMyProgs\Biotop V2\bin\x86\Debug\Biotop.pdb
+D:\Patrick\JustMyProgs\Biotop V2\bin\x86\Debug\Biotop.xml
+D:\Patrick\JustMyProgs\Biotop V2\bin\x86\Debug\de-DE\Biotop.resources.dll
+D:\Patrick\JustMyProgs\Biotop V2\bin\x86\Debug\ZedGraph.dll
+D:\Patrick\JustMyProgs\Biotop V2\bin\x86\Debug\ZedGraph.Web.dll
+D:\Patrick\JustMyProgs\Biotop V2\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Patrick\JustMyProgs\Biotop V2\obj\x86\Debug\Biotop.FormFilter.resources
+D:\Patrick\JustMyProgs\Biotop V2\obj\x86\Debug\Biotop.Form1.resources
+D:\Patrick\JustMyProgs\Biotop V2\obj\x86\Debug\Biotop.FormGrid.resources
+D:\Patrick\JustMyProgs\Biotop V2\obj\x86\Debug\Biotop.Resources.resources
+D:\Patrick\JustMyProgs\Biotop V2\obj\x86\Debug\Biotop.Form1.de-DE.resources
+D:\Patrick\JustMyProgs\Biotop V2\obj\x86\Debug\Biotop.vbproj.GenerateResource.Cache
+D:\Patrick\JustMyProgs\Biotop V2\obj\x86\Debug\de-DE\Biotop.resources.dll

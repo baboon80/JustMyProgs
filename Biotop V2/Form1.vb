@@ -29,10 +29,12 @@ Public Class Form1
     Private ResTxt As String
     Private InvertRegel As Boolean = False
     Private gesSaldoVerlaufhalbZero As String = ""
-    Public myarraylist As New ArrayList
-
-    'Private cCoupData As New clsCoupData("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")
+    Public arrayPartie As New ArrayList
+    Public arrayGlobal As New ArrayList
     Private cCoupData As clsCoupData
+
+    Private zed As ZedGraph.ZedGraphControl
+    Private myPane As ZedGraph.GraphPane
 
     Private Enum ColNum As Integer
         eLdf = 0
@@ -63,7 +65,6 @@ Public Class Form1
         eRRS = 25
     End Enum
 
-
     Private Sub Form1_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
         If e.KeyCode = Windows.Forms.Keys.F Then
             If e.Control = True Then
@@ -81,22 +82,10 @@ Public Class Form1
 
     Private Sub Form1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
-        
-
-
-
-        ToolStripStatusLabel1.Text = "Bitte wählen Sie zum auswerten eine Permanenz Datei aus, oder geben Sie manuell Zahlen ein!"
-
-
-
+        ToolStripStatusLabel1.Text = "Bitte Permanenz Datei für die System-Auswertung eingeben!"
         ToolStripProgressBar1.Visible = False
-
-
         loaded = True
     End Sub
-
-    
-
 
     Private Sub StartAuswertung()
 
@@ -111,6 +100,7 @@ Public Class Form1
         Dim GlobalGesMaxloss As Integer = 0
         Dim filterfound As Boolean = True
         Dim saldoverlauf As String = ""
+        Dim PartieParam As Integer = 0
 
         If File.Exists(PermFile) = False Then
             Exit Sub
@@ -138,9 +128,16 @@ Public Class Form1
         GesSaldo = 0
         lastsaldo = 0
         gesSaldoVerlaufhalbZero = ""
+        arrayPartie.Clear()
+        arrayGlobal.Clear()
 
-        myarraylist.Clear()
+        If RadioButton4.Checked = True Then
+            PartieParam = 1
+        ElseIf RadioButton5.Checked = True Then
+            PartieParam = 2
+        End If
 
+        ListBox1.Items.RemoveAt(0)
 
         Using r As StreamReader = New StreamReader(TextBox1.Text)
             line = r.ReadLine
@@ -151,71 +148,56 @@ Public Class Form1
                         lNewCoup = NewCoup
                         Call InsertNewCoup(NewCoup)
 
-
                         If saldo > lastsaldo Then
-                            gesSaldoVerlaufhalbZero = gesSaldoVerlaufhalbZero & "+"
-                            saldoverlauf = saldoverlauf & "+"
+                            gesSaldoVerlaufhalbZero = gesSaldoVerlaufhalbZero & "+ "
+                            saldoverlauf = saldoverlauf & "+ "
                         ElseIf saldo < lastsaldo Then
                             If lNewCoup > 0 Then
-                                gesSaldoVerlaufhalbZero = gesSaldoVerlaufhalbZero & "-"
-                                saldoverlauf = saldoverlauf & "-"
+                                gesSaldoVerlaufhalbZero = gesSaldoVerlaufhalbZero & "- "
+                                saldoverlauf = saldoverlauf & "- "
                             Else
                                 saldo = saldo + 1 'zero Steuer wieder drauf, nur nötig damit erkannt wird das es Verlust gab
-                                saldoverlauf = saldoverlauf & "Z"
-                                gesSaldoVerlaufhalbZero = gesSaldoVerlaufhalbZero & "Z"
+                                saldoverlauf = saldoverlauf & "Z "
+                                gesSaldoVerlaufhalbZero = gesSaldoVerlaufhalbZero & "Z "
                             End If
                         End If
 
-                        If (saldo = 2 Or saldo = 2.5) And TmpMaxSaldo >= 3 Then
-                            nextDay = True
-                        ElseIf (saldo = 3 Or saldo = 3.5) And TmpMaxSaldo >= 5 Then
-                            nextDay = True
-                        ElseIf (saldo = 5 Or saldo = 5.5) And TmpMaxSaldo >= 8 Then
-                            nextDay = True
-                        ElseIf (saldo = 8 Or saldo = 8.5) And TmpMaxSaldo >= 11 Then
-                            nextDay = True
-                        ElseIf (saldo = 11 Or saldo = 11.5) And TmpMaxSaldo >= 14 Then
-                            nextDay = True
-                        ElseIf (saldo = 14 Or saldo = 14.5) And TmpMaxSaldo >= 17 Then
-                            nextDay = True
-                        ElseIf (saldo = 17 Or saldo = 17.5) And TmpMaxSaldo >= 20 Then
-                            nextDay = True
-                        ElseIf saldo = 20 Or saldo = 20.5 Then
-                            nextDay = True
-                        ElseIf saldo = -6 Then
-                            nextDay = True
+                        If CheckBox1.Checked = True Then
+                            If (saldo = 2 Or saldo = 2.5) And TmpMaxSaldo >= 3 Then
+                                nextDay = True
+                            ElseIf (saldo = 3 Or saldo = 3.5) And TmpMaxSaldo >= 5 Then
+                                nextDay = True
+                            ElseIf (saldo = 5 Or saldo = 5.5) And TmpMaxSaldo >= 8 Then
+                                nextDay = True
+                            ElseIf (saldo = 8 Or saldo = 8.5) And TmpMaxSaldo >= 11 Then
+                                nextDay = True
+                            ElseIf (saldo = 11 Or saldo = 11.5) And TmpMaxSaldo >= 14 Then
+                                nextDay = True
+                            ElseIf (saldo = 14 Or saldo = 14.5) And TmpMaxSaldo >= 17 Then
+                                nextDay = True
+                            ElseIf (saldo = 17 Or saldo = 17.5) And TmpMaxSaldo >= 20 Then
+                                nextDay = True
+                            ElseIf saldo = 20 Or saldo = 20.5 Then
+                                nextDay = True
+                            ElseIf saldo = -6 Then
+                                nextDay = True
+                            End If
+
+                            If TmpMaxSaldo < saldo Then TmpMaxSaldo = saldo
                         End If
-
-                        If TmpMaxSaldo < saldo Then TmpMaxSaldo = saldo
-
                         lastsaldo = saldo
                     End If
                 Else
-                    If InStr(line, "Datum") Then
+                    If InStr(line, "Datum") And PartieParam = 1 Then
                         If datum = "" Then
                             datum = Trim(line.Substring(6))
-
-                            If TextBox2.Text <> "" Then
-                                If datum = TextBox2.Text Then
-                                    filterfound = True
-                                Else
-                                    filterfound = False
-                                    datum = ""
-                                End If
-                            End If
-                        Else
-                            If TextBox2.Text <> "" Then
-                                If datum = TextBox2.Text And nextDay = True Then
-                                    Exit Do
-                                End If
-                            End If
                         End If
 
                         If nextDay = True Then
                             GesSaldo = GesSaldo + saldo
 
-                            ResTxt = ResTxt & datum & ": Saldo = " & saldo & " | Zero Verlust = " & (zeroCnt / 2) & " | Anz. Sätze = " & SatzCnt & " | Max. Verlustserie = " & GesMaxloss & vbNewLine
-                            ResTxt = ResTxt & "Saldoverlauf: " & vbNewLine & saldoverlauf & vbNewLine & vbNewLine
+                            Me.ListBox1.Items.Add(datum & ": Saldo = " & saldo & vbTab & "Zero Verlust = " & (zeroCnt / 2) & vbTab & "Anz. Sätze = " & SatzCnt & vbTab & "Max. Verlustserie = " & GesMaxloss & vbTab & _
+                                                  "Saldoverlauf: " & saldoverlauf)
 
                             If GlobalGesMaxloss < GesMaxloss Then
                                 GlobalGesMaxloss = GesMaxloss
@@ -244,8 +226,9 @@ Public Class Form1
                             nextDay = False
                             TmpMaxSaldo = 0
                             GesMaxloss = 0
-                            
-                            myarraylist.Clear()
+
+                            arrayGlobal.Add(New ArrayList(arrayPartie))
+                            arrayPartie.Clear()
 
                             RowCount = 0
 
@@ -257,32 +240,41 @@ Public Class Form1
                 line = r.ReadLine
             Loop
 
-            If SatzCnt > 0 Then
-                GesSaldo = GesSaldo + saldo
-                If datum = "" Then
+            arrayGlobal.Add(New ArrayList(arrayPartie))
+
+
+            If datum = "" Then
+                If PartieParam = 2 Then
+                    datum = "Endlospartie"
+                Else
                     datum = Now.Date
                 End If
-                ResTxt = ResTxt & datum & ": Saldo = " & saldo & " | Zero Verlust = " & (zeroCnt / 2) & " | Anz. Sätze = " & SatzCnt & " | Max. Verlustserie = " & GesMaxloss & vbNewLine
-                ResTxt = ResTxt & "Saldoverlauf: " & vbNewLine & saldoverlauf & vbNewLine & vbNewLine
             End If
+
+            If SatzCnt > 0 Then
+                GesSaldo = GesSaldo + saldo
+                Me.ListBox1.Items.Add(datum & ": Saldo = " & saldo & vbTab & "Zero Verlust = " & (zeroCnt / 2) & vbTab & "Anz. Sätze = " & SatzCnt & vbTab & "Max. Verlustserie = " & GesMaxloss & vbTab & _
+                                                  "Saldoverlauf: " & saldoverlauf)
+            Else
+                Me.ListBox1.Items.Add("Es konnten keinen Sätze ermittelt werden")
+            End If
+
             GesZero = GesZero + (zeroCnt / 2)
             GesSatzCnt = GesSatzCnt + SatzCnt
             If GlobalGesMaxloss < GesMaxloss Then
                 GlobalGesMaxloss = GesMaxloss
             End If
 
-            If filterfound = False Then
-                ResTxt = ResTxt & "Datum wurde in Permanenz nicht gefunden"
-            Else
-                ResTxt = ResTxt & vbNewLine & "Saldo Ohne Zero: " & GesSaldo & vbNewLine
-                ResTxt = ResTxt & "Saldo mit Zero: " & GesSaldo - GesZero & vbNewLine
-                ResTxt = ResTxt & "Zero Verlust: " & GesZero & vbNewLine
-                ResTxt = ResTxt & "Gesamt Anzahl Sätze: " & GesSatzCnt & vbNewLine
-                ResTxt = ResTxt & "Größte Verlust Serie (Ohne Zero): " & GlobalGesMaxloss & vbNewLine
-            End If
+            ResTxt = " Gesamtergebnis:" & vbNewLine
+            ResTxt = ResTxt & vbNewLine & " Saldo (mit Zero): " & GesSaldo - GesZero & vbNewLine
+            ResTxt = ResTxt & " Saldo (ohne Zero): " & GesSaldo & vbNewLine
+            ResTxt = ResTxt & " Zero Verlust: " & GesZero & vbNewLine
+            ResTxt = ResTxt & " Gesamt Anzahl Sätze: " & GesSatzCnt & vbNewLine
+            ResTxt = ResTxt & " Größte Verlust Serie: " & GlobalGesMaxloss & vbNewLine
+            TextRes.Text = ResTxt
         End Using
 
-        
+
         ToolStripProgressBar1.Visible = False
         Me.Cursor = Cursors.Default
 
@@ -290,7 +282,6 @@ Public Class Form1
 
     Private Sub InsertNewCoup(ByVal NewCoup As String, Optional ByVal dummySet As Boolean = False)
 
-        Dim R1 As DataGridViewRow
         Dim lNewCoup As Integer
         Dim Col As Integer
 
@@ -299,11 +290,8 @@ Public Class Form1
         Col = CheckCollong(lNewCoup) 'prüft die Farbe
 
         cCoupData = New clsCoupData()
-
         cCoupData.Ldf = RowCount + 1
         cCoupData.Coup = NewCoup
-
-
 
         If lNewCoup = 0 Then
             'nichts tun
@@ -314,121 +302,46 @@ Public Class Form1
                 cCoupData.R = "R"
             End If
 
-            Call SetTransformator(R1)
-
-            'Call fillSelektorPlus()
-            Call fillSelektorPlusX()
-
-            'Call fillSelektorMinus()
-            Call fillSelektorMinusX()
-
-            'Call fillSelektorPlusRap()
-            Call fillSelektorPlusRapX()
-
-            'Call fillSelektorMinusRap()
-            Call fillSelektorMinusRapX()
-
-            'Call fillSelektorSchwarz()
-
-            Call fillSelektorSchwarzX()
-            'Call fillSelektorRot()
-            Call fillSelektorRotX()
-
-            'Call fillSelektorSchwarzRap()
-            Call fillSelektorSchwarzRapX()
-            'Call fillSelektorRotRap()
-            Call fillSelektorRotRapX()
+            Call SetTransformator()
+            Call fillSelektorPlus()
+            Call fillSelektorMinus()
+            Call fillSelektorPlusRap()
+            Call fillSelektorMinusRap()
+            Call fillSelektorSchwarz()
+            Call fillSelektorRot()
+            Call fillSelektorSchwarzRap()
+            Call fillSelektorRotRap()
 
             If dummySet = True Then Exit Sub
-
-            'R1.Cells(ColNum.eTPRS).Value = FillSatz(ColNum.eTPR7)
-            cCoupData.TPRS = FillSatzX(ColNum.eTPR7)
-            'R1.Cells(ColNum.eTMRS).Value = FillSatz(ColNum.eTMR7)
-            cCoupData.TmRS = FillSatzX(ColNum.eTMR7)
-            'R1.Cells(ColNum.eSRS).Value = FillSatz(ColNum.eSR7)
-            cCoupData.SRS = FillSatzX(ColNum.eSR7)
-            'R1.Cells(ColNum.eRRS).Value = FillSatz(ColNum.eRR7)
-            cCoupData.RRS = FillSatzX(ColNum.eRR7)
+            cCoupData.TPRS = FillSatz(ColNum.eTPR7)
+            cCoupData.TmRS = FillSatz(ColNum.eTMR7)
+            cCoupData.SRS = FillSatz(ColNum.eSR7)
+            cCoupData.RRS = FillSatz(ColNum.eRR7)
         End If
 
         If dummySet = True Then Exit Sub
 
-        'Call CanISetPlus()
-        Call CanISetPlusX()
-        'Call CanISetMinus()
-        Call CanISetMinusX()
-        'call CanISetSchwarz()
-        Call CanISetSchwarzX()
-        'Call CanISetRot()
-        Call CanISetRotX()
-
-        'Call CalkSaldo()
-        Call CalkSaldoX()
+        Call CanISetPlus()
+        Call CanISetMinus()
+        Call CanISetSchwarz()
+        Call CanISetRot()
+        Call CalkSaldo()
 
         RowCount = RowCount + 1
 
-        myarraylist.Add(cCoupData)
+        arrayPartie.Add(cCoupData)
     End Sub
 
-    Private Sub SetTransformator(ByRef R1 As DataGridViewRow)
+    Private Sub SetTransformator()
 
-        'Dim Erg As Integer = SetTransformatorRegel1()
-        'If Erg = 1 Then
-        '    R1.Cells(ColNum.eTP).Value = "+ (R1)"
-        'ElseIf Erg = 2 Then
-        '    R1.Cells(ColNum.eTM).Value = "- (R1)"
-        'End If
-        'If Erg = 0 Then
-        '    Erg = SetTransformatorRegel2()
-        '    If Erg = 1 Then
-        '        R1.Cells(ColNum.eTP).Value = "+ (R2)"
-        '    ElseIf Erg = 2 Then
-        '        R1.Cells(ColNum.eTM).Value = "- (R2)"
-        '    End If
-        'End If
-        'If Erg = 0 Then
-        '    Erg = SetTransformatorRegel3()
-        '    If Erg = 1 Then
-        '        R1.Cells(ColNum.eTP).Value = "+ (R3)"
-        '    ElseIf Erg = 2 Then
-        '        R1.Cells(ColNum.eTM).Value = "- (R3)"
-        '    End If
-        'End If
-        'If Erg = 0 Then
-        '    Erg = SetTransformatorRegel4()
-        '    If Erg = 1 Then
-        '        R1.Cells(ColNum.eTP).Value = "+ (R4)"
-        '    ElseIf Erg = 2 Then
-        '        R1.Cells(ColNum.eTM).Value = "- (R4)"
-        '    End If
-        'End If
-        'If Erg = 0 And RowCount > 3 Then
-        '    Erg = SetTransformatorRegel5()
-        '    If Erg = 1 Then
-        '        R1.Cells(ColNum.eTP).Value = "+ (R5)"
-        '    ElseIf Erg = 2 Then
-        '        R1.Cells(ColNum.eTM).Value = "- (R5)"
-        '    End If
-        'End If
-        'If Erg = 0 Then
-        '    Erg = SetTransformatorRegel5_1()
-        '    If Erg = 1 Then
-        '        R1.Cells(ColNum.eTP).Value = "+ (R5)"
-        '    ElseIf Erg = 2 Then
-        '        R1.Cells(ColNum.eTM).Value = "- (R5)"
-        '    End If
-        'End If
-
-        '***************************************************
-
-        Dim Erg1 As Integer = SetTransformatorRegel1_2()
+        Dim Erg1 As Integer = SetTransformatorRegel1()
         If Erg1 = 1 Then
             cCoupData.TP = "+ (R1)"
         ElseIf Erg1 = 2 Then
             cCoupData.TM = "- (R1)"
         End If
         If Erg1 = 0 Then
-            Erg1 = SetTransformatorRegel2_2()
+            Erg1 = SetTransformatorRegel2()
             If Erg1 = 1 Then
                 cCoupData.TP = "+ (R2)"
             ElseIf Erg1 = 2 Then
@@ -436,7 +349,7 @@ Public Class Form1
             End If
         End If
         If Erg1 = 0 Then
-            Erg1 = SetTransformatorRegel3_2()
+            Erg1 = SetTransformatorRegel3()
             If Erg1 = 1 Then
                 cCoupData.TP = "+ (R3)"
             ElseIf Erg1 = 2 Then
@@ -444,7 +357,7 @@ Public Class Form1
             End If
         End If
         If Erg1 = 0 Then
-            Erg1 = SetTransformatorRegel4_2()
+            Erg1 = SetTransformatorRegel4()
             If Erg1 = 1 Then
                 cCoupData.TP = "+ (R4)"
             ElseIf Erg1 = 2 Then
@@ -452,7 +365,7 @@ Public Class Form1
             End If
         End If
         If Erg1 = 0 And RowCount > 3 Then
-            Erg1 = SetTransformatorRegel5_2()
+            Erg1 = SetTransformatorRegel5()
             If Erg1 = 1 Then
                 cCoupData.TP = "+ (R5)"
             ElseIf Erg1 = 2 Then
@@ -460,7 +373,7 @@ Public Class Form1
             End If
         End If
         If Erg1 = 0 Then
-            Erg1 = SetTransformatorRegel5_3()
+            Erg1 = SetTransformatorRegel5_1()
             If Erg1 = 1 Then
                 cCoupData.TP = "+ (R5)"
             ElseIf Erg1 = 2 Then
@@ -470,8 +383,8 @@ Public Class Form1
 
     End Sub
 
-    
-    Private Sub CalkSaldoX()
+
+    Private Sub CalkSaldo()
         Dim SetTo As String = ""
         Dim Res As String = ""
         Dim tmpsaldo As Integer = 0
@@ -485,11 +398,11 @@ Public Class Form1
         Dim cnt As Integer = 0
         Dim play As Boolean = True
         Dim played As Boolean = False
-        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim arraylistCnt As Integer = arrayPartie.Count
 
 
-        If myarraylist.Count = 0 Then Exit Sub
-        Dim localInstanceofMyClass = CType(myarraylist(arraylistCnt - 1), clsCoupData)
+        If arrayPartie.Count = 0 Then Exit Sub
+        Dim localInstanceofMyClass = CType(arrayPartie(arraylistCnt - 1), clsCoupData)
         tmpsaldo = saldo
 
         If localInstanceofMyClass.Ldf = 128 Then arraylistCnt = arraylistCnt
@@ -501,28 +414,28 @@ Public Class Form1
 
         If stmp1 <> "" Then
             If stmp1.Substring(0, 3) = "Sat" Then
-                stmp1 = stmp1.Substring(InStr(stmp1, ")") - 2, 1)
+                stmp1 = stmp1.Substring(InStr(stmp1, "/") - 2, 1)
                 cnt = cnt + 1
             End If
         End If
 
         If stmp2 <> "" Then
             If stmp2.Substring(0, 3) = "Sat" Then
-                stmp2 = stmp2.Substring(InStr(stmp2, ")") - 2, 1)
+                stmp2 = stmp2.Substring(InStr(stmp2, "/") - 2, 1)
                 cnt = cnt + 1
             End If
         End If
 
         If stmp3 <> "" Then
             If stmp3.Substring(0, 3) = "Sat" Then
-                stmp3 = stmp3.Substring(InStr(stmp3, ")") - 2, 1)
+                stmp3 = stmp3.Substring(InStr(stmp3, "/") - 2, 1)
                 cnt = cnt + 1
             End If
         End If
 
         If stmp4 <> "" Then
             If stmp4.Substring(0, 3) = "Sat" Then
-                stmp4 = stmp4.Substring(InStr(stmp4, ")") - 2, 1)
+                stmp4 = stmp4.Substring(InStr(stmp4, "/") - 2, 1)
                 cnt = cnt + 1
             End If
         End If
@@ -555,7 +468,7 @@ Public Class Form1
                             zeroCnt = zeroCnt + 1
                         End If
 
-                        If SetTo.Substring(InStr(SetTo, "("), 1) = cCoupData.TPR Then
+                        If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = cCoupData.TPR Then
                             saldo = saldo + 1
                             localInstanceofMyClass.TPRS = SetTo & " +1/" & saldo
                             Maxloss = 0
@@ -588,7 +501,7 @@ Public Class Form1
                             zeroCnt = zeroCnt + 1
                         End If
 
-                        If SetTo.Substring(InStr(SetTo, "("), 1) = cCoupData.TmR Then
+                        If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = cCoupData.TmR Then
                             saldo = saldo + 1
                             localInstanceofMyClass.TmRS = SetTo & " +1/" & saldo
                             Maxloss = 0
@@ -621,7 +534,7 @@ Public Class Form1
                             zeroCnt = zeroCnt + 1
                         End If
 
-                        If SetTo.Substring(InStr(SetTo, "("), 1) = cCoupData.SR Then
+                        If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = cCoupData.SR Then
                             saldo = saldo + 1
                             localInstanceofMyClass.SRS = SetTo & " +1/" & saldo
                             Maxloss = 0
@@ -654,7 +567,7 @@ Public Class Form1
                             zeroCnt = zeroCnt + 1
                         End If
 
-                        If SetTo.Substring(InStr(SetTo, "("), 1) = cCoupData.RR Then
+                        If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = cCoupData.RR Then
                             saldo = saldo + 1
                             localInstanceofMyClass.RRS = SetTo & " +1/" & saldo
                             Maxloss = 0
@@ -690,7 +603,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub CanISetPlusX()
+    Private Sub CanISetPlus()
         Dim Rap As String
         Dim Ser As String
         Dim Int As String
@@ -699,7 +612,7 @@ Public Class Form1
         Dim sAkt As String = ""
         Dim sLast As String = ""
         Dim coup As String = ""
-        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim arraylistCnt As Integer = arrayPartie.Count
         Dim localInstanceofMyClass As clsCoupData
 
         If SatzPlus <> "" Then
@@ -719,8 +632,8 @@ Public Class Form1
                 SerIntCnt = SerIntCnt + 1
             End If
 
-            For I As Integer = 0 To myarraylist.Count - 1
-                localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+            For I As Integer = 0 To arrayPartie.Count - 1
+                localInstanceofMyClass = CType(arrayPartie(arraylistCnt - I - 1), clsCoupData)
                 Ser = localInstanceofMyClass.TPS
                 Int = localInstanceofMyClass.TPI
 
@@ -740,22 +653,22 @@ Public Class Form1
             If SerInt = "SII" Or SerInt = "ISS" Then 'now set?
                 sAkt = cCoupData.TP
                 For I As Integer = 1 To arraylistCnt - 1
-                    localInstanceofMyClass = CType(myarraylist(arraylistCnt - I), clsCoupData)
+                    localInstanceofMyClass = CType(arrayPartie(arraylistCnt - I), clsCoupData)
                     coup = localInstanceofMyClass.Coup
                     sLast = localInstanceofMyClass.TP
 
                     If coup <> "00" And coup <> "0" Then
                         If sAkt <> "" And sLast = "" Then 'And coup <> "0" Then                            
                             Dim tmpCopyStruct As clsCoupData = cCoupData
-                            myarraylist.Add(cCoupData) 'momentaner Datensatz in array
+                            arrayPartie.Add(cCoupData) 'momentaner Datensatz in array
                             InsertNewCoup("1", True)
                             If cCoupData.TPR = SatzPlus Then
-                                tmpCopyStruct.TPRS = "Satz auf (" & SatzPlus & "/R)"
+                                tmpCopyStruct.TPRS = "Satz auf " & SatzPlus & "/R"
                             Else
-                                tmpCopyStruct.TPRS = "Satz auf (" & SatzPlus & "/S)"
+                                tmpCopyStruct.TPRS = "Satz auf " & SatzPlus & "/S"
                             End If
 
-                            DeletelastDummyCoupX()
+                            DeletelastDummyCoup()
                             ''zurückschreiben
                             cCoupData = tmpCopyStruct
                             SatzPlus = ""
@@ -769,13 +682,12 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub DeletelastDummyCoupX()
-        Dim ArraylistCnt As Integer = myarraylist.Count
-        myarraylist.Remove(myarraylist(ArraylistCnt - 1))
+    Private Sub DeletelastDummyCoup()
+        Dim ArraylistCnt As Integer = arrayPartie.Count
+        arrayPartie.Remove(arrayPartie(ArraylistCnt - 1))
     End Sub
 
-
-    Private Sub CanISetMinusX()
+    Private Sub CanISetMinus()
         Dim Rap As String
         Dim Ser As String
         Dim Int As String
@@ -784,7 +696,7 @@ Public Class Form1
         Dim sAkt As String = ""
         Dim sLast As String = ""
         Dim coup As String = ""
-        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim arraylistCnt As Integer = arrayPartie.Count
         Dim localInstanceofMyClass As clsCoupData
 
         If SatzMinus <> "" Then
@@ -804,8 +716,8 @@ Public Class Form1
                 SerIntCnt = SerIntCnt + 1
             End If
 
-            For I As Integer = 0 To myarraylist.Count - 1
-                localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+            For I As Integer = 0 To arrayPartie.Count - 1
+                localInstanceofMyClass = CType(arrayPartie(arraylistCnt - I - 1), clsCoupData)
                 Ser = localInstanceofMyClass.TmS
                 Int = localInstanceofMyClass.TmI
 
@@ -825,22 +737,22 @@ Public Class Form1
             If SerInt = "SII" Or SerInt = "ISS" Then 'now set?
                 sAkt = cCoupData.TM
                 For I As Integer = 1 To arraylistCnt - 1
-                    localInstanceofMyClass = CType(myarraylist(arraylistCnt - I), clsCoupData)
+                    localInstanceofMyClass = CType(arrayPartie(arraylistCnt - I), clsCoupData)
                     coup = localInstanceofMyClass.Coup
                     sLast = localInstanceofMyClass.TM
 
                     If coup <> "00" And coup <> "0" Then
                         If sAkt <> "" And sLast = "" Then 'And coup <> "0" Then                            
                             Dim tmpCopyStruct As clsCoupData = cCoupData
-                            myarraylist.Add(cCoupData) 'momentaner Datensatz in array
+                            arrayPartie.Add(cCoupData) 'momentaner Datensatz in array
                             InsertNewCoup("1", True)
                             If cCoupData.TmR = SatzMinus Then
-                                tmpCopyStruct.TmRS = "Satz auf (" & SatzMinus & "/R)"
+                                tmpCopyStruct.TmRS = "Satz auf " & SatzMinus & "/R"
                             Else
-                                tmpCopyStruct.TmRS = "Satz auf (" & SatzMinus & "/S)"
+                                tmpCopyStruct.TmRS = "Satz auf " & SatzMinus & "/S"
                             End If
 
-                            DeletelastDummyCoupX()
+                            DeletelastDummyCoup()
                             ''zurückschreiben
                             cCoupData = tmpCopyStruct
                             SatzMinus = ""
@@ -854,7 +766,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub CanISetSchwarzX()
+    Private Sub CanISetSchwarz()
         Dim Rap As String
         Dim Ser As String
         Dim Int As String
@@ -863,7 +775,7 @@ Public Class Form1
         Dim sAkt As String = ""
         Dim sLast As String = ""
         Dim coup As String = ""
-        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim arraylistCnt As Integer = arrayPartie.Count
         Dim localInstanceofMyClass As clsCoupData
 
         If SatzSchwarz <> "" Then
@@ -883,8 +795,8 @@ Public Class Form1
                 SerIntCnt = SerIntCnt + 1
             End If
 
-            For I As Integer = 0 To myarraylist.Count - 1
-                localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+            For I As Integer = 0 To arrayPartie.Count - 1
+                localInstanceofMyClass = CType(arrayPartie(arraylistCnt - I - 1), clsCoupData)
                 Ser = localInstanceofMyClass.SS
                 Int = localInstanceofMyClass.SI
 
@@ -904,22 +816,22 @@ Public Class Form1
             If SerInt = "SII" Or SerInt = "ISS" Then 'now set?
                 sAkt = cCoupData.S
                 For I As Integer = 1 To arraylistCnt - 1
-                    localInstanceofMyClass = CType(myarraylist(arraylistCnt - I), clsCoupData)
+                    localInstanceofMyClass = CType(arrayPartie(arraylistCnt - I), clsCoupData)
                     coup = localInstanceofMyClass.Coup
                     sLast = localInstanceofMyClass.S
 
                     If coup <> "00" And coup <> "0" Then
                         If sAkt <> "" And sLast = "" Then 'And coup <> "0" Then                            
                             Dim tmpCopyStruct As clsCoupData = cCoupData
-                            myarraylist.Add(cCoupData) 'momentaner Datensatz in array
+                            arrayPartie.Add(cCoupData) 'momentaner Datensatz in array
                             InsertNewCoup("1", True)
                             If cCoupData.SR = SatzSchwarz Then
-                                tmpCopyStruct.SRS = "Satz auf (" & SatzSchwarz & "/R)"
+                                tmpCopyStruct.SRS = "Satz auf " & SatzSchwarz & "/R"
                             Else
-                                tmpCopyStruct.SRS = "Satz auf (" & SatzSchwarz & "/S)"
+                                tmpCopyStruct.SRS = "Satz auf " & SatzSchwarz & "/S"
                             End If
 
-                            DeletelastDummyCoupX()
+                            DeletelastDummyCoup()
                             ''zurückschreiben
                             cCoupData = tmpCopyStruct
                             SatzSchwarz = ""
@@ -933,7 +845,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub CanISetRotX()
+    Private Sub CanISetRot()
         Dim Rap As String
         Dim Ser As String
         Dim Int As String
@@ -942,7 +854,7 @@ Public Class Form1
         Dim sAkt As String = ""
         Dim sLast As String = ""
         Dim coup As String = ""
-        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim arraylistCnt As Integer = arrayPartie.Count
         Dim localInstanceofMyClass As clsCoupData
 
         If SatzRot <> "" Then
@@ -962,8 +874,8 @@ Public Class Form1
                 SerIntCnt = SerIntCnt + 1
             End If
 
-            For I As Integer = 0 To myarraylist.Count - 1
-                localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+            For I As Integer = 0 To arrayPartie.Count - 1
+                localInstanceofMyClass = CType(arrayPartie(arraylistCnt - I - 1), clsCoupData)
                 Ser = localInstanceofMyClass.RS
                 Int = localInstanceofMyClass.RI
 
@@ -983,22 +895,22 @@ Public Class Form1
             If SerInt = "SII" Or SerInt = "ISS" Then 'now set?
                 sAkt = cCoupData.R
                 For I As Integer = 1 To arraylistCnt - 1
-                    localInstanceofMyClass = CType(myarraylist(arraylistCnt - I), clsCoupData)
+                    localInstanceofMyClass = CType(arrayPartie(arraylistCnt - I), clsCoupData)
                     coup = localInstanceofMyClass.Coup
                     sLast = localInstanceofMyClass.R
 
                     If coup <> "00" And coup <> "0" Then
                         If sAkt <> "" And sLast = "" Then 'And coup <> "0" Then                            
                             Dim tmpCopyStruct As clsCoupData = cCoupData
-                            myarraylist.Add(cCoupData) 'momentaner Datensatz in array
+                            arrayPartie.Add(cCoupData) 'momentaner Datensatz in array
                             InsertNewCoup("1", True)
                             If cCoupData.RR = SatzRot Then
-                                tmpCopyStruct.RRS = "Satz auf (" & SatzRot & "/R)"
+                                tmpCopyStruct.RRS = "Satz auf " & SatzRot & "/R"
                             Else
-                                tmpCopyStruct.RRS = "Satz auf (" & SatzRot & "/S)"
+                                tmpCopyStruct.RRS = "Satz auf " & SatzRot & "/S"
                             End If
 
-                            DeletelastDummyCoupX()
+                            DeletelastDummyCoup()
                             ''zurückschreiben
                             cCoupData = tmpCopyStruct
                             SatzRot = ""
@@ -1012,7 +924,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub fillSelektorPlusX(Optional ByVal fiktiv As Boolean = False)
+    Private Sub fillSelektorPlus(Optional ByVal fiktiv As Boolean = False)
 
         Dim Plus1 As String = ""
         Dim Plus2 As String = ""
@@ -1020,7 +932,7 @@ Public Class Form1
         Dim PlusTmp As String = ""
         Dim countPlus As Integer = 1
         Dim coup As Integer
-        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim arraylistCnt As Integer = arrayPartie.Count
         Dim localInstanceofMyClass As clsCoupData
 
         coup = cCoupData.Coup
@@ -1030,8 +942,8 @@ Public Class Form1
 
         If arraylistCnt = 0 Then Exit Sub
 
-        For I As Integer = 0 To myarraylist.Count - 1
-            localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+        For I As Integer = 0 To arrayPartie.Count - 1
+            localInstanceofMyClass = CType(arrayPartie(arraylistCnt - I - 1), clsCoupData)
             coup = localInstanceofMyClass.Coup
             If coup <> 0 Then
                 PlusTmp = localInstanceofMyClass.TP
@@ -1056,7 +968,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub fillSelektorMinusX(Optional ByVal fiktiv As Boolean = False)
+    Private Sub fillSelektorMinus(Optional ByVal fiktiv As Boolean = False)
 
         Dim Minus1 As String = ""
         Dim Minus2 As String = ""
@@ -1064,7 +976,7 @@ Public Class Form1
         Dim MinusTmp As String = ""
         Dim countMinus As Integer = 1
         Dim coup As Integer
-        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim arraylistCnt As Integer = arrayPartie.Count
         Dim localInstanceofMyClass As clsCoupData
 
         coup = cCoupData.Coup
@@ -1074,8 +986,8 @@ Public Class Form1
 
         If arraylistCnt = 0 Then Exit Sub
 
-        For I As Integer = 0 To myarraylist.Count - 1
-            localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+        For I As Integer = 0 To arrayPartie.Count - 1
+            localInstanceofMyClass = CType(arrayPartie(arraylistCnt - I - 1), clsCoupData)
             coup = localInstanceofMyClass.Coup
             If coup <> 0 Then
                 MinusTmp = localInstanceofMyClass.TM
@@ -1100,7 +1012,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub fillSelektorSchwarzX(Optional ByVal fiktiv As Boolean = False)
+    Private Sub fillSelektorSchwarz(Optional ByVal fiktiv As Boolean = False)
 
         Dim Schwarz1 As String = ""
         Dim Schwarz2 As String = ""
@@ -1108,7 +1020,7 @@ Public Class Form1
         Dim SchwarzTmp As String = ""
         Dim countSchwarz As Integer = 1
         Dim coup As Integer
-        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim arraylistCnt As Integer = arrayPartie.Count
         Dim localInstanceofMyClass As clsCoupData
 
         coup = cCoupData.Coup
@@ -1118,8 +1030,8 @@ Public Class Form1
 
         If arraylistCnt = 0 Then Exit Sub
 
-        For I As Integer = 0 To myarraylist.Count - 1
-            localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+        For I As Integer = 0 To arrayPartie.Count - 1
+            localInstanceofMyClass = CType(arrayPartie(arraylistCnt - I - 1), clsCoupData)
             coup = localInstanceofMyClass.Coup
             If coup <> 0 Then
                 SchwarzTmp = localInstanceofMyClass.S
@@ -1144,7 +1056,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub fillSelektorRotX(Optional ByVal fiktiv As Boolean = False)
+    Private Sub fillSelektorRot(Optional ByVal fiktiv As Boolean = False)
 
         Dim Rot1 As String = ""
         Dim Rot2 As String = ""
@@ -1152,7 +1064,7 @@ Public Class Form1
         Dim RotTmp As String = ""
         Dim countRot As Integer = 1
         Dim coup As Integer
-        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim arraylistCnt As Integer = arrayPartie.Count
         Dim localInstanceofMyClass As clsCoupData
 
         coup = cCoupData.Coup
@@ -1162,8 +1074,8 @@ Public Class Form1
 
         If arraylistCnt = 0 Then Exit Sub
 
-        For I As Integer = 0 To myarraylist.Count - 1
-            localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+        For I As Integer = 0 To arrayPartie.Count - 1
+            localInstanceofMyClass = CType(arrayPartie(arraylistCnt - I - 1), clsCoupData)
             coup = localInstanceofMyClass.Coup
             If coup <> 0 Then
                 RotTmp = localInstanceofMyClass.R
@@ -1188,7 +1100,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub fillSelektorPlusRapX()
+    Private Sub fillSelektorPlusRap()
 
         Dim PlusSerie As String = ""
         Dim PlusIntermit As String = ""
@@ -1199,7 +1111,7 @@ Public Class Form1
         Dim PlusSum As String = ""
         Dim coup As Integer
         Dim Rap As String = ""
-        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim arraylistCnt As Integer = arrayPartie.Count
         Dim localInstanceofMyClass As clsCoupData
 
         PlusSerie = cCoupData.TPS
@@ -1213,8 +1125,8 @@ Public Class Form1
             PlusRap4 = "I"
         End If
 
-        For I As Integer = 0 To myarraylist.Count - 1
-            localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+        For I As Integer = 0 To arrayPartie.Count - 1
+            localInstanceofMyClass = CType(arrayPartie(arraylistCnt - I - 1), clsCoupData)
 
             coup = localInstanceofMyClass.Coup
             If coup <> 0 Then
@@ -1266,11 +1178,11 @@ Public Class Form1
         cCoupData.TPR = Rap
 
         If Rap <> "" Then
-            cCoupData.TPR7 = GetRapLast7X(ColNum.eTPR)
+            cCoupData.TPR7 = GetRapLast7(ColNum.eTPR)
         End If
     End Sub
 
-    Private Sub fillSelektorMinusRapX()
+    Private Sub fillSelektorMinusRap()
 
         Dim MinusSerie As String = ""
         Dim MinusIntermit As String = ""
@@ -1281,7 +1193,7 @@ Public Class Form1
         Dim MinusSum As String = ""
         Dim coup As Integer
         Dim Rap As String = ""
-        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim arraylistCnt As Integer = arrayPartie.Count
         Dim localInstanceofMyClass As clsCoupData
 
         MinusSerie = cCoupData.TmS
@@ -1295,8 +1207,8 @@ Public Class Form1
             MinusRap4 = "I"
         End If
 
-        For I As Integer = 0 To myarraylist.Count - 1
-            localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+        For I As Integer = 0 To arrayPartie.Count - 1
+            localInstanceofMyClass = CType(arrayPartie(arraylistCnt - I - 1), clsCoupData)
 
             coup = localInstanceofMyClass.Coup
             If coup <> 0 Then
@@ -1348,11 +1260,11 @@ Public Class Form1
         cCoupData.TmR = Rap
 
         If Rap <> "" Then
-            cCoupData.TmR7 = GetRapLast7X(ColNum.eTMR)
+            cCoupData.TmR7 = GetRapLast7(ColNum.eTMR)
         End If
     End Sub
 
-    Private Sub fillSelektorSchwarzRapX()
+    Private Sub fillSelektorSchwarzRap()
 
         Dim SchwarzSerie As String = ""
         Dim SchwarzIntermit As String = ""
@@ -1363,7 +1275,7 @@ Public Class Form1
         Dim SchwarzSum As String = ""
         Dim coup As Integer
         Dim Rap As String = ""
-        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim arraylistCnt As Integer = arrayPartie.Count
         Dim localInstanceofMyClass As clsCoupData
 
         SchwarzSerie = cCoupData.SS
@@ -1377,8 +1289,8 @@ Public Class Form1
             SchwarzRap4 = "I"
         End If
 
-        For I As Integer = 0 To myarraylist.Count - 1
-            localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+        For I As Integer = 0 To arrayPartie.Count - 1
+            localInstanceofMyClass = CType(arrayPartie(arraylistCnt - I - 1), clsCoupData)
 
             coup = localInstanceofMyClass.Coup
             If coup <> 0 Then
@@ -1430,11 +1342,11 @@ Public Class Form1
         cCoupData.SR = Rap
 
         If Rap <> "" Then
-            cCoupData.SR7 = GetRapLast7X(ColNum.eSR)
+            cCoupData.SR7 = GetRapLast7(ColNum.eSR)
         End If
     End Sub
 
-    Private Sub fillSelektorRotRapX()
+    Private Sub fillSelektorRotRap()
 
         Dim RotSerie As String = ""
         Dim RotIntermit As String = ""
@@ -1445,7 +1357,7 @@ Public Class Form1
         Dim RotSum As String = ""
         Dim coup As Integer
         Dim Rap As String = ""
-        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim arraylistCnt As Integer = arrayPartie.Count
         Dim localInstanceofMyClass As clsCoupData
 
         RotSerie = cCoupData.RS
@@ -1459,8 +1371,8 @@ Public Class Form1
             RotRap4 = "I"
         End If
 
-        For I As Integer = 0 To myarraylist.Count - 1
-            localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+        For I As Integer = 0 To arrayPartie.Count - 1
+            localInstanceofMyClass = CType(arrayPartie(arraylistCnt - I - 1), clsCoupData)
 
             coup = localInstanceofMyClass.Coup
             If coup <> 0 Then
@@ -1512,15 +1424,15 @@ Public Class Form1
         cCoupData.RR = Rap
 
         If Rap <> "" Then
-            cCoupData.RR7 = GetRapLast7X(ColNum.eRR)
+            cCoupData.RR7 = GetRapLast7(ColNum.eRR)
         End If
     End Sub
 
-    Private Function GetRapLast7X(ByVal SelektorCol As Integer) As String
+    Private Function GetRapLast7(ByVal SelektorCol As Integer) As String
         Dim Rap As String = ""
         Dim RapTmp As String = ""
         Dim count As Integer = 0
-        Dim arraylistCnt As Integer = myarraylist.Count
+        Dim arraylistCnt As Integer = arrayPartie.Count
         Dim localInstanceofMyClass As clsCoupData
 
         If SelektorCol = ColNum.eTPR Then
@@ -1538,8 +1450,8 @@ Public Class Form1
             Rap = RapTmp + Rap
         End If
 
-        For I As Integer = 0 To myarraylist.Count - 1
-            localInstanceofMyClass = CType(myarraylist(arraylistCnt - I - 1), clsCoupData)
+        For I As Integer = 0 To arrayPartie.Count - 1
+            localInstanceofMyClass = CType(arrayPartie(arraylistCnt - I - 1), clsCoupData)
             If SelektorCol = ColNum.eTPR Then
                 RapTmp = localInstanceofMyClass.TPR
             ElseIf SelektorCol = ColNum.eTMR Then
@@ -1559,13 +1471,13 @@ Public Class Form1
         Next
 
         If count >= 3 Then
-            GetRapLast7X = Rap
+            GetRapLast7 = Rap
         Else
-            GetRapLast7X = ""
+            GetRapLast7 = ""
         End If
     End Function
 
-    Private Function FillSatzX(ByVal SelektorCol As Integer) As String
+    Private Function FillSatz(ByVal SelektorCol As Integer) As String
         Dim Rap As String = ""
         Dim RapTmp As String = ""
         Dim count As Integer = 0
@@ -1617,80 +1529,206 @@ Public Class Form1
             Loop
 
             ReturnStr = ""
-
-            If RapTmp.Length < 6 Then
-                FillSatzX = ""
-                Exit Function
-            End If
-
-            ''Regel10 XXX(X) | OOO(O)
-            If (s7 = s6 And s7 = s5) Then
-                If (s7 <> s4) Then
-                    ReturnStr = "R10: " & s7 & s6 & s5 & "(" & s7 & ")"
-                    SatzCount = SatzCount + 1
-                    Call SetSatz(s7, SelektorCol)
-                Else
-                    ReturnStr = "R10: Not Aborted"
-                End If
-                FillSatzX = ReturnStr
-                Exit Function
-            End If
-
-            ''Is R10 aborted?
-            If s3 <> "" And s4 <> "" And s5 <> "" Then
-                If s3 = s4 And s4 = s5 Then
-                    FillSatzX = ""
+            If RadioButton1.Checked = True Then
+                If RapTmp.Length < 6 Then
+                    FillSatz = ""
                     Exit Function
                 End If
-            End If
 
-            ''Regel11 OO XOX(O) | XX OXO(X) 
-            If (s7 <> s6 And s7 = s5 And s5 <> s4) Then
-                If s6 = s4 And s4 = s3 Then
-                    ReturnStr = "R11: " & s5 & s6 & s7 & "(" & s6 & ")"
-                    SatzCount = SatzCount + 1
-                    Call SetSatz(s6, SelektorCol)
-                Else
-                    ReturnStr = "R11: Not Aborted"
+                ''Regel10 XXX(X) | OOO(O)
+                If (s7 = s6 And s7 = s5) Then
+                    If (s7 <> s4) Then
+                        ReturnStr = "R10: " & s7 & s6 & s5 & "(" & s7 & ")"
+                        SatzCount = SatzCount + 1
+                        Call SetSatz(s7, SelektorCol)
+                    Else
+                        ReturnStr = "R10: Not Aborted"
+                    End If
+                    FillSatz = ReturnStr
+                    Exit Function
                 End If
 
-                FillSatzX = ReturnStr
-                Exit Function
-            End If
+                ''Is R10 aborted?
+                If s3 <> "" And s4 <> "" And s5 <> "" Then
+                    If s3 = s4 And s4 = s5 Then
+                        FillSatz = ""
+                        Exit Function
+                    End If
+                End If
 
-            ''Regel12 XXO(O) | OOX(X)
-            If (s7 <> s6 And s6 = s5) Then
-                If Not ((s4 = s7) And (s3 = s4)) Then
-                    ReturnStr = "R12: " & s5 & s6 & s7 & "(" & s7 & ")"
+                ''Regel11 OO XOX(O) | XX OXO(X) 
+                If (s7 <> s6 And s7 = s5 And s5 <> s4) Then
+                    If s6 = s4 And s4 = s3 Then
+                        ReturnStr = "R11: " & s5 & s6 & s7 & "(" & s6 & ")"
+                        SatzCount = SatzCount + 1
+                        Call SetSatz(s6, SelektorCol)
+                    Else
+                        ReturnStr = "R11: Not Aborted"
+                    End If
+
+                    FillSatz = ReturnStr
+                    Exit Function
+                End If
+
+                ''Regel12 XXO(O) | OOX(X)
+                If (s7 <> s6 And s6 = s5) Then
+                    If Not ((s4 = s7) And (s3 = s4)) Then
+                        ReturnStr = "R12: " & s5 & s6 & s7 & "(" & s7 & ")"
+                        SatzCount = SatzCount + 1
+                        Call SetSatz(s7, SelektorCol)
+                    Else
+                        ReturnStr = "R12: Not Aborted"
+                    End If
+
+                    FillSatz = ReturnStr
+                    Exit Function
+                End If
+
+                ''If RapTmp.Length = 5 Then
+                'Regel13 OXXOX(X) | XOOXO(O)
+                If (s7 <> s6 And s6 <> s5 And s5 = s4 And s4 <> s3) Then
+                    ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s7 & ")"
                     SatzCount = SatzCount + 1
+                    FillSatz = ReturnStr
                     Call SetSatz(s7, SelektorCol)
-                Else
-                    ReturnStr = "R12: Not Aborted"
+                    Exit Function
+                    'XXOXX(O) | OOXOO(X)
+                ElseIf (s7 = s6 And s6 <> s5 And s5 <> s4 And s4 = s3) Then
+                    ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s5 & ")"
+                    SatzCount = SatzCount + 1
+                    FillSatz = ReturnStr
+                    Call SetSatz(s5, SelektorCol)
+                    Exit Function
+                End If
+            ElseIf RadioButton2.Checked = True Then 'Figuren isoliert: -160
+                ''Regel10 XXX(X) | OOO(O)
+                If (s7 = s6 And s7 = s5) Then
+
+                    If RapTmp.Length < 4 Then
+                        FillSatz = ""
+                        Exit Function
+                    End If
+
+                    If ((s7 <> s4) Or RapTmp.Length = 4) Then
+                        ReturnStr = "R10: " & s5 & s6 & s7 & "(" & s7 & ")"
+                        SatzCount = SatzCount + 1
+                        Call SetSatz(s7, SelektorCol)
+                    Else
+                        ReturnStr = "R10: Not Aborted"
+                    End If
+                    FillSatz = ReturnStr
+                    Exit Function
                 End If
 
-                FillSatzX = ReturnStr
-                Exit Function
-            End If
+                ''Is R10 aborted?
+                If s2 = s3 And s3 = s4 And s4 = s5 Then
+                    FillSatz = ""
+                    Exit Function
+                End If
 
-            ''If RapTmp.Length = 5 Then
-            'Regel13 OXXOX(X) | XOOXO(O)
-            If (s7 <> s6 And s6 <> s5 And s5 = s4 And s4 <> s3) Then
-                ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s7 & ")"
-                SatzCount = SatzCount + 1
-                FillSatzX = ReturnStr
-                Call SetSatz(s7, SelektorCol)
-                Exit Function
-                'XXOXX(O) | OOXOO(X)
-            ElseIf (s7 = s6 And s6 <> s5 And s5 <> s4 And s4 = s3) Then
-                ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s5 & ")"
-                SatzCount = SatzCount + 1
-                FillSatzX = ReturnStr
-                Call SetSatz(s5, SelektorCol)
-                Exit Function
+                ''Regel11 OO XOX(O) | XX OXO(X) 
+                If (s7 <> s6 And s7 = s5 And s5 <> s4) Then
+
+                    If RapTmp.Length < 5 Then
+                        FillSatz = ""
+                        Exit Function
+                    End If
+
+                    If (s6 = s4 And s4 = s3) Then
+                        ReturnStr = "R11: " & s5 & s6 & s7 & "(" & s6 & ")"
+                        SatzCount = SatzCount + 1
+                        Call SetSatz(s6, SelektorCol)
+                    Else
+                        ReturnStr = "R11: Not Aborted"
+                    End If
+
+                    FillSatz = ReturnStr
+                    Exit Function
+                End If
+
+                'XXOOX
+                ''Regel12 XXO(O) | OOX(X) XXOOX
+                If (s7 <> s6 And s6 = s5 And s5 <> s4) Then
+
+                    If RapTmp.Length < 5 Then
+                        FillSatz = ""
+                        Exit Function
+                    End If
+
+                    If Not ((s4 = s7) And (s3 = s4)) Then
+                        ReturnStr = "R12: " & s5 & s6 & s7 & "(" & s7 & ")"
+                        SatzCount = SatzCount + 1
+                        Call SetSatz(s7, SelektorCol)
+                    Else
+                        If RapTmp.Length = 5 Then
+                            ReturnStr = "R12: " & s5 & s6 & s7 & "(" & s7 & ")"
+                            SatzCount = SatzCount + 1
+                            Call SetSatz(s7, SelektorCol)
+                        Else
+                            ReturnStr = "R12: Not Aborted"
+                        End If
+
+                    End If
+
+                    FillSatz = ReturnStr
+                    Exit Function
+                End If
+
+                If RapTmp.Length = 7 Then
+                    ''If RapTmp.Length = 5 Then
+                    'Regel13 OXXOX(X) | XOOXO(O)
+                    If (s7 <> s6 And s6 <> s5 And s5 = s4 And s4 <> s3 And (s2 <> s3)) Then
+                        ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s7 & ")"
+                        SatzCount = SatzCount + 1
+                        FillSatz = ReturnStr
+                        Call SetSatz(s7, SelektorCol)
+                        Exit Function
+                        'XXOXX(O) | OOXOO(X)
+                    ElseIf (s7 = s6 And s6 <> s5 And s5 <> s4 And s4 = s3 And (s2 <> s3)) Then
+                        ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s5 & ")"
+                        SatzCount = SatzCount + 1
+                        FillSatz = ReturnStr
+                        Call SetSatz(s5, SelektorCol)
+                        Exit Function
+                    End If
+                Else
+                    FillSatz = ""
+                    Exit Function
+                End If
+
+            ElseIf RadioButton3.Checked = True Then
+
+                If RapTmp.Length < 2 Then
+                    FillSatz = ""
+                    Exit Function
+                End If
+
+                If s7 <> s6 And RapTmp.Length >= 2 Then 'first try
+                    ReturnStr = s6 & s7 & "(" & s6 & ")"
+                    SatzCount = SatzCount + 1
+                    FillSatz = ReturnStr
+                    Call SetSatz(s6, SelektorCol)
+                    Exit Function
+                End If
+                If s7 = s6 And s6 <> s5 And RapTmp.Length >= 3 Then 'first try
+                    ReturnStr = s5 & s6 & s7 & "(" & s5 & ")"
+                    SatzCount = SatzCount + 1
+                    FillSatz = ReturnStr
+                    Call SetSatz(s5, SelektorCol)
+                    Exit Function
+                End If
+                If s7 = s6 And s6 = s5 And s5 <> s4 And RapTmp.Length >= 4 Then 'first try
+                    ReturnStr = s4 & s5 & s6 & s7 & "(" & s4 & ")"
+                    SatzCount = SatzCount + 1
+                    FillSatz = ReturnStr
+                    Call SetSatz(s4, SelektorCol)
+                    Exit Function
+                End If
+
             End If
         End If
 
-        FillSatzX = ReturnStr
+        FillSatz = ReturnStr
 
     End Function
 
@@ -1709,23 +1747,23 @@ Public Class Form1
         End If
     End Sub
 
-    Private Function GetNextColX(ByRef pos As Integer, Optional ByVal AddCol As Boolean = True, Optional ByRef coup As Integer = 0) As Integer
+    Private Function GetNextCol(ByRef pos As Integer, Optional ByVal AddCol As Boolean = True, Optional ByRef coup As Integer = 0) As Integer
         Dim i As Integer
         Dim localInstanceofMyClass As clsCoupData
 
-        GetNextColX = 0
+        GetNextCol = 0
 
-        localInstanceofMyClass = CType(myarraylist(myarraylist.Count - 1 - pos), clsCoupData)
+        localInstanceofMyClass = CType(arrayPartie(arrayPartie.Count - 1 - pos), clsCoupData)
 
         coup = localInstanceofMyClass.Coup
         If coup <> 0 Then
-            GetNextColX = CheckCollong(coup)
+            GetNextCol = CheckCollong(coup)
         End If
 
         If AddCol = True Then pos = i + 1 'damit gleich der nächst coup ausgewählt ist
     End Function
 
-    Private Function SetTransformatorRegel1_2() As Integer
+    Private Function SetTransformatorRegel1() As Integer
         Dim IsCol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
         Dim col1 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
         Dim tmpcol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
@@ -1736,13 +1774,13 @@ Public Class Form1
         Dim coup As Integer
         Dim break As Boolean
 
-        If myarraylist.Count < 3 Then 'Regel 1 kann erst fühstens ab Coup 4 eintreten!
-            SetTransformatorRegel1_2 = 0
+        If arrayPartie.Count < 3 Then 'Regel 1 kann erst fühstens ab Coup 4 eintreten!
+            SetTransformatorRegel1 = 0
             Exit Function
         End If
 
-        For I As Integer = pos To myarraylist.Count - 1
-            tmpcol = GetNextColX(I, False, coup)
+        For I As Integer = pos To arrayPartie.Count - 1
+            tmpcol = GetNextCol(I, False, coup)
             If tmpcol <> 0 Then
                 If IsCol = 0 Then
                     IsCol = tmpcol
@@ -1757,13 +1795,13 @@ Public Class Form1
 
         If (IsCol = col1) Then 'hier generelle Abfrage ob Regel2 überhaupt in Kraft treten kann
             'Coup != letzter coup 
-            SetTransformatorRegel1_2 = 0
+            SetTransformatorRegel1 = 0
             Exit Function
         End If
 
-        IsBreaked = CheckIsBreakedX()
-        For I As Integer = pos To myarraylist.Count - 1
-            tmpcol = GetNextColX(I, False, coup)
+        IsBreaked = CheckIsBreaked()
+        For I As Integer = pos To arrayPartie.Count - 1
+            tmpcol = GetNextCol(I, False, coup)
             If LastcolFound = True Then
                 If tmpcol <> 0 Then
                     If tmpcol <> IsCol Then
@@ -1771,14 +1809,14 @@ Public Class Form1
                         'aktuelle Farbe abgebrochen -> +
                         'aktuelle Farbe weitergelaufen -> -
                         If IsBreaked = True Then
-                            SetTransformatorRegel1_2 = 1 '+
+                            SetTransformatorRegel1 = 1 '+
                         Else
-                            SetTransformatorRegel1_2 = 2 '-
+                            SetTransformatorRegel1 = 2 '-
                         End If
                         Exit Function
                     Else
                         'Regel 1: nicht in Kraft getreten, Vorherige Farbe war keine Intermittenz
-                        SetTransformatorRegel1_2 = 0
+                        SetTransformatorRegel1 = 0
                         Exit Function
                     End If
                 End If
@@ -1797,7 +1835,7 @@ Public Class Form1
 
     End Function
 
-    Private Function SetTransformatorRegel2_2() As Integer
+    Private Function SetTransformatorRegel2() As Integer
         Dim IsCol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
         Dim col1 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
         Dim col2 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
@@ -1809,13 +1847,13 @@ Public Class Form1
         Dim coup As Integer
         Dim break As Boolean
 
-        If myarraylist.Count < 5 Then 'Regel 2 kann erst fühstens ab Coup 6 eintreten!
-            SetTransformatorRegel2_2 = 0
+        If arrayPartie.Count < 5 Then 'Regel 2 kann erst fühstens ab Coup 6 eintreten!
+            SetTransformatorRegel2 = 0
             Exit Function
         End If
 
-        For I As Integer = pos To myarraylist.Count - 1
-            tmpcol = GetNextColX(I, False, coup)
+        For I As Integer = pos To arrayPartie.Count - 1
+            tmpcol = GetNextCol(I, False, coup)
             If tmpcol <> 0 Then
                 If IsCol = 0 Then
                     IsCol = tmpcol
@@ -1834,13 +1872,13 @@ Public Class Form1
 
         If Not ((IsCol = col1) And (col1 <> col2)) Then 'hier generelle Abfrage ob Regel2 überhaupt in Kraft treten kann
             'letzer Coup = vorletzer coup und vorvorletzter coup != letzter coup
-            SetTransformatorRegel2_2 = 0
+            SetTransformatorRegel2 = 0
             Exit Function
         End If
 
-        IsBreaked = CheckIsBreakedX()
-        For I As Integer = pos To myarraylist.Count - 1
-            tmpcol = GetNextColX(I, False, coup)
+        IsBreaked = CheckIsBreaked()
+        For I As Integer = pos To arrayPartie.Count - 1
+            tmpcol = GetNextCol(I, False, coup)
             If LastcolFound = True Then
                 If tmpcol <> 0 Then
                     If tmpcol <> IsCol Then
@@ -1848,14 +1886,14 @@ Public Class Form1
                         'aktuelle Farbe abgebrochen -> +
                         'aktuelle Farbe weitergelaufen -> -
                         If IsBreaked = True Then
-                            SetTransformatorRegel2_2 = 1 '+
+                            SetTransformatorRegel2 = 1 '+
                         Else
-                            SetTransformatorRegel2_2 = 2 '-
+                            SetTransformatorRegel2 = 2 '-
                         End If
                         Exit Function
                     Else
                         'Regel 1: nicht in Kraft getreten, Vorherige Farbe war keine Intermittenz
-                        SetTransformatorRegel2_2 = 0
+                        SetTransformatorRegel2 = 0
                         Exit Function
                     End If
                 End If
@@ -1874,7 +1912,7 @@ Public Class Form1
 
     End Function
 
-    Private Function SetTransformatorRegel3_2() As Integer
+    Private Function SetTransformatorRegel3() As Integer
         Dim IsCol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
         Dim col1 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
         Dim col2 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
@@ -1886,13 +1924,13 @@ Public Class Form1
         Dim coup As Integer
         Dim break As Boolean
 
-        If myarraylist.Count < 5 Then 'Regel 3 kann erst fühstens ab Coup 6 eintreten!
-            SetTransformatorRegel3_2 = 0
+        If arrayPartie.Count < 5 Then 'Regel 3 kann erst fühstens ab Coup 6 eintreten!
+            SetTransformatorRegel3 = 0
             Exit Function
         End If
 
-        For I As Integer = pos To myarraylist.Count - 1
-            tmpcol = GetNextColX(I, False, coup)
+        For I As Integer = pos To arrayPartie.Count - 1
+            tmpcol = GetNextCol(I, False, coup)
             If tmpcol <> 0 Then
                 If IsCol = 0 Then
                     IsCol = tmpcol
@@ -1907,15 +1945,15 @@ Public Class Form1
 
         If (IsCol = col1) Then 'hier generelle Abfrage ob Regel3 überhaupt in Kraft treten kann
             'Coup != letzter coup 
-            SetTransformatorRegel3_2 = 0
+            SetTransformatorRegel3 = 0
             Exit Function
         End If
 
         col1 = 0
 
-        IsBreaked = CheckIsBreakedX()
-        For I As Integer = pos To myarraylist.Count - 1
-            tmpcol = GetNextColX(I, False, coup)
+        IsBreaked = CheckIsBreaked()
+        For I As Integer = pos To arrayPartie.Count - 1
+            tmpcol = GetNextCol(I, False, coup)
             If LastcolFound = True Then
                 If tmpcol <> 0 Then
                     If col1 = 0 Then
@@ -1927,14 +1965,14 @@ Public Class Form1
                             'aktuelle Farbe abgebrochen -> -
                             'aktuelle Farbe weitergelaufen -> +
                             If IsBreaked = True Then
-                                SetTransformatorRegel3_2 = 2 '-
+                                SetTransformatorRegel3 = 2 '-
                             Else
-                                SetTransformatorRegel3_2 = 1 '+
+                                SetTransformatorRegel3 = 1 '+
                             End If
                             Exit Function
                         Else
                             'Regel 1: nicht in Kraft getreten, Vorherige Farbe war keine Intermittenz
-                            SetTransformatorRegel3_2 = 0
+                            SetTransformatorRegel3 = 0
                             Exit Function
                         End If
                     End If
@@ -1954,7 +1992,7 @@ Public Class Form1
 
     End Function
 
-    Private Function SetTransformatorRegel4_2() As Integer
+    Private Function SetTransformatorRegel4() As Integer
         Dim IsCol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
         Dim col1 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
         Dim col2 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
@@ -1966,13 +2004,13 @@ Public Class Form1
         Dim coup As Integer
         Dim break As Boolean
 
-        If myarraylist.Count < 6 Then 'Regel 4 kann erst fühstens ab Coup 7 eintreten!
-            SetTransformatorRegel4_2 = 0
+        If arrayPartie.Count < 6 Then 'Regel 4 kann erst fühstens ab Coup 7 eintreten!
+            SetTransformatorRegel4 = 0
             Exit Function
         End If
 
-        For I As Integer = pos To myarraylist.Count - 1
-            tmpcol = GetNextColX(I, False, coup)
+        For I As Integer = pos To arrayPartie.Count - 1
+            tmpcol = GetNextCol(I, False, coup)
             If tmpcol <> 0 Then
                 If IsCol = 0 Then
                     IsCol = tmpcol
@@ -1991,15 +2029,15 @@ Public Class Form1
 
         If Not ((IsCol = col1) And (col1 <> col2)) Then 'hier generelle Abfrage ob Regel2 überhaupt in Kraft treten kann
             'letzer Coup = vorletzer coup und vorvorletzter coup != letzter coup
-            SetTransformatorRegel4_2 = 0
+            SetTransformatorRegel4 = 0
             Exit Function
         End If
 
         col1 = 0
 
-        IsBreaked = CheckIsBreakedX()
-        For I As Integer = pos To myarraylist.Count - 1
-            tmpcol = GetNextColX(I, False, coup)
+        IsBreaked = CheckIsBreaked()
+        For I As Integer = pos To arrayPartie.Count - 1
+            tmpcol = GetNextCol(I, False, coup)
             If LastcolFound = True Then
                 If tmpcol <> 0 Then
                     If col1 = 0 Then
@@ -2011,14 +2049,14 @@ Public Class Form1
                             'aktuelle Farbe abgebrochen -> -
                             'aktuelle Farbe weitergelaufen -> +
                             If IsBreaked = True Then
-                                SetTransformatorRegel4_2 = 1 '+
+                                SetTransformatorRegel4 = 1 '+
                             Else
-                                SetTransformatorRegel4_2 = 2 '-
+                                SetTransformatorRegel4 = 2 '-
                             End If
                             Exit Function
                         Else
                             'Regel 1: nicht in Kraft getreten, Vorherige Farbe war keine Intermittenz
-                            SetTransformatorRegel4_2 = 0
+                            SetTransformatorRegel4 = 0
                             Exit Function
                         End If
                     End If
@@ -2038,7 +2076,7 @@ Public Class Form1
 
     End Function
 
-    Private Function SetTransformatorRegel5_2() As Integer
+    Private Function SetTransformatorRegel5() As Integer
         Dim IsCol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
         Dim col1 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
         Dim col2 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
@@ -2048,13 +2086,13 @@ Public Class Form1
         Dim pos As Integer = 0
         Dim coup As Integer
 
-        If myarraylist.Count < 3 Then 'Regel 5 kann erst fühstens ab Coup 4 eintreten!
-            SetTransformatorRegel5_2 = 0
+        If arrayPartie.Count < 3 Then 'Regel 5 kann erst fühstens ab Coup 4 eintreten!
+            SetTransformatorRegel5 = 0
             Exit Function
         End If
 
-        For I As Integer = pos To myarraylist.Count - 1
-            tmpcol = GetNextColX(I, False, coup)
+        For I As Integer = pos To arrayPartie.Count - 1
+            tmpcol = GetNextCol(I, False, coup)
             If tmpcol <> 0 Then
                 If IsCol = 0 Then
                     IsCol = tmpcol
@@ -2073,22 +2111,22 @@ Public Class Form1
 
         If Not ((IsCol = col1) And (col1 = col2)) Then 'hier generelle Abfrage ob Regel5 überhaupt in Kraft treten kann
             'letzer Coup = vorletzer coup = vorvorletzercoup
-            SetTransformatorRegel5_2 = 0
+            SetTransformatorRegel5 = 0
             Exit Function
         End If
 
         col1 = 0
 
-        IsBreaked = CheckIsBreakedX()
+        IsBreaked = CheckIsBreaked()
         If IsBreaked = True Then
-            SetTransformatorRegel5_2 = 2 '-
+            SetTransformatorRegel5 = 2 '-
         Else
-            SetTransformatorRegel5_2 = 1 '+
+            SetTransformatorRegel5 = 1 '+
         End If
 
     End Function
 
-    Private Function SetTransformatorRegel5_3() As Integer
+    Private Function SetTransformatorRegel5_1() As Integer
         Dim IsCol As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
         Dim col1 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
         Dim col2 As Integer = 0 '1 = schwarz, 2= rot, 0 = zero/noch leer
@@ -2100,13 +2138,13 @@ Public Class Form1
         Dim coup As Integer
         Dim break As Boolean = False
 
-        If myarraylist.Count < 6 Then 'Regel 5_1 kann erst fühstens ab Coup 6 eintreten!
-            SetTransformatorRegel5_3 = 0
+        If arrayPartie.Count < 6 Then 'Regel 5_1 kann erst fühstens ab Coup 6 eintreten!
+            SetTransformatorRegel5_1 = 0
             Exit Function
         End If
 
-        For I As Integer = pos To myarraylist.Count - 1
-            tmpcol = GetNextColX(I, False, coup)
+        For I As Integer = pos To arrayPartie.Count - 1
+            tmpcol = GetNextCol(I, False, coup)
             If tmpcol <> 0 Then
                 If IsCol = 0 Then
                     IsCol = tmpcol
@@ -2120,10 +2158,10 @@ Public Class Form1
         Next
 
         col1 = 0
-        IsBreaked = CheckIsBreakedX()
+        IsBreaked = CheckIsBreaked()
 
-        For I As Integer = pos To myarraylist.Count - 1
-            tmpcol = GetNextColX(I, False, coup)
+        For I As Integer = pos To arrayPartie.Count - 1
+            tmpcol = GetNextCol(I, False, coup)
             If LastcolFound = True Then
                 If tmpcol <> 0 Then
                     If col1 = 0 Then
@@ -2135,14 +2173,14 @@ Public Class Form1
                             'aktuelle Farbe abgebrochen -> -
                             'aktuelle Farbe weitergelaufen -> +
                             If IsBreaked = True Then
-                                SetTransformatorRegel5_3 = 2 '-
+                                SetTransformatorRegel5_1 = 2 '-
                             Else
-                                SetTransformatorRegel5_3 = 1 '+
+                                SetTransformatorRegel5_1 = 1 '+
                             End If
                             Exit Function
                         Else
                             'Regel 1: nicht in Kraft getreten, Vorherige Farbe war keine Intermittenz
-                            SetTransformatorRegel5_3 = 0
+                            SetTransformatorRegel5_1 = 0
                             Exit Function
                         End If
                     End If
@@ -2162,11 +2200,11 @@ Public Class Form1
 
     End Function
 
-    Private Function CheckIsBreakedX()
-        If GetNextColX(0) = CheckCollong(cCoupData.Coup) Then
-            CheckIsBreakedX = False
+    Private Function CheckIsBreaked()
+        If GetNextCol(0) = CheckCollong(cCoupData.Coup) Then
+            CheckIsBreaked = False
         Else
-            CheckIsBreakedX = True
+            CheckIsBreaked = True
         End If
     End Function
 
@@ -2208,7 +2246,9 @@ Public Class Form1
     End Sub
 
     Private Sub TextBox1_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TextBox1.KeyDown
-        Auswerten()
+        If e.KeyCode = Keys.Return Then
+            Auswerten()
+        End If
     End Sub
 
     Private Sub TextBox1_TextChanged_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBox1.TextChanged
@@ -2216,35 +2256,6 @@ Public Class Form1
             Button2.Enabled = False
         Else
             Button2.Enabled = True
-        End If
-    End Sub
-
-    Private Sub TextBox3_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TextBox3.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            Call InsertManuell()
-        End If
-    End Sub
-
-    Private Sub TextBox3_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBox3.TextChanged
-        If TextBox3.Text = "" Then
-            Button6.Enabled = False
-        Else
-            Button6.Enabled = True
-        End If
-    End Sub
-
-    Private Sub InsertManuell()
-        Dim key As String = TextBox3.Text
-        If key <> "" Then
-            TextBox3.Text = ""
-            If CheckKey(key) = False Then
-                Call MsgBox(key & " ist keine gültige Roulett Zahl!", MsgBoxStyle.Critical, "Achtung")
-                Exit Sub
-            Else
-                Call InsertNewCoup(key)
-                Call SetToolTipStatus()
-                Me.Update()
-            End If
         End If
     End Sub
 
@@ -2322,21 +2333,11 @@ Public Class Form1
         If key = "36" Then Return True
     End Function
 
-    'Private Sub DataGridView1_ColumnWidthChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewColumnEventArgs)
-    '    If loaded = True Then Call SetSizeLabelColPos()
-    'End Sub
-
-
-    Private Sub Button6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button6.Click
-        Call InsertManuell()
-    End Sub
-
-
     Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
     End Sub
 
-    Private Sub TextBox2_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TextBox2.KeyDown
+    Private Sub TextBox2_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
         If e.KeyCode = Keys.Enter Then
             Auswerten()
         End If
@@ -2347,6 +2348,7 @@ Public Class Form1
         Me.Update()
         Me.Cursor = Cursors.WaitCursor
 
+        clearFullData()
         SatzPlus = ""
         SatzMinus = ""
         SatzSchwarz = ""
@@ -2355,27 +2357,136 @@ Public Class Form1
         Call StartAuswertung()
 
         Call SetToolTipStatus()
+        Me.TextRes.Text = ResTxt
 
-        FormGrid.CoupData = myarraylist
-        FormGrid.ShowDialog()
-        FormRes.prop1() = ResTxt
-        FormRes.SaldoVerlaufhalbZero = gesSaldoVerlaufhalbZero
-        Call FormRes.ShowDialog()
-        Me.Update()
+        Me.TextRes.SelectionStart = TextBox1.TextLength
+        Me.TextRes.ScrollToCaret()
+        CreateGraph()
     End Sub
 
-    Private Sub Button3_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
+    Private Sub CreateGraph()
+
+        ClearGraph()
+
+        If zed Is Nothing Then
+            zed = New ZedGraph.ZedGraphControl
+            zed.Parent = Me.Panel2
+            zed.Location = New Point(0, 0)
+            zed.Size = New Size(Panel2.Width, Panel2.Height - 10)
+            myPane = zed.GraphPane
+
+            myPane.Title.Text = "Gesamt Saldo Verlauf"
+            myPane.XAxis.Title.Text = "Satz"
+            myPane.YAxis.Title.Text = "Saldo"
+        End If        
+
+        Dim x As Integer = 0
+        Dim y1 As Integer
+        Dim list1 As New ZedGraph.PointPairList
+        Dim CntS As Integer = 0
+        Dim x3 As Integer = 0
+        Dim y3 As Integer
+        Dim list3 As New ZedGraph.PointPairList
+        Dim CntS3 As Integer = 0
+
+
+        If Not gesSaldoVerlaufhalbZero = Nothing Then
+            Dim len As Integer = gesSaldoVerlaufhalbZero.Length
+            If gesSaldoVerlaufhalbZero <> "" Then
+                Do While CntS < len
+
+                    If gesSaldoVerlaufhalbZero.Substring(CntS, 1) = "+" Then
+                        y1 = y1 + 1
+                        x = x + 1
+                        list1.Add(x, y1)
+                    ElseIf gesSaldoVerlaufhalbZero.Substring(CntS, 1) = "-" Then
+                        y1 = y1 - 1
+                        x = x + 1
+                        list1.Add(x, y1)
+                    End If
+                    CntS = CntS + 1
+                Loop
+            End If
+
+            Dim len3 As Integer = gesSaldoVerlaufhalbZero.Length
+            If gesSaldoVerlaufhalbZero <> "" Then
+                Do While CntS3 < len3
+                    If gesSaldoVerlaufhalbZero.Substring(CntS3, 1) = "+" Then
+                        y3 = y3 + 1
+                        x3 = x3 + 1
+                        list3.Add(x3, y3)
+                    ElseIf gesSaldoVerlaufhalbZero.Substring(CntS3, 1) = "-" Then
+                        y3 = y3 - 1
+                        x3 = x3 + 1
+                        list3.Add(x3, y3)
+                    ElseIf gesSaldoVerlaufhalbZero.Substring(CntS3, 1) = "Z" Then
+                        y3 = y3 - 0.5
+                        x3 = x3 + 1
+                        list3.Add(x3, y3)
+                    End If
+                    CntS3 = CntS3 + 1
+                Loop
+            End If
+
+            Dim myCurve1 As ZedGraph.LineItem
+            Dim myCurve2 As ZedGraph.LineItem
+            myCurve1 = myPane.AddCurve("Saldo mit Zero", list3, Color.Orange, ZedGraph.SymbolType.None)
+            myCurve2 = myPane.AddCurve("Saldo ohne Zero", list1, Color.Green, ZedGraph.SymbolType.None)
+            zed.AxisChange()
+            zed.Refresh()
+        End If
+    End Sub
+
+    Private Sub Button3_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs)
         RowCount = 0
 
         Me.TextBox1.Focus()
 
-        ToolStripStatusLabel1.Text = "Bitte wählen Sie zum auswerten eine Permanenz Datei aus, oder geben Sie manuell Zahlen ein!"
+        ToolStripStatusLabel1.Text = "Bitte Permanenz Datei für die System-Auswertung eingeben!"
         Me.Update()
     End Sub
 
-    Private Sub Button4_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
-        FormRes.prop1() = ResTxt
-        FormRes.SaldoVerlaufhalbZero = gesSaldoVerlaufhalbZero
-        Call FormRes.ShowDialog()
+    Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
+        clearFullData()        
     End Sub
+
+    Private Sub clearFullData()
+        ClearGraph()
+        TextRes.Text = ""
+        ListBox1.Items.Clear()
+        Me.ListBox1.Items.Add("Bitte Permanenz Datei für die System-Auswertung eingeben!")
+    End Sub
+
+    Private Sub ClearGraph()        
+        If Not myPane Is Nothing Then
+            myPane.CurveList.Clear()
+            myPane.GraphObjList.Clear()
+            zed.Refresh()
+        End If        
+    End Sub
+
+    Private Sub HScrollBar1_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles HScrollBar1.Scroll
+        If Not zed Is Nothing Then
+            zed.Size = New Size(Panel2.Width + (Panel2.Width * (HScrollBar1.Value / 10)) - 7, Panel2.Height - 7)
+            zed.AxisChange()
+            zed.Refresh()
+        End If
+    End Sub
+
+    Private Sub ListBox1_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles ListBox1.DoubleClick
+        Dim sItem As String = ListBox1.SelectedItem
+        Dim SaldoVerlauf As String
+
+        If sItem = "" Then Exit Sub
+        Dim VerlPos As Integer = InStr(sItem, "Verlauf: ", CompareMethod.Text) + 10
+        SaldoVerlauf = sItem.Substring(VerlPos, sItem.Length - VerlPos)
+
+        Dim localArrayList As ArrayList = arrayGlobal(ListBox1.SelectedIndex)
+
+        FormGrid.CoupData = localArrayList
+        FormGrid.SaldoVerlaufhalbZero = SaldoVerlauf
+        FormGrid.ShowDialog()
+
+    End Sub
+
 End Class

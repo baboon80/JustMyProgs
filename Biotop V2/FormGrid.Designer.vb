@@ -31,6 +31,7 @@ Partial Class FormGrid
         Me.Label3 = New System.Windows.Forms.Label
         Me.Label2 = New System.Windows.Forms.Label
         Me.DataGridView1 = New System.Windows.Forms.DataGridView
+        Me.Panel2 = New System.Windows.Forms.Panel
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -161,14 +162,24 @@ Partial Class FormGrid
         Me.DataGridView1.MultiSelect = False
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
-        Me.DataGridView1.Size = New System.Drawing.Size(1214, 555)
+        Me.DataGridView1.Size = New System.Drawing.Size(982, 279)
         Me.DataGridView1.TabIndex = 19
+        '
+        'Panel2
+        '
+        Me.Panel2.AutoScroll = True
+        Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel2.Location = New System.Drawing.Point(12, 317)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(982, 248)
+        Me.Panel2.TabIndex = 28
         '
         'FormGrid
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1243, 612)
+        Me.ClientSize = New System.Drawing.Size(1006, 573)
+        Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.Label9)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.Label7)
@@ -178,8 +189,10 @@ Partial Class FormGrid
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.DataGridView1)
+        Me.MinimumSize = New System.Drawing.Size(1022, 611)
         Me.Name = "FormGrid"
-        Me.Text = "FormGrid"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
+        Me.Text = "Partie Details"
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -193,4 +206,5 @@ Partial Class FormGrid
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
+    Friend WithEvents Panel2 As System.Windows.Forms.Panel
 End Class

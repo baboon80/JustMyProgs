@@ -87,3 +87,6 @@ D:\Patrick\Programmierung\JustMyProgs\Biotop V1\obj\Release\Biotop.Resources.res
 D:\Patrick\Programmierung\JustMyProgs\Biotop V1\obj\Release\Biotop.Form1.de-DE.resources
 D:\Patrick\Programmierung\JustMyProgs\Biotop V1\obj\Release\Biotop.vbproj.GenerateResource.Cache
 D:\Patrick\Programmierung\JustMyProgs\Biotop V1\obj\Release\de-DE\Biotop.resources.dll
+D:\Patrick\JustMyProgs\Biotop V1\obj\Release\Biotop.exe
+D:\Patrick\JustMyProgs\Biotop V1\obj\Release\Biotop.xml
+D:\Patrick\JustMyProgs\Biotop V1\obj\Release\Biotop.pdb

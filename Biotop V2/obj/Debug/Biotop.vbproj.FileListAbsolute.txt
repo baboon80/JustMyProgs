@@ -55,3 +55,20 @@ D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\bin\Debug\ZedGraph.xml
 D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\bin\Debug\ZedGraph.Web.xml
 D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Debug\de-DE\Biotop.resources.dll
 D:\Patrick\Programmierung\Biotop\Biotop-Auswertung\obj\Debug\Biotop.exe
+D:\Patrick\JustMyProgs\Biotop V2\bin\Debug\Biotop V2.exe
+D:\Patrick\JustMyProgs\Biotop V2\bin\Debug\Biotop V2.pdb
+D:\Patrick\JustMyProgs\Biotop V2\bin\Debug\Biotop V2.xml
+D:\Patrick\JustMyProgs\Biotop V2\bin\Debug\de-DE\Biotop V2.resources.dll
+D:\Patrick\JustMyProgs\Biotop V2\bin\Debug\ZedGraph.dll
+D:\Patrick\JustMyProgs\Biotop V2\bin\Debug\ZedGraph.Web.dll
+D:\Patrick\JustMyProgs\Biotop V2\obj\Debug\ResolveAssemblyReference.cache
+D:\Patrick\JustMyProgs\Biotop V2\obj\Debug\BiotopV2.FormFilter.resources
+D:\Patrick\JustMyProgs\Biotop V2\obj\Debug\BiotopV2.Form1.resources
+D:\Patrick\JustMyProgs\Biotop V2\obj\Debug\BiotopV2.FormGrid.resources
+D:\Patrick\JustMyProgs\Biotop V2\obj\Debug\BiotopV2.Resources.resources
+D:\Patrick\JustMyProgs\Biotop V2\obj\Debug\BiotopV2.Form1.de-DE.resources
+D:\Patrick\JustMyProgs\Biotop V2\obj\Debug\Biotop.vbproj.GenerateResource.Cache
+D:\Patrick\JustMyProgs\Biotop V2\obj\Debug\de-DE\Biotop V2.resources.dll
+D:\Patrick\JustMyProgs\Biotop V2\obj\Debug\Biotop V2.exe
+D:\Patrick\JustMyProgs\Biotop V2\obj\Debug\Biotop V2.xml
+D:\Patrick\JustMyProgs\Biotop V2\obj\Debug\Biotop V2.pdb
