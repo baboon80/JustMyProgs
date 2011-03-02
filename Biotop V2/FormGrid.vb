@@ -3,6 +3,7 @@
     Private SaldoVerlhalbZ As String
     Private zed As New ZedGraph.ZedGraphControl
     Private myPane As ZedGraph.GraphPane
+    Private loaded As Boolean = False
 
     Public Property CoupData() As ArrayList
         Get
@@ -152,10 +153,14 @@
 
                 R1 = DataGridView1.Rows(I)
 
+                R1.Cells(ColNum.eCoup).Style.ForeColor = Color.Black
+                If localInstanceofMyClass.Coup = 0 Then
+                    R1.Cells(ColNum.eCoup).Style.BackColor = Color.Green
+                    R1.Cells(ColNum.eCoup).Style.ForeColor = Color.White
+                End If
+
                 R1.Cells(ColNum.eS).Style.ForeColor = Color.Black
                 R1.Cells(ColNum.eR).Style.ForeColor = System.Drawing.Color.FromArgb(255, 162, 15, 15)
-
-                R1.Cells(ColNum.eCoup).Style.ForeColor = Color.Black
 
                 R1.Cells(ColNum.eTP).Style.BackColor = Label2.BackColor
                 R1.Cells(ColNum.eTM).Style.BackColor = Label2.BackColor
@@ -208,8 +213,6 @@
             Next I
         End If
 
-
-
         zed = New ZedGraph.ZedGraphControl
         zed.Parent = Me.Panel2
         zed.Location = New Point(0, 0)
@@ -217,6 +220,11 @@
         zed.Size = New Size(Panel2.Width - 8, Panel2.Height - 8)
 
         CreateGraph()
+        loaded = True
+    End Sub
+
+    Private Sub DataGridView1_ColumnWidthChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewColumnEventArgs) Handles DataGridView1.ColumnWidthChanged
+        If loaded = True Then Call SetSizeLabelColPos()
     End Sub
 
     Private Sub FormGrid_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize

@@ -32,6 +32,11 @@ Public Class Form1
     Public arrayPartie As New ArrayList
     Public arrayGlobal As New ArrayList
     Private cCoupData As clsCoupData
+    Private Sel1Verlust As Integer
+    Private Sel2Verlust As Integer
+    Private Sel3Verlust As Integer
+    Private Sel4Verlust As Integer
+    Private SaldoWithOutZ As Double
 
     Private zed As ZedGraph.ZedGraphControl
     Private myPane As ZedGraph.GraphPane
@@ -109,6 +114,7 @@ Public Class Form1
         RowCount = 0
         SatzCount = 0
         saldo = 0
+        SaldoWithOutZ = 0
         SatzPlus = ""
         SatzMinus = ""
         SatzSchwarz = ""
@@ -130,6 +136,11 @@ Public Class Form1
         gesSaldoVerlaufhalbZero = ""
         arrayPartie.Clear()
         arrayGlobal.Clear()
+
+        Sel1Verlust = 0
+        Sel2Verlust = 0
+        Sel3Verlust = 0
+        Sel4Verlust = 0
 
         If RadioButton4.Checked = True Then
             PartieParam = 1
@@ -155,35 +166,34 @@ Public Class Form1
                             If lNewCoup > 0 Then
                                 gesSaldoVerlaufhalbZero = gesSaldoVerlaufhalbZero & "- "
                                 saldoverlauf = saldoverlauf & "- "
-                            Else
-                                saldo = saldo + 1 'zero Steuer wieder drauf, nur nötig damit erkannt wird das es Verlust gab
+                            Else                                
                                 saldoverlauf = saldoverlauf & "Z "
                                 gesSaldoVerlaufhalbZero = gesSaldoVerlaufhalbZero & "Z "
                             End If
                         End If
 
                         If CheckBox1.Checked = True Then
-                            If (saldo = 2 Or saldo = 2.5) And TmpMaxSaldo >= 3 Then
+                            If SaldoWithOutZ = 2 And TmpMaxSaldo >= 3 Then
                                 nextDay = True
-                            ElseIf (saldo = 3 Or saldo = 3.5) And TmpMaxSaldo >= 5 Then
+                            ElseIf SaldoWithOutZ = 3 And TmpMaxSaldo >= 5 Then
                                 nextDay = True
-                            ElseIf (saldo = 5 Or saldo = 5.5) And TmpMaxSaldo >= 8 Then
+                            ElseIf SaldoWithOutZ = 5 And TmpMaxSaldo >= 8 Then
                                 nextDay = True
-                            ElseIf (saldo = 8 Or saldo = 8.5) And TmpMaxSaldo >= 11 Then
+                            ElseIf SaldoWithOutZ = 8 And TmpMaxSaldo >= 11 Then
                                 nextDay = True
-                            ElseIf (saldo = 11 Or saldo = 11.5) And TmpMaxSaldo >= 14 Then
+                            ElseIf SaldoWithOutZ = 11 And TmpMaxSaldo >= 14 Then
                                 nextDay = True
-                            ElseIf (saldo = 14 Or saldo = 14.5) And TmpMaxSaldo >= 17 Then
+                            ElseIf SaldoWithOutZ = 14 And TmpMaxSaldo >= 17 Then
                                 nextDay = True
-                            ElseIf (saldo = 17 Or saldo = 17.5) And TmpMaxSaldo >= 20 Then
+                            ElseIf SaldoWithOutZ = 17 And TmpMaxSaldo >= 20 Then
                                 nextDay = True
-                            ElseIf saldo = 20 Or saldo = 20.5 Then
+                            ElseIf SaldoWithOutZ = 20 Then
                                 nextDay = True
-                            ElseIf saldo = -6 Then
+                            ElseIf SaldoWithOutZ = -6 Then
                                 nextDay = True
                             End If
 
-                            If TmpMaxSaldo < saldo Then TmpMaxSaldo = saldo
+                            If TmpMaxSaldo < SaldoWithOutZ Then TmpMaxSaldo = SaldoWithOutZ
                         End If
                         lastsaldo = saldo
                     End If
@@ -206,6 +216,7 @@ Public Class Form1
                             GesSatzCnt = GesSatzCnt + SatzCnt
 
                             saldo = 0
+                            SaldoWithOutZ = 0
                             lastsaldo = 0
                             saldoverlauf = ""
                             SatzPlus = ""
@@ -221,6 +232,10 @@ Public Class Form1
                             CntVerlust = 0
                             MaxSaldo = 0
                             MinSaldo = 0
+                            Sel1Verlust = 0
+                            Sel2Verlust = 0
+                            Sel3Verlust = 0
+                            Sel4Verlust = 0
 
                             datum = ""
                             nextDay = False
@@ -266,8 +281,8 @@ Public Class Form1
             End If
 
             ResTxt = " Gesamtergebnis:" & vbNewLine
-            ResTxt = ResTxt & vbNewLine & " Saldo (mit Zero): " & GesSaldo - GesZero & vbNewLine
-            ResTxt = ResTxt & " Saldo (ohne Zero): " & GesSaldo & vbNewLine
+            ResTxt = ResTxt & vbNewLine & " Saldo (mit Zero): " & GesSaldo & vbNewLine
+            ResTxt = ResTxt & " Saldo (ohne Zero): " & GesSaldo + GesZero & vbNewLine
             ResTxt = ResTxt & " Zero Verlust: " & GesZero & vbNewLine
             ResTxt = ResTxt & " Gesamt Anzahl Sätze: " & GesSatzCnt & vbNewLine
             ResTxt = ResTxt & " Größte Verlust Serie: " & GlobalGesMaxloss & vbNewLine
@@ -469,19 +484,35 @@ Public Class Form1
                         End If
 
                         If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = cCoupData.TPR Then
-                            saldo = saldo + 1
-                            localInstanceofMyClass.TPRS = SetTo & " +1/" & saldo
-                            Maxloss = 0
-                        Else
-                            saldo = saldo - 1
-                            Maxloss = Maxloss + 1
-                            If cCoupData.TPR = "" Then
-                                localInstanceofMyClass.TPRS = SetTo & " -0.5/" & saldo
+                            SatzCnt = SatzCnt + 1
+                            If Sel1Verlust < 3 Then
+                                saldo = saldo + 1
+                                SaldoWithOutZ = SaldoWithOutZ + 1
+                                localInstanceofMyClass.TPRS = SetTo & " +1/" & saldo
+                                Maxloss = 0
                             Else
-                                localInstanceofMyClass.TPRS = SetTo & " -1/" & saldo
+                                localInstanceofMyClass.TPRS = "Verlust > 3"
                             End If
+
+                            Sel1Verlust = 0
+                        Else
+                            If Sel1Verlust < 3 Then
+                                SatzCnt = SatzCnt + 1
+                                Maxloss = Maxloss + 1
+                                If cCoupData.TPR = "" Then
+                                    saldo = saldo - 0.5
+                                    localInstanceofMyClass.TPRS = SetTo & " -0.5/" & saldo
+                                Else
+                                    saldo = saldo - 1
+                                    SaldoWithOutZ = SaldoWithOutZ - 1
+                                    localInstanceofMyClass.TPRS = SetTo & " -1/" & saldo
+                                End If
+                            Else
+                                localInstanceofMyClass.TPRS = "Verlust > 3"
+                            End If
+
+                            Sel1Verlust = Sel1Verlust + 1
                         End If
-                        SatzCnt = SatzCnt + 1
                     Else
                         localInstanceofMyClass.TPRS = "bereits gesetzt"
                     End If
@@ -502,19 +533,35 @@ Public Class Form1
                         End If
 
                         If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = cCoupData.TmR Then
-                            saldo = saldo + 1
-                            localInstanceofMyClass.TmRS = SetTo & " +1/" & saldo
-                            Maxloss = 0
-                        Else
-                            saldo = saldo - 1
-                            Maxloss = Maxloss + 1
-                            If cCoupData.TmR = "" Then
-                                localInstanceofMyClass.TmRS = SetTo & " -0.5/" & saldo
+                            SatzCnt = SatzCnt + 1
+                            If Sel2Verlust < 3 Then
+                                saldo = saldo + 1
+                                SaldoWithOutZ = SaldoWithOutZ + 1
+                                localInstanceofMyClass.TmS = SetTo & " +1/" & saldo
+                                Maxloss = 0
                             Else
-                                localInstanceofMyClass.TmRS = SetTo & " -1/" & saldo
+                                localInstanceofMyClass.TmS = "Verlust > 3"
                             End If
+
+                            Sel2Verlust = 0
+                        Else
+                            If Sel2Verlust < 3 Then
+                                SatzCnt = SatzCnt + 1
+                                Maxloss = Maxloss + 1
+                                If cCoupData.TmR = "" Then
+                                    saldo = saldo - 0.5
+                                    localInstanceofMyClass.TmRS = SetTo & " -0.5/" & saldo
+                                Else
+                                    saldo = saldo - 1
+                                    SaldoWithOutZ = SaldoWithOutZ - 1
+                                    localInstanceofMyClass.TmRS = SetTo & " -1/" & saldo
+                                End If
+                            Else
+                                localInstanceofMyClass.TmRS = "Verlust > 3"
+                            End If
+
+                            Sel2Verlust = Sel2Verlust + 1
                         End If
-                        SatzCnt = SatzCnt + 1
                     Else
                         localInstanceofMyClass.TmRS = "bereits gesetzt"
                     End If
@@ -535,19 +582,35 @@ Public Class Form1
                         End If
 
                         If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = cCoupData.SR Then
-                            saldo = saldo + 1
-                            localInstanceofMyClass.SRS = SetTo & " +1/" & saldo
-                            Maxloss = 0
-                        Else
-                            saldo = saldo - 1
-                            Maxloss = Maxloss + 1
-                            If cCoupData.SR = "" Then
-                                localInstanceofMyClass.SRS = SetTo & " -0.5/" & saldo
+                            SatzCnt = SatzCnt + 1
+                            If Sel3Verlust < 3 Then
+                                saldo = saldo + 1
+                                SaldoWithOutZ = SaldoWithOutZ + 1
+                                localInstanceofMyClass.SRS = SetTo & " +1/" & saldo
+                                Maxloss = 0
                             Else
-                                localInstanceofMyClass.SRS = SetTo & " -1/" & saldo
+                                localInstanceofMyClass.SRS = "Verlust > 3"
                             End If
+
+                            Sel3Verlust = 0
+                        Else
+                            If Sel3Verlust < 3 Then
+                                SatzCnt = SatzCnt + 1
+                                Maxloss = Maxloss + 1
+                                If cCoupData.SR = "" Then
+                                    saldo = saldo - 0.5
+                                    localInstanceofMyClass.SRS = SetTo & " -0.5/" & saldo
+                                Else
+                                    saldo = saldo - 1
+                                    SaldoWithOutZ = SaldoWithOutZ - 1
+                                    localInstanceofMyClass.SRS = SetTo & " -1/" & saldo
+                                End If
+                            Else
+                                localInstanceofMyClass.SRS = "Verlust > 3"
+                            End If
+
+                            Sel3Verlust = Sel3Verlust + 1
                         End If
-                        SatzCnt = SatzCnt + 1
                     Else
                         localInstanceofMyClass.SRS = "bereits gesetzt"
                     End If
@@ -568,19 +631,35 @@ Public Class Form1
                         End If
 
                         If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = cCoupData.RR Then
-                            saldo = saldo + 1
-                            localInstanceofMyClass.RRS = SetTo & " +1/" & saldo
-                            Maxloss = 0
-                        Else
-                            saldo = saldo - 1
-                            Maxloss = Maxloss + 1
-                            If cCoupData.RR = "" Then
-                                localInstanceofMyClass.RRS = SetTo & " -0.5/" & saldo
+                            SatzCnt = SatzCnt + 1
+                            If Sel4Verlust < 3 Then
+                                saldo = saldo + 1
+                                SaldoWithOutZ = SaldoWithOutZ + 1
+                                localInstanceofMyClass.RRS = SetTo & " +1/" & saldo
+                                Maxloss = 0
                             Else
-                                localInstanceofMyClass.RRS = SetTo & " -1/" & saldo
+                                localInstanceofMyClass.RRS = "Verlust > 3"
                             End If
+
+                            Sel4Verlust = 0
+                        Else
+                            If Sel4Verlust < 3 Then
+                                SatzCnt = SatzCnt + 1
+                                Maxloss = Maxloss + 1
+                                If cCoupData.RR = "" Then
+                                    saldo = saldo - 0.5
+                                    localInstanceofMyClass.RRS = SetTo & " -0.5/" & saldo
+                                Else
+                                    saldo = saldo - 1
+                                    SaldoWithOutZ = SaldoWithOutZ - 1
+                                    localInstanceofMyClass.RRS = SetTo & " -1/" & saldo
+                                End If
+                            Else
+                                localInstanceofMyClass.RRS = "Verlust > 3"
+                            End If
+
+                            Sel4Verlust = Sel4Verlust + 1
                         End If
-                        SatzCnt = SatzCnt + 1
                     Else
                         localInstanceofMyClass.RRS = "bereits gesetzt"
                     End If
