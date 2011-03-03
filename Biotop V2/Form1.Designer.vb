@@ -27,6 +27,9 @@ Partial Class Form1
         Me.Panel1 = New System.Windows.Forms.Panel
         Me.GroupBox1 = New System.Windows.Forms.GroupBox
         Me.Panel3 = New System.Windows.Forms.Panel
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox
+        Me.CheckBox2 = New System.Windows.Forms.CheckBox
+        Me.RadioButton6 = New System.Windows.Forms.RadioButton
         Me.RadioButton3 = New System.Windows.Forms.RadioButton
         Me.RadioButton2 = New System.Windows.Forms.RadioButton
         Me.RadioButton1 = New System.Windows.Forms.RadioButton
@@ -43,17 +46,10 @@ Partial Class Form1
         Me.TextRes = New System.Windows.Forms.TextBox
         Me.HScrollBar1 = New System.Windows.Forms.HScrollBar
         Me.ListBox1 = New System.Windows.Forms.ListBox
-        Me.Panel4 = New System.Windows.Forms.Panel
-        Me.RadioButton4 = New System.Windows.Forms.RadioButton
-        Me.RadioButton5 = New System.Windows.Forms.RadioButton
-        Me.Panel5 = New System.Windows.Forms.Panel
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox
         Me.Panel1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.Panel3.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
-        Me.Panel4.SuspendLayout()
-        Me.Panel5.SuspendLayout()
         Me.SuspendLayout()
         '
         'OpenFileDialog1
@@ -75,8 +71,6 @@ Partial Class Form1
         '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.Panel5)
-        Me.GroupBox1.Controls.Add(Me.Panel4)
         Me.GroupBox1.Controls.Add(Me.Panel3)
         Me.GroupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         resources.ApplyResources(Me.GroupBox1, "GroupBox1")
@@ -86,11 +80,34 @@ Partial Class Form1
         'Panel3
         '
         Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel3.Controls.Add(Me.CheckBox1)
+        Me.Panel3.Controls.Add(Me.CheckBox2)
+        Me.Panel3.Controls.Add(Me.RadioButton6)
         Me.Panel3.Controls.Add(Me.RadioButton3)
         Me.Panel3.Controls.Add(Me.RadioButton2)
         Me.Panel3.Controls.Add(Me.RadioButton1)
         resources.ApplyResources(Me.Panel3, "Panel3")
         Me.Panel3.Name = "Panel3"
+        '
+        'CheckBox1
+        '
+        resources.ApplyResources(Me.CheckBox1, "CheckBox1")
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.UseVisualStyleBackColor = True
+        '
+        'CheckBox2
+        '
+        resources.ApplyResources(Me.CheckBox2, "CheckBox2")
+        Me.CheckBox2.Checked = True
+        Me.CheckBox2.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBox2.Name = "CheckBox2"
+        Me.CheckBox2.UseVisualStyleBackColor = True
+        '
+        'RadioButton6
+        '
+        resources.ApplyResources(Me.RadioButton6, "RadioButton6")
+        Me.RadioButton6.Name = "RadioButton6"
+        Me.RadioButton6.UseVisualStyleBackColor = True
         '
         'RadioButton3
         '
@@ -187,43 +204,6 @@ Partial Class Form1
         Me.ListBox1.Items.AddRange(New Object() {resources.GetString("ListBox1.Items")})
         Me.ListBox1.Name = "ListBox1"
         '
-        'Panel4
-        '
-        Me.Panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel4.Controls.Add(Me.RadioButton5)
-        Me.Panel4.Controls.Add(Me.RadioButton4)
-        resources.ApplyResources(Me.Panel4, "Panel4")
-        Me.Panel4.Name = "Panel4"
-        '
-        'RadioButton4
-        '
-        resources.ApplyResources(Me.RadioButton4, "RadioButton4")
-        Me.RadioButton4.Checked = True
-        Me.RadioButton4.Name = "RadioButton4"
-        Me.RadioButton4.TabStop = True
-        Me.RadioButton4.UseVisualStyleBackColor = True
-        '
-        'RadioButton5
-        '
-        resources.ApplyResources(Me.RadioButton5, "RadioButton5")
-        Me.RadioButton5.Name = "RadioButton5"
-        Me.RadioButton5.UseVisualStyleBackColor = True
-        '
-        'Panel5
-        '
-        Me.Panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel5.Controls.Add(Me.CheckBox1)
-        resources.ApplyResources(Me.Panel5, "Panel5")
-        Me.Panel5.Name = "Panel5"
-        '
-        'CheckBox1
-        '
-        resources.ApplyResources(Me.CheckBox1, "CheckBox1")
-        Me.CheckBox1.Checked = True
-        Me.CheckBox1.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.UseVisualStyleBackColor = True
-        '
         'Form1
         '
         resources.ApplyResources(Me, "$this")
@@ -245,10 +225,6 @@ Partial Class Form1
         Me.Panel3.PerformLayout()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
-        Me.Panel4.ResumeLayout(False)
-        Me.Panel4.PerformLayout()
-        Me.Panel5.ResumeLayout(False)
-        Me.Panel5.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -274,10 +250,8 @@ Partial Class Form1
     Friend WithEvents RadioButton3 As System.Windows.Forms.RadioButton
     Friend WithEvents RadioButton2 As System.Windows.Forms.RadioButton
     Friend WithEvents RadioButton1 As System.Windows.Forms.RadioButton
-    Friend WithEvents Panel4 As System.Windows.Forms.Panel
-    Friend WithEvents RadioButton5 As System.Windows.Forms.RadioButton
-    Friend WithEvents RadioButton4 As System.Windows.Forms.RadioButton
-    Friend WithEvents Panel5 As System.Windows.Forms.Panel
+    Friend WithEvents RadioButton6 As System.Windows.Forms.RadioButton
+    Friend WithEvents CheckBox2 As System.Windows.Forms.CheckBox
     Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
 
 End Class

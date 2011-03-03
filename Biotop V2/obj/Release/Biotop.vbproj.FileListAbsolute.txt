@@ -117,3 +117,8 @@ D:\Patrick\Programmierung\JustMyProgs\Biotop V2\obj\Release\de-DE\Biotop V2.reso
 D:\Patrick\Programmierung\JustMyProgs\Biotop V2\obj\Release\Biotop V2.exe
 D:\Patrick\Programmierung\JustMyProgs\Biotop V2\obj\Release\Biotop V2.xml
 D:\Patrick\Programmierung\JustMyProgs\Biotop V2\obj\Release\Biotop V2.pdb
+D:\Patrick\JustMyProgs\Biotop V2\bin\Release\Biotop V2.exe.manifest
+D:\Patrick\JustMyProgs\Biotop V2\bin\Release\Biotop V2.application
+D:\Patrick\JustMyProgs\Biotop V2\obj\Release\Biotop V2.TrustInfo.xml
+D:\Patrick\JustMyProgs\Biotop V2\obj\Release\Biotop V2.exe.manifest
+D:\Patrick\JustMyProgs\Biotop V2\obj\Release\Biotop V2.application

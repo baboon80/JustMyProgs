@@ -90,6 +90,8 @@ Public Class Form1
         ToolStripStatusLabel1.Text = "Bitte Permanenz Datei für die System-Auswertung eingeben!"
         ToolStripProgressBar1.Visible = False
         loaded = True
+
+        Me.Text = "Biotop V2 Version: 2.01"
     End Sub
 
     Private Sub StartAuswertung()
@@ -142,12 +144,6 @@ Public Class Form1
         Sel3Verlust = 0
         Sel4Verlust = 0
 
-        If RadioButton4.Checked = True Then
-            PartieParam = 1
-        ElseIf RadioButton5.Checked = True Then
-            PartieParam = 2
-        End If
-
         ListBox1.Items.RemoveAt(0)
 
         Using r As StreamReader = New StreamReader(TextBox1.Text)
@@ -172,7 +168,7 @@ Public Class Form1
                             End If
                         End If
 
-                        If CheckBox1.Checked = True Then
+                        If CheckBox1.Checked = False Then
                             If SaldoWithOutZ = 2 And TmpMaxSaldo >= 3 Then
                                 nextDay = True
                             ElseIf SaldoWithOutZ = 3 And TmpMaxSaldo >= 5 Then
@@ -198,7 +194,7 @@ Public Class Form1
                         lastsaldo = saldo
                     End If
                 Else
-                    If InStr(line, "Datum") And PartieParam = 1 Then
+                    If InStr(line, "Datum") And CheckBox1.Checked = False Then
                         If datum = "" Then
                             datum = Trim(line.Substring(6))
                         End If
@@ -259,7 +255,7 @@ Public Class Form1
 
 
             If datum = "" Then
-                If PartieParam = 2 Then
+                If CheckBox1.Checked = True Then
                     datum = "Endlospartie"
                 Else
                     datum = Now.Date
@@ -268,11 +264,22 @@ Public Class Form1
 
             If SatzCnt > 0 Then
                 GesSaldo = GesSaldo + saldo
-                Me.ListBox1.Items.Add(datum & ": Saldo = " & saldo & vbTab & "Zero Verlust = " & (zeroCnt / 2) & vbTab & "Anz. Sätze = " & SatzCnt & vbTab & "Max. Verlustserie = " & GesMaxloss & vbTab & _
+                If CheckBox1.Checked = True Then
+
+                    If saldoverlauf.Length > 100 Then
+                        Me.ListBox1.Items.Add(datum & ": Saldo = " & saldo & vbTab & "Zero Verlust = " & (zeroCnt / 2) & vbTab & "Anz. Sätze = " & SatzCnt & vbTab & "Max. Verlustserie = " & GesMaxloss & vbTab & _
+                                                      "Saldoverlauf: " & saldoverlauf.Substring(0, 100) & "...")
+                    Else
+                        Me.ListBox1.Items.Add(datum & ": Saldo = " & saldo & vbTab & "Zero Verlust = " & (zeroCnt / 2) & vbTab & "Anz. Sätze = " & SatzCnt & vbTab & "Max. Verlustserie = " & GesMaxloss & vbTab & _
+                                                      "Saldoverlauf: " & saldoverlauf)
+                    End If
+                Else
+                    Me.ListBox1.Items.Add(datum & ": Saldo = " & saldo & vbTab & "Zero Verlust = " & (zeroCnt / 2) & vbTab & "Anz. Sätze = " & SatzCnt & vbTab & "Max. Verlustserie = " & GesMaxloss & vbTab & _
                                                   "Saldoverlauf: " & saldoverlauf)
-            Else
-                Me.ListBox1.Items.Add("Es konnten keinen Sätze ermittelt werden")
-            End If
+                End If
+                Else
+                    Me.ListBox1.Items.Add("Es konnten keinen Sätze ermittelt werden")
+                End If
 
             GesZero = GesZero + (zeroCnt / 2)
             GesSatzCnt = GesSatzCnt + SatzCnt
@@ -415,6 +422,12 @@ Public Class Form1
         Dim played As Boolean = False
         Dim arraylistCnt As Integer = arrayPartie.Count
 
+        If CheckBox2.Checked = False Then
+            Sel1Verlust = 0
+            Sel2Verlust = 0
+            Sel3Verlust = 0
+            Sel4Verlust = 0
+        End If
 
         If arrayPartie.Count = 0 Then Exit Sub
         Dim localInstanceofMyClass = CType(arrayPartie(arraylistCnt - 1), clsCoupData)
@@ -491,7 +504,7 @@ Public Class Form1
                                 localInstanceofMyClass.TPRS = SetTo & " +1/" & saldo
                                 Maxloss = 0
                             Else
-                                localInstanceofMyClass.TPRS = "Verlust > 3"
+                                localInstanceofMyClass.TPRS = SetTo & " Verl. > 3"
                             End If
 
                             Sel1Verlust = 0
@@ -508,7 +521,7 @@ Public Class Form1
                                     localInstanceofMyClass.TPRS = SetTo & " -1/" & saldo
                                 End If
                             Else
-                                localInstanceofMyClass.TPRS = "Verlust > 3"
+                                localInstanceofMyClass.TPRS = SetTo & " Verl. > 3"
                             End If
 
                             Sel1Verlust = Sel1Verlust + 1
@@ -537,10 +550,10 @@ Public Class Form1
                             If Sel2Verlust < 3 Then
                                 saldo = saldo + 1
                                 SaldoWithOutZ = SaldoWithOutZ + 1
-                                localInstanceofMyClass.TmS = SetTo & " +1/" & saldo
+                                localInstanceofMyClass.TmRS = SetTo & " +1/" & saldo
                                 Maxloss = 0
                             Else
-                                localInstanceofMyClass.TmS = "Verlust > 3"
+                                localInstanceofMyClass.TmRS = SetTo & " Verl. > 3"
                             End If
 
                             Sel2Verlust = 0
@@ -557,7 +570,7 @@ Public Class Form1
                                     localInstanceofMyClass.TmRS = SetTo & " -1/" & saldo
                                 End If
                             Else
-                                localInstanceofMyClass.TmRS = "Verlust > 3"
+                                localInstanceofMyClass.TmRS = SetTo & " Verl. > 3"
                             End If
 
                             Sel2Verlust = Sel2Verlust + 1
@@ -589,7 +602,7 @@ Public Class Form1
                                 localInstanceofMyClass.SRS = SetTo & " +1/" & saldo
                                 Maxloss = 0
                             Else
-                                localInstanceofMyClass.SRS = "Verlust > 3"
+                                localInstanceofMyClass.SRS = SetTo & " Verl. > 3"
                             End If
 
                             Sel3Verlust = 0
@@ -606,7 +619,7 @@ Public Class Form1
                                     localInstanceofMyClass.SRS = SetTo & " -1/" & saldo
                                 End If
                             Else
-                                localInstanceofMyClass.SRS = "Verlust > 3"
+                                localInstanceofMyClass.SRS = SetTo & " Verl. > 3"
                             End If
 
                             Sel3Verlust = Sel3Verlust + 1
@@ -638,7 +651,7 @@ Public Class Form1
                                 localInstanceofMyClass.RRS = SetTo & " +1/" & saldo
                                 Maxloss = 0
                             Else
-                                localInstanceofMyClass.RRS = "Verlust > 3"
+                                localInstanceofMyClass.RRS = SetTo & " Verl. > 3"
                             End If
 
                             Sel4Verlust = 0
@@ -655,7 +668,7 @@ Public Class Form1
                                     localInstanceofMyClass.RRS = SetTo & " -1/" & saldo
                                 End If
                             Else
-                                localInstanceofMyClass.RRS = "Verlust > 3"
+                                localInstanceofMyClass.RRS = SetTo & " Verl. > 3"
                             End If
 
                             Sel4Verlust = Sel4Verlust + 1
@@ -1549,11 +1562,20 @@ Public Class Form1
             If count = 7 Then Exit For
         Next
 
-        If count >= 3 Then
-            GetRapLast7 = Rap
+        If RadioButton3.Checked = True Or RadioButton6.Checked = True Then
+            If count >= 2 Then
+                GetRapLast7 = Rap
+            Else
+                GetRapLast7 = ""
+            End If
         Else
-            GetRapLast7 = ""
+            If count >= 3 Then
+                GetRapLast7 = Rap
+            Else
+                GetRapLast7 = ""
+            End If
         End If
+
     End Function
 
     Private Function FillSatz(ByVal SelektorCol As Integer) As String
@@ -1803,6 +1825,36 @@ Public Class Form1
                     Call SetSatz(s4, SelektorCol)
                     Exit Function
                 End If
+
+            ElseIf RadioButton6.Checked = True Then
+
+                If RapTmp.Length < 2 Then
+                    FillSatz = ""
+                    Exit Function
+                End If
+
+                If s7 <> s6 And RapTmp.Length >= 2 Then 'first trysel
+                    ReturnStr = s6 & s7 & "(" & s7 & ")"
+                    SatzCount = SatzCount + 1
+                    FillSatz = ReturnStr
+                    Call SetSatz(s7, SelektorCol)
+                    Exit Function
+                End If
+                If s7 = s6 And s6 <> s5 And RapTmp.Length >= 3 Then 'first try
+                    ReturnStr = s5 & s6 & s7 & "(" & s7 & ")"
+                    SatzCount = SatzCount + 1
+                    FillSatz = ReturnStr
+                    Call SetSatz(s7, SelektorCol)
+                    Exit Function
+                End If
+                If s7 = s6 And s6 = s5 And s5 <> s4 And RapTmp.Length >= 4 Then 'first try
+                    ReturnStr = s4 & s5 & s6 & s7 & "(" & s7 & ")"
+                    SatzCount = SatzCount + 1
+                    FillSatz = ReturnStr
+                    Call SetSatz(s7, SelektorCol)
+                    Exit Function
+                End If
+
 
             End If
         End If
@@ -2436,6 +2488,7 @@ Public Class Form1
         Call StartAuswertung()
 
         Call SetToolTipStatus()
+
         Me.TextRes.Text = ResTxt
 
         Me.TextRes.SelectionStart = TextBox1.TextLength
