@@ -91,7 +91,7 @@ Public Class Form1
         ToolStripProgressBar1.Visible = False
         loaded = True
 
-        Me.Text = "Biotop V2 Version: 2.01"
+        Me.Text = "Biotop V2 Version: 2.03"
     End Sub
 
     Private Sub StartAuswertung()
@@ -1847,14 +1847,6 @@ Public Class Form1
                     Call SetSatz(s7, SelektorCol)
                     Exit Function
                 End If
-                If s7 = s6 And s6 = s5 And s5 <> s4 And RapTmp.Length >= 4 Then 'first try
-                    ReturnStr = s4 & s5 & s6 & s7 & "(" & s7 & ")"
-                    SatzCount = SatzCount + 1
-                    FillSatz = ReturnStr
-                    Call SetSatz(s7, SelektorCol)
-                    Exit Function
-                End If
-
 
             End If
         End If
@@ -2585,6 +2577,7 @@ Public Class Form1
     Private Sub clearFullData()
         ClearGraph()
         TextRes.Text = ""
+        TextBox2.Text = ""
         ListBox1.Items.Clear()
         Me.ListBox1.Items.Add("Bitte Permanenz Datei für die System-Auswertung eingeben!")
     End Sub
@@ -2605,20 +2598,60 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub ListBox1_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ListBox1.Click
+
+    End Sub
+
     Private Sub ListBox1_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles ListBox1.DoubleClick
         Dim sItem As String = ListBox1.SelectedItem
         Dim SaldoVerlauf As String
 
+        Me.Cursor = Cursors.WaitCursor
+
         If sItem = "" Then Exit Sub
-        Dim VerlPos As Integer = InStr(sItem, "Verlauf: ", CompareMethod.Text) + 10
-        SaldoVerlauf = sItem.Substring(VerlPos, sItem.Length - VerlPos)
+        
+        If CheckBox1.Checked = True Then
+            SaldoVerlauf = gesSaldoVerlaufhalbZero
+        Else
+            Dim VerlPos As Integer = InStr(sItem, "Verlauf: ", CompareMethod.Text) + 8
+            SaldoVerlauf = sItem.Substring(VerlPos, sItem.Length - VerlPos)
+        End If
 
         Dim localArrayList As ArrayList = arrayGlobal(ListBox1.SelectedIndex)
 
         FormGrid.CoupData = localArrayList
         FormGrid.SaldoVerlaufhalbZero = SaldoVerlauf
         FormGrid.ShowDialog()
+        Me.Cursor = Cursors.Default
 
     End Sub
 
+    Private Sub ListBox1_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ListBox1.SelectedIndexChanged
+        Dim sItem As String = ListBox1.SelectedItem
+        Dim SaldoVerlauf As String
+        Dim tmpverlauf As String = ""
+
+        Me.Cursor = Cursors.WaitCursor
+
+        If sItem = "" Then Exit Sub
+
+        If CheckBox1.Checked = True Then
+            SaldoVerlauf = gesSaldoVerlaufhalbZero
+        Else
+            Dim VerlPos As Integer = InStr(sItem, "Verlauf: ", CompareMethod.Text) + 8
+            SaldoVerlauf = sItem.Substring(VerlPos, sItem.Length - VerlPos)
+        End If
+
+        For I As Integer = 0 To SaldoVerlauf.Length - 1
+            If SaldoVerlauf.Substring(I, 1) = "+" Then
+                tmpverlauf = tmpverlauf & "+ "
+            ElseIf SaldoVerlauf.Substring(I, 1) = "-" Then
+                tmpverlauf = tmpverlauf & "- "
+            End If
+        Next
+
+        Me.TextBox2.Text = tmpverlauf
+
+        Me.Cursor = Cursors.Default
+    End Sub
 End Class

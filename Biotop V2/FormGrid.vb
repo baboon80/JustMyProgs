@@ -221,6 +221,8 @@
 
         CreateGraph()
         loaded = True
+
+        Me.Cursor = Cursors.Default
     End Sub
 
     Private Sub DataGridView1_ColumnWidthChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewColumnEventArgs) Handles DataGridView1.ColumnWidthChanged

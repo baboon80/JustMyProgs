@@ -46,6 +46,8 @@ Partial Class Form1
         Me.TextRes = New System.Windows.Forms.TextBox
         Me.HScrollBar1 = New System.Windows.Forms.HScrollBar
         Me.ListBox1 = New System.Windows.Forms.ListBox
+        Me.Label2 = New System.Windows.Forms.Label
+        Me.TextBox2 = New System.Windows.Forms.TextBox
         Me.Panel1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.Panel3.SuspendLayout()
@@ -106,15 +108,15 @@ Partial Class Form1
         'RadioButton6
         '
         resources.ApplyResources(Me.RadioButton6, "RadioButton6")
+        Me.RadioButton6.Checked = True
         Me.RadioButton6.Name = "RadioButton6"
+        Me.RadioButton6.TabStop = True
         Me.RadioButton6.UseVisualStyleBackColor = True
         '
         'RadioButton3
         '
         resources.ApplyResources(Me.RadioButton3, "RadioButton3")
-        Me.RadioButton3.Checked = True
         Me.RadioButton3.Name = "RadioButton3"
-        Me.RadioButton3.TabStop = True
         Me.RadioButton3.UseVisualStyleBackColor = True
         '
         'RadioButton2
@@ -204,10 +206,22 @@ Partial Class Form1
         Me.ListBox1.Items.AddRange(New Object() {resources.GetString("ListBox1.Items")})
         Me.ListBox1.Name = "ListBox1"
         '
+        'Label2
+        '
+        resources.ApplyResources(Me.Label2, "Label2")
+        Me.Label2.Name = "Label2"
+        '
+        'TextBox2
+        '
+        resources.ApplyResources(Me.TextBox2, "TextBox2")
+        Me.TextBox2.Name = "TextBox2"
+        '
         'Form1
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
+        Me.Controls.Add(Me.TextBox2)
+        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.ListBox1)
         Me.Controls.Add(Me.HScrollBar1)
         Me.Controls.Add(Me.TextRes)
@@ -253,5 +267,7 @@ Partial Class Form1
     Friend WithEvents RadioButton6 As System.Windows.Forms.RadioButton
     Friend WithEvents CheckBox2 As System.Windows.Forms.CheckBox
     Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
 
 End Class
