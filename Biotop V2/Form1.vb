@@ -91,7 +91,7 @@ Public Class Form1
         ToolStripProgressBar1.Visible = False
         loaded = True
 
-        Me.Text = "Biotop V2 Version: 2.03"
+        Me.Text = "Biotop V2 Version: 2.04"
     End Sub
 
     Private Sub StartAuswertung()
