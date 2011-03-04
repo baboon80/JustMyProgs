@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{8DA64467-B26A-4885-A2E3-5C0BA458AABA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -19,12 +19,13 @@
     <OptionInfer>On</OptionInfer>
     <ApplicationIcon>statistics.ico</ApplicationIcon>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <ManifestCertificateThumbprint>82CE94139279F8C20EBFB2D90B5FDDA09E2836D4</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>193F8F98F942FB067C57D6A602AAD73B054DF6D8</ManifestCertificateThumbprint>
     <ManifestKeyFile>Biotop_TemporaryKey.pfx</ManifestKeyFile>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
     <TargetZone>LocalIntranet</TargetZone>
+    <SignManifests>false</SignManifests>
+    <SignAssembly>false</SignAssembly>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
-    <SignManifests>true</SignManifests>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -215,6 +216,11 @@
     <Content Include="statistics.ico" />
   </ItemGroup>
   <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 2.0 %28x86%29</ProductName>

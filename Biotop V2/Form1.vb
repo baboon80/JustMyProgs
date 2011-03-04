@@ -165,6 +165,7 @@ Public Class Form1
                             Else                                
                                 saldoverlauf = saldoverlauf & "Z "
                                 gesSaldoVerlaufhalbZero = gesSaldoVerlaufhalbZero & "Z "
+                                zeroCnt = zeroCnt + 1
                             End If
                         End If
 
@@ -492,9 +493,6 @@ Public Class Form1
                 Else
                     If played = False Then
                         played = True
-                        If cCoupData.TPR = "" Then
-                            zeroCnt = zeroCnt + 1
-                        End If
 
                         If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = cCoupData.TPR Then
                             SatzCnt = SatzCnt + 1
@@ -541,9 +539,6 @@ Public Class Form1
                 Else
                     If played = False Then
                         played = True
-                        If cCoupData.TmR = "" Then
-                            zeroCnt = zeroCnt + 1
-                        End If
 
                         If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = cCoupData.TmR Then
                             SatzCnt = SatzCnt + 1
@@ -590,9 +585,6 @@ Public Class Form1
                 Else
                     If played = False Then
                         played = True
-                        If cCoupData.SR = "" Then
-                            zeroCnt = zeroCnt + 1
-                        End If
 
                         If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = cCoupData.SR Then
                             SatzCnt = SatzCnt + 1
@@ -626,7 +618,7 @@ Public Class Form1
                         End If
                     Else
                         localInstanceofMyClass.SRS = "bereits gesetzt"
-                    End If
+                End If
                 End If
             End If
         End If
@@ -639,9 +631,6 @@ Public Class Form1
                 Else
                     If played = False Then
                         played = True
-                        If cCoupData.RR = "" Then
-                            zeroCnt = zeroCnt + 1
-                        End If
 
                         If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = cCoupData.RR Then
                             SatzCnt = SatzCnt + 1
@@ -1833,21 +1822,20 @@ Public Class Form1
                     Exit Function
                 End If
 
-                If s7 <> s6 And RapTmp.Length >= 2 Then 'first trysel
-                    ReturnStr = s6 & s7 & "(" & s7 & ")"
+                If s7 <> s6 And RapTmp.Length >= 2 Then 'first try
+                    ReturnStr = s6 & s7 & "(" & s6 & ")"
                     SatzCount = SatzCount + 1
                     FillSatz = ReturnStr
-                    Call SetSatz(s7, SelektorCol)
+                    Call SetSatz(s6, SelektorCol)
                     Exit Function
                 End If
                 If s7 = s6 And s6 <> s5 And RapTmp.Length >= 3 Then 'first try
-                    ReturnStr = s5 & s6 & s7 & "(" & s7 & ")"
+                    ReturnStr = s5 & s6 & s7 & "(" & s5 & ")"
                     SatzCount = SatzCount + 1
                     FillSatz = ReturnStr
-                    Call SetSatz(s7, SelektorCol)
+                    Call SetSatz(s5, SelektorCol)
                     Exit Function
                 End If
-
             End If
         End If
 
