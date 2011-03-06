@@ -130,7 +130,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="CheckBox11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 216</value>
+    <value>13, 298</value>
   </data>
   <data name="CheckBox11.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 17</value>
@@ -160,7 +160,7 @@
     <value>NoControl</value>
   </data>
   <data name="CheckBox10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 193</value>
+    <value>13, 275</value>
   </data>
   <data name="CheckBox10.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 17</value>
@@ -190,7 +190,7 @@
     <value>NoControl</value>
   </data>
   <data name="CheckBox9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 170</value>
+    <value>13, 252</value>
   </data>
   <data name="CheckBox9.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 17</value>
@@ -220,7 +220,7 @@
     <value>NoControl</value>
   </data>
   <data name="CheckBox8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 147</value>
+    <value>13, 229</value>
   </data>
   <data name="CheckBox8.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 17</value>
@@ -250,7 +250,7 @@
     <value>NoControl</value>
   </data>
   <data name="CheckBox7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 127</value>
+    <value>13, 209</value>
   </data>
   <data name="CheckBox7.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 17</value>
@@ -280,7 +280,7 @@
     <value>NoControl</value>
   </data>
   <data name="CheckBox6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 104</value>
+    <value>13, 186</value>
   </data>
   <data name="CheckBox6.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 17</value>
@@ -310,7 +310,7 @@
     <value>NoControl</value>
   </data>
   <data name="CheckBox5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 81</value>
+    <value>13, 163</value>
   </data>
   <data name="CheckBox5.Size" type="System.Drawing.Size, System.Drawing">
     <value>66, 17</value>
@@ -340,7 +340,7 @@
     <value>NoControl</value>
   </data>
   <data name="CheckBox4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 58</value>
+    <value>13, 140</value>
   </data>
   <data name="CheckBox4.Size" type="System.Drawing.Size, System.Drawing">
     <value>66, 17</value>
@@ -367,7 +367,7 @@
     <value>True</value>
   </data>
   <data name="CheckBox3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 35</value>
+    <value>13, 117</value>
   </data>
   <data name="CheckBox3.Size" type="System.Drawing.Size, System.Drawing">
     <value>66, 17</value>
@@ -397,7 +397,7 @@
     <value>NoControl</value>
   </data>
   <data name="CheckBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 357</value>
+    <value>13, 353</value>
   </data>
   <data name="CheckBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>171, 17</value>
@@ -427,7 +427,7 @@
     <value>NoControl</value>
   </data>
   <data name="CheckBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 334</value>
+    <value>13, 330</value>
   </data>
   <data name="CheckBox2.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 17</value>
@@ -457,7 +457,7 @@
     <value>NoControl</value>
   </data>
   <data name="RadioButton6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 311</value>
+    <value>13, 81</value>
   </data>
   <data name="RadioButton6.Size" type="System.Drawing.Size, System.Drawing">
     <value>188, 17</value>
@@ -487,7 +487,7 @@
     <value>NoControl</value>
   </data>
   <data name="RadioButton3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 288</value>
+    <value>13, 58</value>
   </data>
   <data name="RadioButton3.Size" type="System.Drawing.Size, System.Drawing">
     <value>247, 17</value>
@@ -547,7 +547,7 @@
     <value>NoControl</value>
   </data>
   <data name="RadioButton1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 265</value>
+    <value>13, 35</value>
   </data>
   <data name="RadioButton1.Size" type="System.Drawing.Size, System.Drawing">
     <value>102, 17</value>
@@ -759,6 +759,15 @@
   <metadata name="StatusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>0, 608</value>
   </metadata>
+  <data name="ToolStripProgressBar1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 16</value>
+  </data>
+  <data name="ToolStripStatusLabel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1280, 17</value>
+  </data>
+  <data name="ToolStripStatusLabel1.Text" xml:space="preserve">
+    <value>ToolStripStatusLabel1</value>
+  </data>
   <data name="StatusStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 608</value>
   </data>
@@ -782,15 +791,6 @@
   </data>
   <data name="&gt;&gt;StatusStrip1.ZOrder" xml:space="preserve">
     <value>6</value>
-  </data>
-  <data name="ToolStripProgressBar1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 16</value>
-  </data>
-  <data name="ToolStripStatusLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1280, 17</value>
-  </data>
-  <data name="ToolStripStatusLabel1.Text" xml:space="preserve">
-    <value>ToolStripStatusLabel1</value>
   </data>
   <data name="Panel2.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
