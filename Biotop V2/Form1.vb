@@ -84,14 +84,13 @@ Public Class Form1
         End If
     End Sub
 
-
     Private Sub Form1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
         ToolStripStatusLabel1.Text = "Bitte Permanenz Datei für die System-Auswertung eingeben!"
         ToolStripProgressBar1.Visible = False
         loaded = True
 
-        Me.Text = "Biotop V2 Version: 2.04"
+        Me.Text = "Biotop V2 Version: 2.07"
     End Sub
 
     Private Sub StartAuswertung()
@@ -1690,101 +1689,91 @@ Public Class Form1
                     Call SetSatz(s5, SelektorCol)
                     Exit Function
                 End If
-            ElseIf RadioButton2.Checked = True Then 'Figuren isoliert: -160
-                ''Regel10 XXX(X) | OOO(O)
-                If (s7 = s6 And s7 = s5) Then
+            ElseIf RadioButton2.Checked = True Then 'Biotop Original
 
-                    If RapTmp.Length < 4 Then
-                        FillSatz = ""
-                        Exit Function
-                    End If
-
-                    If ((s7 <> s4) Or RapTmp.Length = 4) Then
+                If RapTmp.Length >= 4 Then
+                    ''Regel10 XXX(X) | OOO(O)
+                    If (s7 = s6 And s7 = s5 And s4 <> s5 And CheckBox3.Checked = True) Then
                         ReturnStr = "R10: " & s5 & s6 & s7 & "(" & s7 & ")"
                         SatzCount = SatzCount + 1
                         Call SetSatz(s7, SelektorCol)
-                    Else
-                        ReturnStr = "R10: Not Aborted"
-                    End If
-                    FillSatz = ReturnStr
-                    Exit Function
-                End If
-
-                ''Is R10 aborted?
-                If s2 = s3 And s3 = s4 And s4 = s5 Then
-                    FillSatz = ""
-                    Exit Function
-                End If
-
-                ''Regel11 OO XOX(O) | XX OXO(X) 
-                If (s7 <> s6 And s7 = s5 And s5 <> s4) Then
-
-                    If RapTmp.Length < 5 Then
-                        FillSatz = ""
+                        FillSatz = ReturnStr
                         Exit Function
                     End If
-
-                    If (s6 = s4 And s4 = s3) Then
-                        ReturnStr = "R11: " & s5 & s6 & s7 & "(" & s6 & ")"
-                        SatzCount = SatzCount + 1
-                        Call SetSatz(s6, SelektorCol)
-                    Else
-                        ReturnStr = "R11: Not Aborted"
-                    End If
-
-                    FillSatz = ReturnStr
-                    Exit Function
                 End If
 
-                'XXOOX
-                ''Regel12 XXO(O) | OOX(X) XXOOX
-                If (s7 <> s6 And s6 = s5 And s5 <> s4) Then
-
-                    If RapTmp.Length < 5 Then
-                        FillSatz = ""
-                        Exit Function
+                If RapTmp.Length >= 4 Then
+                    ''Regel11 OO XOX(O) | XX OXO(X) 
+                    If (s7 <> s6 And s7 = s5 And s5 <> s4 And CheckBox4.Checked = True) Then
+                        If RapTmp.Length = 4 Then
+                            ReturnStr = "R11: " & s5 & s6 & s7 & "(" & s6 & ")"
+                            SatzCount = SatzCount + 1
+                            Call SetSatz(s6, SelektorCol)
+                            FillSatz = ReturnStr
+                            Exit Function
+                        Else
+                            If (s6 = s4 And s4 = s3) Then
+                                ReturnStr = "R11: " & s5 & s6 & s7 & "(" & s6 & ")"
+                                SatzCount = SatzCount + 1
+                                Call SetSatz(s6, SelektorCol)
+                                FillSatz = ReturnStr
+                                Exit Function
+                            End If
+                        End If
                     End If
+                End If
 
-                    If Not ((s4 = s7) And (s3 = s4)) Then
-                        ReturnStr = "R12: " & s5 & s6 & s7 & "(" & s7 & ")"
-                        SatzCount = SatzCount + 1
-                        Call SetSatz(s7, SelektorCol)
-                    Else
-                        If RapTmp.Length = 5 Then
+                If RapTmp.Length >= 4 Then
+                    'OOOXOOX
+                    ''Regel12 XXO(O) | OOX(X) XXOOX
+                    If (s7 <> s6 And s6 = s5 And s5 <> s4 And CheckBox5.Checked = True) Then
+                        If RapTmp.Length = 4 Or RapTmp.Length = 5 Then
                             ReturnStr = "R12: " & s5 & s6 & s7 & "(" & s7 & ")"
                             SatzCount = SatzCount + 1
                             Call SetSatz(s7, SelektorCol)
-                        Else
-                            ReturnStr = "R12: Not Aborted"
+                            FillSatz = ReturnStr
+                            Exit Function
                         End If
 
+                        If RapTmp.Length = 5 Or RapTmp.Length = 6 Then
+                            ReturnStr = "R12: " & s5 & s6 & s7 & "(" & s7 & ")"
+                            SatzCount = SatzCount + 1
+                            Call SetSatz(s7, SelektorCol)
+                            FillSatz = ReturnStr
+                            Exit Function
+                        ElseIf RapTmp.Length >= 6 Then
+                            If Not (s2 <> s3 And s3 = s4) Then
+                                ReturnStr = "R12: " & s5 & s6 & s7 & "(" & s7 & ")"
+                                SatzCount = SatzCount + 1
+                                Call SetSatz(s7, SelektorCol)
+                                FillSatz = ReturnStr
+                                Exit Function
+                            End If
+                        End If
                     End If
-
-                    FillSatz = ReturnStr
-                    Exit Function
                 End If
 
-                If RapTmp.Length = 7 Then
+                If RapTmp.Length >= 6 Then
                     ''If RapTmp.Length = 5 Then
                     'Regel13 OXXOX(X) | XOOXO(O)
-                    If (s7 <> s6 And s6 <> s5 And s5 = s4 And s4 <> s3 And (s2 <> s3)) Then
+                    If (s7 <> s6 And s6 <> s5 And s5 = s4 And s4 <> s3 And s2 <> s3 And CheckBox6.Checked = True) Then
                         ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s7 & ")"
                         SatzCount = SatzCount + 1
-                        FillSatz = ReturnStr
                         Call SetSatz(s7, SelektorCol)
+                        FillSatz = ReturnStr
                         Exit Function
                         'XXOXX(O) | OOXOO(X)
-                    ElseIf (s7 = s6 And s6 <> s5 And s5 <> s4 And s4 = s3 And (s2 <> s3)) Then
+                    ElseIf (s7 = s6 And s6 <> s5 And s5 <> s4 And s4 = s3 And s2 <> s3) Then
                         ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s5 & ")"
                         SatzCount = SatzCount + 1
-                        FillSatz = ReturnStr
                         Call SetSatz(s5, SelektorCol)
+                        FillSatz = ReturnStr
                         Exit Function
                     End If
-                Else
-                    FillSatz = ""
-                    Exit Function
                 End If
+
+                FillSatz = ""
+                Exit Function
 
             ElseIf RadioButton3.Checked = True Then
 
@@ -1815,31 +1804,31 @@ Public Class Form1
                     Exit Function
                 End If
 
-            ElseIf RadioButton6.Checked = True Then
+                ElseIf RadioButton6.Checked = True Then
 
-                If RapTmp.Length < 2 Then
-                    FillSatz = ""
-                    Exit Function
-                End If
+                    If RapTmp.Length < 2 Then
+                        FillSatz = ""
+                        Exit Function
+                    End If
 
-                If s7 <> s6 And RapTmp.Length >= 2 Then 'first try
-                    ReturnStr = s6 & s7 & "(" & s6 & ")"
-                    SatzCount = SatzCount + 1
-                    FillSatz = ReturnStr
-                    Call SetSatz(s6, SelektorCol)
-                    Exit Function
-                End If
-                If s7 = s6 And s6 <> s5 And RapTmp.Length >= 3 Then 'first try
-                    ReturnStr = s5 & s6 & s7 & "(" & s5 & ")"
-                    SatzCount = SatzCount + 1
-                    FillSatz = ReturnStr
-                    Call SetSatz(s5, SelektorCol)
-                    Exit Function
+                    If s7 <> s6 And RapTmp.Length >= 2 Then 'first try
+                        ReturnStr = s6 & s7 & "(" & s6 & ")"
+                        SatzCount = SatzCount + 1
+                        FillSatz = ReturnStr
+                        Call SetSatz(s6, SelektorCol)
+                        Exit Function
+                    End If
+                    If s7 = s6 And s6 <> s5 And RapTmp.Length >= 3 Then 'first try
+                        ReturnStr = s5 & s6 & s7 & "(" & s5 & ")"
+                        SatzCount = SatzCount + 1
+                        FillSatz = ReturnStr
+                        Call SetSatz(s5, SelektorCol)
+                        Exit Function
+                    End If
                 End If
             End If
-        End If
 
-        FillSatz = ReturnStr
+            FillSatz = ReturnStr
 
     End Function
 
