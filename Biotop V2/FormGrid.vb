@@ -387,13 +387,7 @@
         GetColWidth = width + 20
     End Function
 
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Me.Width = Me.Width
-    End Sub
-
     Private Sub CreateGraph()
-
-
         myPane = zed.GraphPane
 
         myPane.Title.Text = "Saldo Verlauf"
@@ -453,10 +447,9 @@
             myCurve1 = myPane.AddCurve("Saldo mit Zero", list3, Color.Orange, ZedGraph.SymbolType.None)
             myCurve2 = myPane.AddCurve("Saldo ohne Zero", list1, Color.Green, ZedGraph.SymbolType.None)
             zed.AxisChange()
+            myPane.Chart.Fill = New ZedGraph.Fill(Color.White, Color.LightGray, 90.0F)
+            myPane.Fill = New ZedGraph.Fill(Color.AliceBlue)
+            zed.Refresh()
         End If
-    End Sub
-
-    Private Sub Button1_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Me.Width = Me.Width
     End Sub
 End Class

@@ -2629,6 +2629,7 @@ Public Class Form1
 
         If zed Is Nothing Then
             zed = New ZedGraph.ZedGraphControl
+
             zed.Parent = Me.Panel2
             zed.Location = New Point(0, 0)
             zed.Size = New Size(Panel2.Width, Panel2.Height - 10)
@@ -2691,8 +2692,14 @@ Public Class Form1
             Dim myCurve2 As ZedGraph.LineItem
             myCurve1 = myPane.AddCurve("Saldo mit Zero", list3, Color.Orange, ZedGraph.SymbolType.None)
             myCurve2 = myPane.AddCurve("Saldo ohne Zero", list1, Color.Green, ZedGraph.SymbolType.None)
+
+            myPane.Chart.Fill = New ZedGraph.Fill(Color.White, Color.LightGray, 90.0F)
+            myPane.Fill = New ZedGraph.Fill(Color.AliceBlue)
+
             zed.AxisChange()
-            zed.Refresh()
+            zed.Size = New Size(Panel2.Width + (Panel2.Width * (HScrollBar1.Value / 10)) - 7, Panel2.Height - 7)
+            zed.AxisChange()
+            zed.Refresh()        
         End If
     End Sub
 
@@ -2790,8 +2797,8 @@ Public Class Form1
         Me.Cursor = Cursors.Default
     End Sub
 
-    Private Sub RadioButton2_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RadioButton2.CheckedChanged
-        If RadioButton2.Checked = True Then            
+    Private Sub RadioButton2_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        If RadioButton2.Checked = True Then
             CheckBox3.Enabled = True
             CheckBox4.Enabled = True
             CheckBox5.Enabled = True
@@ -2809,7 +2816,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub RadioButton1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RadioButton1.CheckedChanged
+    Private Sub RadioButton1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If RadioButton1.Checked = True Then
             CheckBox3.Enabled = True
             CheckBox4.Enabled = True
@@ -2828,7 +2835,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub RadioButton3_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RadioButton3.CheckedChanged
+    Private Sub RadioButton3_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If RadioButton3.Checked = True Then
             CheckBox3.Enabled = False
             CheckBox4.Enabled = False
@@ -2847,7 +2854,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub RadioButton6_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RadioButton6.CheckedChanged
+    Private Sub RadioButton6_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If RadioButton6.Checked = True Then
             CheckBox3.Enabled = False
             CheckBox4.Enabled = False
