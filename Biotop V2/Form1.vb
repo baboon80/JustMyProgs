@@ -90,7 +90,7 @@ Public Class Form1
         ToolStripProgressBar1.Visible = False
         loaded = True
 
-        Me.Text = "Biotop V2 Version: 2.08"
+        Me.Text = "Biotop V2 Version: 2.07"
     End Sub
 
     Private Sub StartAuswertung()
@@ -161,7 +161,7 @@ Public Class Form1
                             If lNewCoup > 0 Then
                                 gesSaldoVerlaufhalbZero = gesSaldoVerlaufhalbZero & "- "
                                 saldoverlauf = saldoverlauf & "- "
-                            Else                                
+                            Else
                                 saldoverlauf = saldoverlauf & "Z "
                                 gesSaldoVerlaufhalbZero = gesSaldoVerlaufhalbZero & "Z "
                                 zeroCnt = zeroCnt + 1
@@ -277,9 +277,9 @@ Public Class Form1
                     Me.ListBox1.Items.Add(datum & ": Saldo = " & saldo & vbTab & "Zero Verlust = " & (zeroCnt / 2) & vbTab & "Anz. Sätze = " & SatzCnt & vbTab & "Max. Verlustserie = " & GesMaxloss & vbTab & _
                                                   "Saldoverlauf: " & saldoverlauf)
                 End If
-                Else
-                    Me.ListBox1.Items.Add("Es konnten keinen Sätze ermittelt werden")
-                End If
+            Else
+                Me.ListBox1.Items.Add("Es konnten keinen Sätze ermittelt werden")
+            End If
 
             GesZero = GesZero + (zeroCnt / 2)
             GesSatzCnt = GesSatzCnt + SatzCnt
@@ -421,10 +421,6 @@ Public Class Form1
         Dim play As Boolean = True
         Dim played As Boolean = False
         Dim arraylistCnt As Integer = arrayPartie.Count
-        Dim RapDataP As String = ""
-        Dim RapDataM As String = ""
-        Dim RapDataS As String = ""
-        Dim RapDataR As String = ""
 
         If CheckBox2.Checked = False Then
             Sel1Verlust = 0
@@ -488,11 +484,6 @@ Public Class Form1
             Next k
         End If
 
-        If cCoupData.TPR <> "" Then RapDataP = (cCoupData.TPR).Substring(0, 1)
-        If cCoupData.TmR <> "" Then RapDataM = (cCoupData.TmR).Substring(0, 1)
-        If cCoupData.SR <> "" Then RapDataS = (cCoupData.SR).Substring(0, 1)
-        If cCoupData.RR <> "" Then RapDataR = (cCoupData.RR).Substring(0, 1)
-
         SetTo = localInstanceofMyClass.TPRS
         If SetTo <> "" Then
             If SetTo.Substring(0, 3) = "Sat" Then
@@ -502,7 +493,7 @@ Public Class Form1
                     If played = False Then
                         played = True
 
-                        If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = RapDataP Then
+                        If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = cCoupData.TPR Then
                             SatzCnt = SatzCnt + 1
                             If Sel1Verlust < 3 Then
                                 saldo = saldo + 1
@@ -518,7 +509,7 @@ Public Class Form1
                             If Sel1Verlust < 3 Then
                                 SatzCnt = SatzCnt + 1
                                 Maxloss = Maxloss + 1
-                                If RapDataP = "" Then
+                                If cCoupData.TPR = "" Then
                                     saldo = saldo - 0.5
                                     localInstanceofMyClass.TPRS = SetTo & " -0.5/" & saldo
                                 Else
@@ -548,7 +539,7 @@ Public Class Form1
                     If played = False Then
                         played = True
 
-                        If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = RapDataM Then
+                        If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = cCoupData.TmR Then
                             SatzCnt = SatzCnt + 1
                             If Sel2Verlust < 3 Then
                                 saldo = saldo + 1
@@ -564,7 +555,7 @@ Public Class Form1
                             If Sel2Verlust < 3 Then
                                 SatzCnt = SatzCnt + 1
                                 Maxloss = Maxloss + 1
-                                If RapDataM = "" Then
+                                If cCoupData.TmR = "" Then
                                     saldo = saldo - 0.5
                                     localInstanceofMyClass.TmRS = SetTo & " -0.5/" & saldo
                                 Else
@@ -594,7 +585,7 @@ Public Class Form1
                     If played = False Then
                         played = True
 
-                        If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = RapDataS Then
+                        If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = cCoupData.SR Then
                             SatzCnt = SatzCnt + 1
                             If Sel3Verlust < 3 Then
                                 saldo = saldo + 1
@@ -610,7 +601,7 @@ Public Class Form1
                             If Sel3Verlust < 3 Then
                                 SatzCnt = SatzCnt + 1
                                 Maxloss = Maxloss + 1
-                                If RapDataS = "" Then
+                                If cCoupData.SR = "" Then
                                     saldo = saldo - 0.5
                                     localInstanceofMyClass.SRS = SetTo & " -0.5/" & saldo
                                 Else
@@ -626,7 +617,7 @@ Public Class Form1
                         End If
                     Else
                         localInstanceofMyClass.SRS = "bereits gesetzt"
-                End If
+                    End If
                 End If
             End If
         End If
@@ -640,7 +631,7 @@ Public Class Form1
                     If played = False Then
                         played = True
 
-                        If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = RapDataR Then
+                        If SetTo.Substring(InStr(SetTo, "/") - 2, 1) = cCoupData.RR Then
                             SatzCnt = SatzCnt + 1
                             If Sel4Verlust < 3 Then
                                 saldo = saldo + 1
@@ -656,7 +647,7 @@ Public Class Form1
                             If Sel4Verlust < 3 Then
                                 SatzCnt = SatzCnt + 1
                                 Maxloss = Maxloss + 1
-                                If RapDataR = "" Then
+                                If cCoupData.RR = "" Then
                                     saldo = saldo - 0.5
                                     localInstanceofMyClass.RRS = SetTo & " -0.5/" & saldo
                                 Else
@@ -703,7 +694,11 @@ Public Class Form1
         Dim coup As String = ""
         Dim arraylistCnt As Integer = arrayPartie.Count
         Dim localInstanceofMyClass As clsCoupData
-        Dim isNotOk As Boolean = False
+        Dim Strang As String = ""
+        Dim LastStrang As String = ""
+        Dim StrangSumTmp As String = ""
+        Dim StrangSerieCnt As Integer = 0
+        Dim DontSet As Boolean = False
 
         If SatzPlus <> "" Then
             Rap = cCoupData.TPR
@@ -753,25 +748,48 @@ Public Class Form1
                             arrayPartie.Add(cCoupData) 'momentaner Datensatz in array
                             InsertNewCoup("1", True)
 
-                            If CheckBox7.Checked = True Then
-                                If (cCoupData.TPR).Substring(1, 1) <> SatzPlus.Substring(1, 1) Then
-                                    If (cCoupData.TPR).Substring(0, 1) = SatzPlus.Substring(0, 1) Then
-                                        isNotOk = True
-                                    End If
-                                ElseIf (cCoupData.TPR).Substring(1, 1) = SatzPlus.Substring(1, 1) Then
-                                    If (cCoupData.TPR).Substring(0, 1) <> SatzPlus.Substring(0, 1) Then
-                                        isNotOk = True
-                                    End If
-                                End If
+                            
+                            Ser = cCoupData.TPS
+                            Int = cCoupData.TPI
+
+                            If cCoupData.TPR = SatzPlus Then
+                                tmpCopyStruct.TPRS = "Satz auf " & SatzPlus & "/R"
+                            Else
+                                tmpCopyStruct.TPRS = "Satz auf " & SatzPlus & "/S"
                             End If
 
-                            If isNotOk = False Then
-                                If (cCoupData.TPR).Substring(0, 1) = SatzPlus.Substring(0, 1) Then
-                                    tmpCopyStruct.TPRS = "Satz auf " & SatzPlus.Substring(0, 1) & "/R"
-                                Else
-                                    tmpCopyStruct.TPRS = "Satz auf " & SatzPlus.Substring(0, 1) & "/S"
-                                End If
-                            End If
+                            'If tmpCopyStruct.TPRS <> "" Then
+                            '    For Z As Integer = 2 To arraylistCnt - 1
+                            '        localInstanceofMyClass = CType(arrayPartie(arraylistCnt - Z), clsCoupData)
+
+                            '        Strang = localInstanceofMyClass.TP
+
+                            '        If Strang <> "" Then
+                            '            StrangSerieCnt = StrangSerieCnt + 1
+                            '        Else
+                            '            If LastStrang <> "" Then
+                            '                If StrangSumTmp <> "" Then StrangSumTmp = "," & StrangSumTmp
+                            '                StrangSumTmp = StrangSerieCnt & StrangSumTmp
+                            '                If StrangSumTmp.Length = 3 Then
+                            '                    'R14
+                            '                    If StrangSumTmp.Substring(0, 1) = 2 And CInt(StrangSumTmp.Substring(2, 1)) >= 3 Then
+
+                            '                    End If
+                            '                Else
+                            '                    'DontSet = True
+                            '                    'kein satz
+                            '                End If
+
+                            '                StrangSerieCnt = 0
+                            '            End If
+
+                            '        End If
+                            '        LastStrang = Strang
+
+                            '    Next Z
+                            'End If
+
+                            If DontSet = True Then tmpCopyStruct.TPRS = ""
 
                             DeletelastDummyCoup()
                             ''zurückschreiben
@@ -803,7 +821,6 @@ Public Class Form1
         Dim coup As String = ""
         Dim arraylistCnt As Integer = arrayPartie.Count
         Dim localInstanceofMyClass As clsCoupData
-        Dim isNotOk As Boolean = False
 
         If SatzMinus <> "" Then
             Rap = cCoupData.TmR
@@ -852,25 +869,10 @@ Public Class Form1
                             Dim tmpCopyStruct As clsCoupData = cCoupData
                             arrayPartie.Add(cCoupData) 'momentaner Datensatz in array
                             InsertNewCoup("1", True)
-
-                            If CheckBox7.Checked = True Then
-                                If (cCoupData.TmR).Substring(1, 1) <> SatzMinus.Substring(1, 1) Then
-                                    If (cCoupData.TmR).Substring(0, 1) = SatzMinus.Substring(0, 1) Then
-                                        isNotOk = True
-                                    End If
-                                ElseIf (cCoupData.TmR).Substring(1, 1) = SatzMinus.Substring(1, 1) Then
-                                    If (cCoupData.TmR).Substring(0, 1) <> SatzMinus.Substring(0, 1) Then
-                                        isNotOk = True
-                                    End If
-                                End If
-                            End If
-
-                            If isNotOk = False Then
-                                If (cCoupData.TmR).Substring(0, 1) = SatzMinus.Substring(0, 1) Then
-                                    tmpCopyStruct.TmRS = "Satz auf " & SatzMinus.Substring(0, 1) & "/R"
-                                Else
-                                    tmpCopyStruct.TmRS = "Satz auf " & SatzMinus.Substring(0, 1) & "/S"
-                                End If
+                            If cCoupData.TmR = SatzMinus Then
+                                tmpCopyStruct.TmRS = "Satz auf " & SatzMinus & "/R"
+                            Else
+                                tmpCopyStruct.TmRS = "Satz auf " & SatzMinus & "/S"
                             End If
 
                             DeletelastDummyCoup()
@@ -898,7 +900,6 @@ Public Class Form1
         Dim coup As String = ""
         Dim arraylistCnt As Integer = arrayPartie.Count
         Dim localInstanceofMyClass As clsCoupData
-        Dim isNotOk As Boolean = False
 
         If SatzSchwarz <> "" Then
             Rap = cCoupData.SR
@@ -947,25 +948,10 @@ Public Class Form1
                             Dim tmpCopyStruct As clsCoupData = cCoupData
                             arrayPartie.Add(cCoupData) 'momentaner Datensatz in array
                             InsertNewCoup("1", True)
-
-                            If CheckBox7.Checked = True Then
-                                If (cCoupData.SR).Substring(1, 1) <> SatzSchwarz.Substring(1, 1) Then
-                                    If (cCoupData.SR).Substring(0, 1) = SatzSchwarz.Substring(0, 1) Then
-                                        isNotOk = True
-                                    End If
-                                ElseIf (cCoupData.SR).Substring(1, 1) = SatzSchwarz.Substring(1, 1) Then
-                                    If (cCoupData.SR).Substring(0, 1) <> SatzSchwarz.Substring(0, 1) Then
-                                        isNotOk = True
-                                    End If
-                                End If
-                            End If
-
-                            If isNotOk = False Then
-                                If (cCoupData.SR).Substring(0, 1) = SatzSchwarz.Substring(0, 1) Then
-                                    tmpCopyStruct.SRS = "Satz auf " & SatzSchwarz.Substring(0, 1) & "/R"
-                                Else
-                                    tmpCopyStruct.SRS = "Satz auf " & SatzSchwarz.Substring(0, 1) & "/S"
-                                End If
+                            If cCoupData.SR = SatzSchwarz Then
+                                tmpCopyStruct.SRS = "Satz auf " & SatzSchwarz & "/R"
+                            Else
+                                tmpCopyStruct.SRS = "Satz auf " & SatzSchwarz & "/S"
                             End If
 
                             DeletelastDummyCoup()
@@ -993,7 +979,6 @@ Public Class Form1
         Dim coup As String = ""
         Dim arraylistCnt As Integer = arrayPartie.Count
         Dim localInstanceofMyClass As clsCoupData
-        Dim isNotOk As Boolean = False
 
         If SatzRot <> "" Then
             Rap = cCoupData.RR
@@ -1042,25 +1027,10 @@ Public Class Form1
                             Dim tmpCopyStruct As clsCoupData = cCoupData
                             arrayPartie.Add(cCoupData) 'momentaner Datensatz in array
                             InsertNewCoup("1", True)
-
-                            If CheckBox7.Checked = True Then
-                                If (cCoupData.RR).Substring(1, 1) <> SatzRot.Substring(1, 1) Then
-                                    If (cCoupData.RR).Substring(0, 1) = SatzRot.Substring(0, 1) Then
-                                        isNotOk = True
-                                    End If
-                                ElseIf (cCoupData.RR).Substring(1, 1) = SatzRot.Substring(1, 1) Then
-                                    If (cCoupData.RR).Substring(0, 1) <> SatzRot.Substring(0, 1) Then
-                                        isNotOk = True
-                                    End If
-                                End If
-                            End If
-
-                            If isNotOk = False Then
-                                If (cCoupData.RR).Substring(0, 1) = SatzRot.Substring(0, 1) Then
-                                    tmpCopyStruct.RRS = "Satz auf " & SatzRot.Substring(0, 1) & "/R"
-                                Else
-                                    tmpCopyStruct.RRS = "Satz auf " & SatzRot.Substring(0, 1) & "/S"
-                                End If
+                            If cCoupData.RR = SatzRot Then
+                                tmpCopyStruct.RRS = "Satz auf " & SatzRot & "/R"
+                            Else
+                                tmpCopyStruct.RRS = "Satz auf " & SatzRot & "/S"
                             End If
 
                             DeletelastDummyCoup()
@@ -1317,7 +1287,16 @@ Public Class Form1
 
         PlusSum = PlusRap1 & PlusRap2 & PlusRap3 & PlusRap4
 
-        Rap = GetRap(PlusSum)
+        Select Case PlusSum
+            Case "ISSI"
+                Rap = "O"
+            Case "SIIS"
+                Rap = "O"
+            Case "SIII"
+                Rap = "X"
+            Case "ISSS"
+                Rap = "X"
+        End Select
 
         cCoupData.TPR = Rap
 
@@ -1325,24 +1304,6 @@ Public Class Form1
             cCoupData.TPR7 = GetRapLast7(ColNum.eTPR)
         End If
     End Sub
-
-    Private Function GetRap(ByVal sSum As String) As String
-        Dim Rap As String = ""
-
-        Select Case sSum
-            Case "ISSI"
-                Rap = "OI"
-            Case "SIIS"
-                Rap = "OS"
-            Case "SIII"
-                Rap = "XI"
-            Case "ISSS"
-                Rap = "XS"
-        End Select
-
-        GetRap = Rap
-
-    End Function
 
     Private Sub fillSelektorMinusRap()
 
@@ -1408,7 +1369,16 @@ Public Class Form1
 
         MinusSum = MinusRap1 & MinusRap2 & MinusRap3 & MinusRap4
 
-        Rap = GetRap(MinusSum)
+        Select Case MinusSum
+            Case "ISSI"
+                Rap = "O"
+            Case "SIIS"
+                Rap = "O"
+            Case "SIII"
+                Rap = "X"
+            Case "ISSS"
+                Rap = "X"
+        End Select
 
         cCoupData.TmR = Rap
 
@@ -1481,7 +1451,16 @@ Public Class Form1
 
         SchwarzSum = SchwarzRap1 & SchwarzRap2 & SchwarzRap3 & SchwarzRap4
 
-        Rap = GetRap(SchwarzSum)
+        Select Case SchwarzSum
+            Case "ISSI"
+                Rap = "O"
+            Case "SIIS"
+                Rap = "O"
+            Case "SIII"
+                Rap = "X"
+            Case "ISSS"
+                Rap = "X"
+        End Select
 
         cCoupData.SR = Rap
 
@@ -1554,7 +1533,16 @@ Public Class Form1
 
         RotSum = RotRap1 & RotRap2 & RotRap3 & RotRap4
 
-        Rap = GetRap(RotSum)
+        Select Case RotSum
+            Case "ISSI"
+                Rap = "O"
+            Case "SIIS"
+                Rap = "O"
+            Case "SIII"
+                Rap = "X"
+            Case "ISSS"
+                Rap = "X"
+        End Select
 
         cCoupData.RR = Rap
 
@@ -1636,13 +1624,6 @@ Public Class Form1
         Dim s7 As String = ""
         Dim ReturnStr As String = ""
         Dim Satz As String = ""
-        Dim s1T As String = ""
-        Dim s2T As String = ""
-        Dim s3T As String = ""
-        Dim s4T As String = ""
-        Dim s5T As String = ""
-        Dim s6T As String = ""
-        Dim s7T As String = ""
 
         If SelektorCol = ColNum.eTPR7 Then
             RapTmp = cCoupData.TPR7
@@ -1655,179 +1636,32 @@ Public Class Form1
         End If
 
         If RapTmp <> "" Then
-            I = 14
+            I = 7
             Do Until I = 0
                 Select Case I
+                    Case 1
+                        s1 = RapTmp.Substring(RapTmp.Length - 7, 1)
                     Case 2
-                        s1 = RapTmp.Substring(RapTmp.Length - 14, 2)
+                        s2 = RapTmp.Substring(RapTmp.Length - 6, 1)
+                    Case 3
+                        s3 = RapTmp.Substring(RapTmp.Length - 5, 1)
                     Case 4
-                        s2 = RapTmp.Substring(RapTmp.Length - 12, 2)
+                        s4 = RapTmp.Substring(RapTmp.Length - 4, 1)
+                    Case 5
+                        s5 = RapTmp.Substring(RapTmp.Length - 3, 1)
                     Case 6
-                        s3 = RapTmp.Substring(RapTmp.Length - 10, 2)
-                    Case 8
-                        s4 = RapTmp.Substring(RapTmp.Length - 8, 2)
-                    Case 10
-                        s5 = RapTmp.Substring(RapTmp.Length - 6, 2)
-                    Case 12
-                        s6 = RapTmp.Substring(RapTmp.Length - 4, 2)
-                    Case 14
-                        s7 = RapTmp.Substring(RapTmp.Length - 2, 2)
+                        s6 = RapTmp.Substring(RapTmp.Length - 2, 1)
+                    Case 7
+                        s7 = RapTmp.Substring(RapTmp.Length - 1, 1)
                 End Select
 
-                I = I - 2
+                I = I - 1
 
-                If 14 - I = RapTmp.Length Then Exit Do
+                If 7 - I = RapTmp.Length Then Exit Do
             Loop
 
             ReturnStr = ""
-
-            If s1.Length = 2 Then
-                s1T = s1.Substring(1, 1)
-                s1 = s1.Substring(0, 1)
-            End If
-            If s2.Length = 2 Then
-                s2T = s2.Substring(1, 1)
-                s2 = s2.Substring(0, 1)
-            End If
-            If s3.Length = 2 Then
-                s3T = s3.Substring(1, 1)
-                s3 = s3.Substring(0, 1)
-            End If
-            If s4.Length = 2 Then
-                s4T = s4.Substring(1, 1)
-                s4 = s4.Substring(0, 1)
-            End If
-            If s5.Length = 2 Then
-                s5T = s5.Substring(1, 1)
-                s5 = s5.Substring(0, 1)
-            End If
-            If s6.Length = 2 Then
-                s6T = s6.Substring(1, 1)
-                s6 = s6.Substring(0, 1)
-            End If
-            If s7.Length = 2 Then
-                s7T = s7.Substring(1, 1)
-                s7 = s7.Substring(0, 1)
-            End If
-
-            RapTmp = s1 & s2 & s3 & s4 & s5 & s6 & s7
-
-            If RadioButton2.Checked = True Then 'Biotop Original
-                If RapTmp.Length >= 4 Then                    
-                    ''Regel10 XXX(X) | OOO(O)
-                    If (s7 = s6 And s7 = s5 And s4 <> s5 And CheckBox3.Checked = True) Then
-                        If CheckBox7.Checked = True Then
-                            If Not (s5T = s6T And s6T = s7T) Then
-                                FillSatz = ""
-                                Exit Function
-                            End If
-                        End If
-                        ReturnStr = "R10: " & s5 & s6 & s7 & "(" & s7 & ")"
-                        SatzCount = SatzCount + 1
-                        s7 = s7 & s7T
-                        Call SetSatz(s7, SelektorCol)
-                        FillSatz = ReturnStr
-                        Exit Function
-                    End If
-                End If
-
-                If RapTmp.Length >= 4 Then
-                    ''Regel11 OO XOX(O) | XX OXO(X) 
-                    If (s7 <> s6 And s7 = s5 And s5 <> s4 And CheckBox4.Checked = True) Then
-                        If CheckBox7.Checked = True Then
-                            If Not (s5T = s6T And s6T = s7T) Then
-                                FillSatz = ""
-                                Exit Function
-                            End If
-                        End If
-                        If RapTmp.Length = 4 Then
-                            ReturnStr = "R11: " & s5 & s6 & s7 & "(" & s6 & ")"
-                            SatzCount = SatzCount + 1
-                            s6 = s6 & s6T
-                            Call SetSatz(s6, SelektorCol)
-                            FillSatz = ReturnStr
-                            Exit Function
-                        Else
-                            If (s6 = s4 And s4 = s3) Then
-                                ReturnStr = "R11: " & s5 & s6 & s7 & "(" & s6 & ")"
-                                SatzCount = SatzCount + 1
-                                s6 = s6 & s6T
-                                Call SetSatz(s6, SelektorCol)
-                                FillSatz = ReturnStr
-                                Exit Function
-                            End If
-                        End If
-                    End If
-                End If
-
-                If RapTmp.Length >= 4 Then
-                    ''Regel12 XXO(O) | OOX(X) XXOOX
-                    If (s7 <> s6 And s6 = s5 And s5 <> s4 And CheckBox5.Checked = True) Then
-                        If CheckBox7.Checked = True Then
-                            If Not (s5T = s6T And s6T = s7T) Then
-                                FillSatz = ""
-                                Exit Function
-                            End If
-                        End If
-                        If RapTmp.Length = 4 Or RapTmp.Length = 5 Then
-                            ReturnStr = "R12: " & s5 & s6 & s7 & "(" & s7 & ")"
-                            SatzCount = SatzCount + 1
-                            s7 = s7 & s7T
-                            Call SetSatz(s7, SelektorCol)
-                            FillSatz = ReturnStr
-                            Exit Function
-                        End If
-
-                        If RapTmp.Length = 5 Or RapTmp.Length = 6 Then
-                            ReturnStr = "R12: " & s5 & s6 & s7 & "(" & s7 & ")"
-                            SatzCount = SatzCount + 1
-                            s7 = s7 & s7T
-                            Call SetSatz(s7, SelektorCol)
-                            FillSatz = ReturnStr
-                            Exit Function
-                        ElseIf RapTmp.Length >= 6 Then
-                            If Not (s2 <> s3 And s3 = s4) Then
-                                ReturnStr = "R12: " & s5 & s6 & s7 & "(" & s7 & ")"
-                                SatzCount = SatzCount + 1
-                                s7 = s7 & s7T
-                                Call SetSatz(s7, SelektorCol)
-                                FillSatz = ReturnStr
-                                Exit Function
-                            End If
-                        End If
-                    End If
-                End If
-
-                If RapTmp.Length >= 6 And CheckBox6.Checked = True Then
-                    If CheckBox7.Checked = True Then
-                        If Not (s3T = s4T And s4T = s5T And s5T = s6T And s6T = s7T) Then
-                            FillSatz = ""
-                            Exit Function
-                        End If
-                    End If
-                    'Regel13 OXXOX(X) | XOOXO(O)
-                    If (s7 <> s6 And s6 <> s5 And s5 = s4 And s4 <> s3 And s2 <> s3) Then
-                        ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s7 & ")"
-                        SatzCount = SatzCount + 1
-                        s7 = s7 & s7T
-                        Call SetSatz(s7, SelektorCol)
-                        FillSatz = ReturnStr
-                        Exit Function
-                        'XXOXX(O) | OOXOO(X)
-                    ElseIf (s7 = s6 And s6 <> s5 And s5 <> s4 And s4 = s3 And s2 <> s3) Then
-                        ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s5 & ")"
-                        SatzCount = SatzCount + 1
-                        s5 = s5 & s5T
-                        Call SetSatz(s5, SelektorCol)
-                        FillSatz = ReturnStr
-                        Exit Function
-                    End If
-                End If
-
-                FillSatz = ""
-                Exit Function
-
-            ElseIf RadioButton1.Checked = True Then
+            If RadioButton1.Checked = True Then
                 If RapTmp.Length < 6 Then
                     FillSatz = ""
                     Exit Function
@@ -1835,16 +1669,9 @@ Public Class Form1
 
                 ''Regel10 XXX(X) | OOO(O)
                 If (s7 = s6 And s7 = s5) Then
-                    If CheckBox7.Checked = True Then
-                        If Not (s5T = s6T And s6T = s7T) Then
-                            FillSatz = ""
-                            Exit Function
-                        End If
-                    End If
                     If (s7 <> s4) Then
                         ReturnStr = "R10: " & s7 & s6 & s5 & "(" & s7 & ")"
                         SatzCount = SatzCount + 1
-                        s7 = s7 & s7T
                         Call SetSatz(s7, SelektorCol)
                     Else
                         ReturnStr = "R10: Not Aborted"
@@ -1863,16 +1690,9 @@ Public Class Form1
 
                 ''Regel11 OO XOX(O) | XX OXO(X) 
                 If (s7 <> s6 And s7 = s5 And s5 <> s4) Then
-                    If CheckBox7.Checked = True Then
-                        If Not (s5T = s6T And s6T = s7T) Then
-                            FillSatz = ""
-                            Exit Function
-                        End If
-                    End If
                     If s6 = s4 And s4 = s3 Then
                         ReturnStr = "R11: " & s5 & s6 & s7 & "(" & s6 & ")"
                         SatzCount = SatzCount + 1
-                        s6 = s6 & s6T
                         Call SetSatz(s6, SelektorCol)
                     Else
                         ReturnStr = "R11: Not Aborted"
@@ -1884,16 +1704,9 @@ Public Class Form1
 
                 ''Regel12 XXO(O) | OOX(X)
                 If (s7 <> s6 And s6 = s5) Then
-                    If CheckBox7.Checked = True Then
-                        If Not (s5T = s6T And s6T = s7T) Then
-                            FillSatz = ""
-                            Exit Function
-                        End If
-                    End If
                     If Not ((s4 = s7) And (s3 = s4)) Then
                         ReturnStr = "R12: " & s5 & s6 & s7 & "(" & s7 & ")"
                         SatzCount = SatzCount + 1
-                        s7 = s7 & s7T
                         Call SetSatz(s7, SelektorCol)
                     Else
                         ReturnStr = "R12: Not Aborted"
@@ -1903,19 +1716,12 @@ Public Class Form1
                     Exit Function
                 End If
 
-
-                If CheckBox7.Checked = True Then
-                    If Not (s3T = s4T And s4T = s5T And s5T = s6T And s6T = s7T) Then
-                        FillSatz = ""
-                        Exit Function
-                    End If
-                End If
+                ''If RapTmp.Length = 5 Then
                 'Regel13 OXXOX(X) | XOOXO(O)
                 If (s7 <> s6 And s6 <> s5 And s5 = s4 And s4 <> s3) Then
                     ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s7 & ")"
                     SatzCount = SatzCount + 1
                     FillSatz = ReturnStr
-                    s7 = s7 & s7T
                     Call SetSatz(s7, SelektorCol)
                     Exit Function
                     'XXOXX(O) | OOXOO(X)
@@ -1923,10 +1729,94 @@ Public Class Form1
                     ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s5 & ")"
                     SatzCount = SatzCount + 1
                     FillSatz = ReturnStr
-                    s5 = s5 & s5T
                     Call SetSatz(s5, SelektorCol)
                     Exit Function
                 End If
+            ElseIf RadioButton2.Checked = True Then 'Biotop Original
+
+                If RapTmp.Length >= 4 Then
+                    ''Regel10 XXX(X) | OOO(O)
+                    If (s7 = s6 And s7 = s5 And s4 <> s5 And CheckBox3.Checked = True) Then
+                        ReturnStr = "R10: " & s5 & s6 & s7 & "(" & s7 & ")"
+                        SatzCount = SatzCount + 1
+                        Call SetSatz(s7, SelektorCol)
+                        FillSatz = ReturnStr
+                        Exit Function
+                    End If
+                End If
+
+                If RapTmp.Length >= 4 Then
+                    ''Regel11 OO XOX(O) | XX OXO(X) 
+                    If (s7 <> s6 And s7 = s5 And s5 <> s4 And CheckBox4.Checked = True) Then
+                        If RapTmp.Length = 4 Then
+                            ReturnStr = "R11: " & s5 & s6 & s7 & "(" & s6 & ")"
+                            SatzCount = SatzCount + 1
+                            Call SetSatz(s6, SelektorCol)
+                            FillSatz = ReturnStr
+                            Exit Function
+                        Else
+                            If (s6 = s4 And s4 = s3) Then
+                                ReturnStr = "R11: " & s5 & s6 & s7 & "(" & s6 & ")"
+                                SatzCount = SatzCount + 1
+                                Call SetSatz(s6, SelektorCol)
+                                FillSatz = ReturnStr
+                                Exit Function
+                            End If
+                        End If
+                    End If
+                End If
+
+                If RapTmp.Length >= 4 Then
+                    'OOOXOOX
+                    ''Regel12 XXO(O) | OOX(X) XXOOX
+                    If (s7 <> s6 And s6 = s5 And s5 <> s4 And CheckBox5.Checked = True) Then
+                        If RapTmp.Length = 4 Or RapTmp.Length = 5 Then
+                            ReturnStr = "R12: " & s5 & s6 & s7 & "(" & s7 & ")"
+                            SatzCount = SatzCount + 1
+                            Call SetSatz(s7, SelektorCol)
+                            FillSatz = ReturnStr
+                            Exit Function
+                        End If
+
+                        If RapTmp.Length = 5 Or RapTmp.Length = 6 Then
+                            ReturnStr = "R12: " & s5 & s6 & s7 & "(" & s7 & ")"
+                            SatzCount = SatzCount + 1
+                            Call SetSatz(s7, SelektorCol)
+                            FillSatz = ReturnStr
+                            Exit Function
+                        ElseIf RapTmp.Length >= 6 Then
+                            If Not (s2 <> s3 And s3 = s4) Then
+                                ReturnStr = "R12: " & s5 & s6 & s7 & "(" & s7 & ")"
+                                SatzCount = SatzCount + 1
+                                Call SetSatz(s7, SelektorCol)
+                                FillSatz = ReturnStr
+                                Exit Function
+                            End If
+                        End If
+                    End If
+                End If
+
+                If RapTmp.Length >= 6 Then
+                    ''If RapTmp.Length = 5 Then
+                    'Regel13 OXXOX(X) | XOOXO(O)
+                    If (s7 <> s6 And s6 <> s5 And s5 = s4 And s4 <> s3 And s2 <> s3 And CheckBox6.Checked = True) Then
+                        ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s7 & ")"
+                        SatzCount = SatzCount + 1
+                        Call SetSatz(s7, SelektorCol)
+                        FillSatz = ReturnStr
+                        Exit Function
+                        'XXOXX(O) | OOXOO(X)
+                    ElseIf (s7 = s6 And s6 <> s5 And s5 <> s4 And s4 = s3 And s2 <> s3) Then
+                        ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s5 & ")"
+                        SatzCount = SatzCount + 1
+                        Call SetSatz(s5, SelektorCol)
+                        FillSatz = ReturnStr
+                        Exit Function
+                    End If
+                End If
+
+                FillSatz = ""
+                Exit Function
 
             ElseIf RadioButton3.Checked = True Then
 
@@ -1939,7 +1829,6 @@ Public Class Form1
                     ReturnStr = s6 & s7 & "(" & s6 & ")"
                     SatzCount = SatzCount + 1
                     FillSatz = ReturnStr
-                    s6 = s6 & s6T
                     Call SetSatz(s6, SelektorCol)
                     Exit Function
                 End If
@@ -1947,7 +1836,6 @@ Public Class Form1
                     ReturnStr = s5 & s6 & s7 & "(" & s5 & ")"
                     SatzCount = SatzCount + 1
                     FillSatz = ReturnStr
-                    s5 = s5 & s5T
                     Call SetSatz(s5, SelektorCol)
                     Exit Function
                 End If
@@ -1955,7 +1843,6 @@ Public Class Form1
                     ReturnStr = s4 & s5 & s6 & s7 & "(" & s4 & ")"
                     SatzCount = SatzCount + 1
                     FillSatz = ReturnStr
-                    s4 = s4 & s4T
                     Call SetSatz(s4, SelektorCol)
                     Exit Function
                 End If
@@ -1971,7 +1858,6 @@ Public Class Form1
                     ReturnStr = s6 & s7 & "(" & s6 & ")"
                     SatzCount = SatzCount + 1
                     FillSatz = ReturnStr
-                    s6 = s6 & s6T
                     Call SetSatz(s6, SelektorCol)
                     Exit Function
                 End If
@@ -1979,7 +1865,6 @@ Public Class Form1
                     ReturnStr = s5 & s6 & s7 & "(" & s5 & ")"
                     SatzCount = SatzCount + 1
                     FillSatz = ReturnStr
-                    s5 = s5 & s5T
                     Call SetSatz(s5, SelektorCol)
                     Exit Function
                 End If
@@ -2638,7 +2523,7 @@ Public Class Form1
             myPane.Title.Text = "Gesamt Saldo Verlauf"
             myPane.XAxis.Title.Text = "Satz"
             myPane.YAxis.Title.Text = "Saldo"
-        End If        
+        End If
 
         Dim x As Integer = 0
         Dim y1 As Integer
@@ -2699,7 +2584,7 @@ Public Class Form1
             zed.AxisChange()
             zed.Size = New Size(Panel2.Width + (Panel2.Width * (HScrollBar1.Value / 10)) - 7, Panel2.Height - 7)
             zed.AxisChange()
-            zed.Refresh()        
+            zed.Refresh()
         End If
     End Sub
 
@@ -2713,7 +2598,7 @@ Public Class Form1
     End Sub
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
-        clearFullData()        
+        clearFullData()
     End Sub
 
     Private Sub clearFullData()
@@ -2724,12 +2609,12 @@ Public Class Form1
         Me.ListBox1.Items.Add("Bitte Permanenz Datei für die System-Auswertung eingeben!")
     End Sub
 
-    Private Sub ClearGraph()        
+    Private Sub ClearGraph()
         If Not myPane Is Nothing Then
             myPane.CurveList.Clear()
             myPane.GraphObjList.Clear()
             zed.Refresh()
-        End If        
+        End If
     End Sub
 
     Private Sub HScrollBar1_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles HScrollBar1.Scroll
@@ -2751,7 +2636,7 @@ Public Class Form1
         Me.Cursor = Cursors.WaitCursor
 
         If sItem = "" Then Exit Sub
-        
+
         If CheckBox1.Checked = True Then
             SaldoVerlauf = gesSaldoVerlaufhalbZero
         Else

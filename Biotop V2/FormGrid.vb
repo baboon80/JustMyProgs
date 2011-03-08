@@ -129,7 +129,7 @@
             .Columns(ColNum.eRR7).SortMode = DataGridViewColumnSortMode.Programmatic
             .Columns(ColNum.eRRS).SortMode = DataGridViewColumnSortMode.Programmatic
 
-            .MultiSelect = False
+
             .BackgroundColor = Color.Honeydew
             .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
         End With
