@@ -25,21 +25,6 @@ Partial Class Form1
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog
         Me.Panel1 = New System.Windows.Forms.Panel
-        Me.Button3 = New System.Windows.Forms.Button
-        Me.Button2 = New System.Windows.Forms.Button
-        Me.Button1 = New System.Windows.Forms.Button
-        Me.TextBox1 = New System.Windows.Forms.TextBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.ColorDialog1 = New System.Windows.Forms.ColorDialog
-        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip
-        Me.ToolStripProgressBar1 = New System.Windows.Forms.ToolStripProgressBar
-        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel
-        Me.Panel2 = New System.Windows.Forms.Panel
-        Me.TextRes = New System.Windows.Forms.TextBox
-        Me.HScrollBar1 = New System.Windows.Forms.HScrollBar
-        Me.ListBox1 = New System.Windows.Forms.ListBox
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.TextBox2 = New System.Windows.Forms.TextBox
         Me.Panel3 = New System.Windows.Forms.Panel
         Me.CheckBox11 = New System.Windows.Forms.CheckBox
         Me.CheckBox10 = New System.Windows.Forms.CheckBox
@@ -56,9 +41,24 @@ Partial Class Form1
         Me.RadioButton3 = New System.Windows.Forms.RadioButton
         Me.RadioButton2 = New System.Windows.Forms.RadioButton
         Me.RadioButton1 = New System.Windows.Forms.RadioButton
+        Me.Button3 = New System.Windows.Forms.Button
+        Me.Button2 = New System.Windows.Forms.Button
+        Me.Button1 = New System.Windows.Forms.Button
+        Me.TextBox1 = New System.Windows.Forms.TextBox
+        Me.Label1 = New System.Windows.Forms.Label
+        Me.ColorDialog1 = New System.Windows.Forms.ColorDialog
+        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip
+        Me.ToolStripProgressBar1 = New System.Windows.Forms.ToolStripProgressBar
+        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel
+        Me.Panel2 = New System.Windows.Forms.Panel
+        Me.TextRes = New System.Windows.Forms.TextBox
+        Me.HScrollBar1 = New System.Windows.Forms.HScrollBar
+        Me.ListBox1 = New System.Windows.Forms.ListBox
+        Me.Label2 = New System.Windows.Forms.Label
+        Me.TextBox2 = New System.Windows.Forms.TextBox
         Me.Panel1.SuspendLayout()
-        Me.StatusStrip1.SuspendLayout()
         Me.Panel3.SuspendLayout()
+        Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'OpenFileDialog1
@@ -77,91 +77,6 @@ Partial Class Form1
         Me.Panel1.Controls.Add(Me.Label1)
         resources.ApplyResources(Me.Panel1, "Panel1")
         Me.Panel1.Name = "Panel1"
-        '
-        'Button3
-        '
-        Me.Button3.Image = Global.BiotopV2.My.Resources.Resources.trash_icon
-        resources.ApplyResources(Me.Button3, "Button3")
-        Me.Button3.Name = "Button3"
-        Me.Button3.UseVisualStyleBackColor = True
-        '
-        'Button2
-        '
-        resources.ApplyResources(Me.Button2, "Button2")
-        Me.Button2.Image = Global.BiotopV2.My.Resources.Resources.gear_icon
-        Me.Button2.Name = "Button2"
-        Me.Button2.UseVisualStyleBackColor = True
-        '
-        'Button1
-        '
-        Me.Button1.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.Button1.Image = Global.BiotopV2.My.Resources.Resources.save_icon
-        resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.Name = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'TextBox1
-        '
-        resources.ApplyResources(Me.TextBox1, "TextBox1")
-        Me.TextBox1.Name = "TextBox1"
-        '
-        'Label1
-        '
-        resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.Name = "Label1"
-        '
-        'StatusStrip1
-        '
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripProgressBar1, Me.ToolStripStatusLabel1})
-        resources.ApplyResources(Me.StatusStrip1, "StatusStrip1")
-        Me.StatusStrip1.Name = "StatusStrip1"
-        '
-        'ToolStripProgressBar1
-        '
-        Me.ToolStripProgressBar1.Name = "ToolStripProgressBar1"
-        resources.ApplyResources(Me.ToolStripProgressBar1, "ToolStripProgressBar1")
-        Me.ToolStripProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous
-        '
-        'ToolStripStatusLabel1
-        '
-        Me.ToolStripStatusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        resources.ApplyResources(Me.ToolStripStatusLabel1, "ToolStripStatusLabel1")
-        Me.ToolStripStatusLabel1.Spring = True
-        '
-        'Panel2
-        '
-        resources.ApplyResources(Me.Panel2, "Panel2")
-        Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel2.Name = "Panel2"
-        '
-        'TextRes
-        '
-        Me.TextRes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        resources.ApplyResources(Me.TextRes, "TextRes")
-        Me.TextRes.Name = "TextRes"
-        '
-        'HScrollBar1
-        '
-        resources.ApplyResources(Me.HScrollBar1, "HScrollBar1")
-        Me.HScrollBar1.Name = "HScrollBar1"
-        '
-        'ListBox1
-        '
-        Me.ListBox1.FormattingEnabled = True
-        resources.ApplyResources(Me.ListBox1, "ListBox1")
-        Me.ListBox1.Items.AddRange(New Object() {resources.GetString("ListBox1.Items")})
-        Me.ListBox1.Name = "ListBox1"
-        '
-        'Label2
-        '
-        resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.Name = "Label2"
-        '
-        'TextBox2
-        '
-        resources.ApplyResources(Me.TextBox2, "TextBox2")
-        Me.TextBox2.Name = "TextBox2"
         '
         'Panel3
         '
@@ -286,6 +201,91 @@ Partial Class Form1
         Me.RadioButton1.Name = "RadioButton1"
         Me.RadioButton1.UseVisualStyleBackColor = True
         '
+        'Button3
+        '
+        Me.Button3.Image = Global.BiotopV2.My.Resources.Resources.trash_icon
+        resources.ApplyResources(Me.Button3, "Button3")
+        Me.Button3.Name = "Button3"
+        Me.Button3.UseVisualStyleBackColor = True
+        '
+        'Button2
+        '
+        resources.ApplyResources(Me.Button2, "Button2")
+        Me.Button2.Image = Global.BiotopV2.My.Resources.Resources.gear_icon
+        Me.Button2.Name = "Button2"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'Button1
+        '
+        Me.Button1.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.Button1.Image = Global.BiotopV2.My.Resources.Resources.save_icon
+        resources.ApplyResources(Me.Button1, "Button1")
+        Me.Button1.Name = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'TextBox1
+        '
+        resources.ApplyResources(Me.TextBox1, "TextBox1")
+        Me.TextBox1.Name = "TextBox1"
+        '
+        'Label1
+        '
+        resources.ApplyResources(Me.Label1, "Label1")
+        Me.Label1.Name = "Label1"
+        '
+        'StatusStrip1
+        '
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripProgressBar1, Me.ToolStripStatusLabel1})
+        resources.ApplyResources(Me.StatusStrip1, "StatusStrip1")
+        Me.StatusStrip1.Name = "StatusStrip1"
+        '
+        'ToolStripProgressBar1
+        '
+        Me.ToolStripProgressBar1.Name = "ToolStripProgressBar1"
+        resources.ApplyResources(Me.ToolStripProgressBar1, "ToolStripProgressBar1")
+        Me.ToolStripProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous
+        '
+        'ToolStripStatusLabel1
+        '
+        Me.ToolStripStatusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        resources.ApplyResources(Me.ToolStripStatusLabel1, "ToolStripStatusLabel1")
+        Me.ToolStripStatusLabel1.Spring = True
+        '
+        'Panel2
+        '
+        resources.ApplyResources(Me.Panel2, "Panel2")
+        Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel2.Name = "Panel2"
+        '
+        'TextRes
+        '
+        Me.TextRes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        resources.ApplyResources(Me.TextRes, "TextRes")
+        Me.TextRes.Name = "TextRes"
+        '
+        'HScrollBar1
+        '
+        resources.ApplyResources(Me.HScrollBar1, "HScrollBar1")
+        Me.HScrollBar1.Name = "HScrollBar1"
+        '
+        'ListBox1
+        '
+        Me.ListBox1.FormattingEnabled = True
+        resources.ApplyResources(Me.ListBox1, "ListBox1")
+        Me.ListBox1.Items.AddRange(New Object() {resources.GetString("ListBox1.Items")})
+        Me.ListBox1.Name = "ListBox1"
+        '
+        'Label2
+        '
+        resources.ApplyResources(Me.Label2, "Label2")
+        Me.Label2.Name = "Label2"
+        '
+        'TextBox2
+        '
+        resources.ApplyResources(Me.TextBox2, "TextBox2")
+        Me.TextBox2.Name = "TextBox2"
+        '
         'Form1
         '
         resources.ApplyResources(Me, "$this")
@@ -304,10 +304,10 @@ Partial Class Form1
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        Me.StatusStrip1.ResumeLayout(False)
-        Me.StatusStrip1.PerformLayout()
         Me.Panel3.ResumeLayout(False)
         Me.Panel3.PerformLayout()
+        Me.StatusStrip1.ResumeLayout(False)
+        Me.StatusStrip1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
