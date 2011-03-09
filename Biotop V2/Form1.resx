@@ -130,7 +130,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="CheckBox11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 298</value>
+    <value>13, 301</value>
   </data>
   <data name="CheckBox11.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 17</value>
@@ -160,7 +160,7 @@
     <value>NoControl</value>
   </data>
   <data name="CheckBox10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 275</value>
+    <value>13, 278</value>
   </data>
   <data name="CheckBox10.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 17</value>
@@ -190,7 +190,7 @@
     <value>NoControl</value>
   </data>
   <data name="CheckBox9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 252</value>
+    <value>13, 255</value>
   </data>
   <data name="CheckBox9.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 17</value>
@@ -220,7 +220,7 @@
     <value>NoControl</value>
   </data>
   <data name="CheckBox8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 229</value>
+    <value>13, 232</value>
   </data>
   <data name="CheckBox8.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 17</value>
@@ -400,7 +400,7 @@
     <value>NoControl</value>
   </data>
   <data name="CheckBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 353</value>
+    <value>13, 360</value>
   </data>
   <data name="CheckBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>171, 17</value>
@@ -430,7 +430,7 @@
     <value>NoControl</value>
   </data>
   <data name="CheckBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 330</value>
+    <value>13, 337</value>
   </data>
   <data name="CheckBox2.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 17</value>
@@ -742,7 +742,7 @@
     <value>100, 16</value>
   </data>
   <data name="ToolStripStatusLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1280, 17</value>
+    <value>1127, 17</value>
   </data>
   <data name="ToolStripStatusLabel1.Text" xml:space="preserve">
     <value>ToolStripStatusLabel1</value>

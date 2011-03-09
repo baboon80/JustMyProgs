@@ -168,6 +168,29 @@
                 R1.Cells(ColNum.eTPS).Style.BackColor = Label3.BackColor
                 R1.Cells(ColNum.eTPI).Style.BackColor = Label3.BackColor
                 R1.Cells(ColNum.eTPR).Style.BackColor = Label3.BackColor
+
+                If localInstanceofMyClass.TPR = "O" Then
+                    If localInstanceofMyClass.TPI = "X" Then
+                        R1.Cells(ColNum.eTPS).Style.BackColor = Color.Yellow
+                        R1.Cells(ColNum.eTPS).Style.ForeColor = Color.Black
+                        R1.Cells(ColNum.eTPS).Value = "2(O)"
+                    Else
+                        R1.Cells(ColNum.eTPI).Style.BackColor = Color.Yellow
+                        R1.Cells(ColNum.eTPI).Style.ForeColor = Color.Black
+                        R1.Cells(ColNum.eTPI).Value = "2(O)"
+                    End If
+                ElseIf localInstanceofMyClass.TPR = "X" Then
+                    If localInstanceofMyClass.TPI = "X" Then
+                        R1.Cells(ColNum.eTPI).Style.BackColor = Color.OrangeRed
+                        R1.Cells(ColNum.eTPI).Style.ForeColor = Color.Black
+                        R1.Cells(ColNum.eTPI).Value = "3(X)"
+                    Else
+                        R1.Cells(ColNum.eTPS).Style.BackColor = Color.OrangeRed
+                        R1.Cells(ColNum.eTPS).Style.ForeColor = Color.Black
+                        R1.Cells(ColNum.eTPS).Value = "3(X)"
+                    End If
+                End If
+
                 R1.Cells(ColNum.eTPR7).Style.BackColor = Label3.BackColor
                 If localInstanceofMyClass.TPRS <> "" Then
                     R1.Cells(ColNum.eTPRS).Style.BackColor = Label3.BackColor
@@ -176,6 +199,29 @@
                 R1.Cells(ColNum.eTMS).Style.BackColor = Label4.BackColor
                 R1.Cells(ColNum.eTMI).Style.BackColor = Label4.BackColor
                 R1.Cells(ColNum.eTMR).Style.BackColor = Label4.BackColor
+
+                If localInstanceofMyClass.TmR = "O" Then
+                    If localInstanceofMyClass.TmI = "X" Then
+                        R1.Cells(ColNum.eTMS).Style.BackColor = Color.Yellow
+                        R1.Cells(ColNum.eTMS).Style.ForeColor = Color.Black
+                        R1.Cells(ColNum.eTMS).Value = "2(O)"
+                    Else
+                        R1.Cells(ColNum.eTMI).Style.BackColor = Color.Yellow
+                        R1.Cells(ColNum.eTMI).Style.ForeColor = Color.Black
+                        R1.Cells(ColNum.eTMI).Value = "2(O)"
+                    End If
+                ElseIf localInstanceofMyClass.TmR = "X" Then
+                    If localInstanceofMyClass.TmI = "X" Then
+                        R1.Cells(ColNum.eTMI).Style.BackColor = Color.OrangeRed
+                        R1.Cells(ColNum.eTMI).Style.ForeColor = Color.Black
+                        R1.Cells(ColNum.eTMI).Value = "3(X)"
+                    Else
+                        R1.Cells(ColNum.eTMS).Style.BackColor = Color.OrangeRed
+                        R1.Cells(ColNum.eTMS).Style.ForeColor = Color.Black
+                        R1.Cells(ColNum.eTMS).Value = "3(X)"
+                    End If
+                End If
+
                 R1.Cells(ColNum.eTMR7).Style.BackColor = Label4.BackColor
                 If localInstanceofMyClass.TmRS <> "" Then
                     R1.Cells(ColNum.eTMRS).Style.BackColor = Label4.BackColor
@@ -191,6 +237,29 @@
                 R1.Cells(ColNum.eSS).Style.ForeColor = Color.White
                 R1.Cells(ColNum.eSI).Style.ForeColor = Color.White
                 R1.Cells(ColNum.eSR).Style.ForeColor = Color.White
+
+                If localInstanceofMyClass.SR = "O" Then
+                    If localInstanceofMyClass.SI = "X" Then
+                        R1.Cells(ColNum.eSS).Style.BackColor = Color.Yellow
+                        R1.Cells(ColNum.eSS).Style.ForeColor = Color.Black
+                        R1.Cells(ColNum.eSS).Value = "2(O)"
+                    Else
+                        R1.Cells(ColNum.eSI).Style.BackColor = Color.Yellow
+                        R1.Cells(ColNum.eSI).Style.ForeColor = Color.Black
+                        R1.Cells(ColNum.eSI).Value = "2(O)"
+                    End If
+                ElseIf localInstanceofMyClass.SR = "X" Then
+                    If localInstanceofMyClass.SI = "X" Then
+                        R1.Cells(ColNum.eSI).Style.BackColor = Color.OrangeRed
+                        R1.Cells(ColNum.eSI).Style.ForeColor = Color.Black
+                        R1.Cells(ColNum.eSI).Value = "3(X)"
+                    Else
+                        R1.Cells(ColNum.eSS).Style.BackColor = Color.OrangeRed
+                        R1.Cells(ColNum.eSS).Style.ForeColor = Color.Black
+                        R1.Cells(ColNum.eSS).Value = "3(X)"
+                    End If
+                End If
+
                 R1.Cells(ColNum.eSR7).Style.ForeColor = Color.White
                 If localInstanceofMyClass.SRS <> "" Then
                     R1.Cells(ColNum.eSRS).Style.BackColor = Label7.BackColor
@@ -204,6 +273,29 @@
                 R1.Cells(ColNum.eRS).Style.ForeColor = Color.White
                 R1.Cells(ColNum.eRI).Style.ForeColor = Color.White
                 R1.Cells(ColNum.eRR).Style.ForeColor = Color.White
+
+                If localInstanceofMyClass.RR = "O" Then
+                    If localInstanceofMyClass.RI = "X" Then
+                        R1.Cells(ColNum.eRS).Style.BackColor = Color.Yellow
+                        R1.Cells(ColNum.eRS).Style.ForeColor = Color.Black
+                        R1.Cells(ColNum.eRS).Value = "2(O)"
+                    Else
+                        R1.Cells(ColNum.eRI).Style.BackColor = Color.Yellow
+                        R1.Cells(ColNum.eRI).Style.ForeColor = Color.Black
+                        R1.Cells(ColNum.eRI).Value = "2(O)"
+                    End If
+                ElseIf localInstanceofMyClass.RR = "X" Then
+                    If localInstanceofMyClass.RI = "X" Then
+                        R1.Cells(ColNum.eRI).Style.BackColor = Color.OrangeRed
+                        R1.Cells(ColNum.eRI).Style.ForeColor = Color.Black
+                        R1.Cells(ColNum.eRI).Value = "3(X)"
+                    Else
+                        R1.Cells(ColNum.eRS).Style.BackColor = Color.OrangeRed
+                        R1.Cells(ColNum.eRS).Style.ForeColor = Color.Black
+                        R1.Cells(ColNum.eRS).Value = "3(X)"
+                    End If
+                End If
+
                 R1.Cells(ColNum.eRR7).Style.ForeColor = Color.White
                 If localInstanceofMyClass.RRS <> "" Then
                     R1.Cells(ColNum.eRRS).Style.BackColor = Label8.BackColor
@@ -270,10 +362,6 @@
         Label8.Width = DataGridView1.Columns.Item(ColNum.eRS).Width + DataGridView1.Columns.Item(ColNum.eRI).Width + DataGridView1.Columns.Item(ColNum.eRR).Width + DataGridView1.Columns.Item(ColNum.eRR7).Width + DataGridView1.Columns.Item(ColNum.eRRS).Width
 
         Me.Width = DataGridView1.Width + 30
-    End Sub
-
-    Private Sub FormGrid_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
-
     End Sub
 
     Private Sub ReadINIColSize()
@@ -403,7 +491,6 @@
         Dim list3 As New ZedGraph.PointPairList
         Dim CntS3 As Integer = 0
 
-
         If Not SaldoVerlhalbZ = Nothing Then
             Dim len As Integer = SaldoVerlhalbZ.Length
             If SaldoVerlhalbZ <> "" Then
@@ -451,5 +538,9 @@
             myPane.Fill = New ZedGraph.Fill(Color.AliceBlue)
             zed.Refresh()
         End If
+    End Sub
+
+    Private Sub FormGrid_SizeChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.SizeChanged
+        'If loaded = True Then Call SetSizeLabelColPos()
     End Sub
 End Class

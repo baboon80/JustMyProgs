@@ -25,21 +25,6 @@ Partial Class Form1
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog
         Me.Panel1 = New System.Windows.Forms.Panel
-        Me.Button3 = New System.Windows.Forms.Button
-        Me.Button2 = New System.Windows.Forms.Button
-        Me.Button1 = New System.Windows.Forms.Button
-        Me.TextBox1 = New System.Windows.Forms.TextBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.ColorDialog1 = New System.Windows.Forms.ColorDialog
-        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip
-        Me.ToolStripProgressBar1 = New System.Windows.Forms.ToolStripProgressBar
-        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel
-        Me.Panel2 = New System.Windows.Forms.Panel
-        Me.TextRes = New System.Windows.Forms.TextBox
-        Me.HScrollBar1 = New System.Windows.Forms.HScrollBar
-        Me.ListBox1 = New System.Windows.Forms.ListBox
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.TextBox2 = New System.Windows.Forms.TextBox
         Me.Panel3 = New System.Windows.Forms.Panel
         Me.CheckBox11 = New System.Windows.Forms.CheckBox
         Me.CheckBox10 = New System.Windows.Forms.CheckBox
@@ -56,9 +41,24 @@ Partial Class Form1
         Me.RadioButton3 = New System.Windows.Forms.RadioButton
         Me.RadioButton2 = New System.Windows.Forms.RadioButton
         Me.RadioButton1 = New System.Windows.Forms.RadioButton
+        Me.Button3 = New System.Windows.Forms.Button
+        Me.Button2 = New System.Windows.Forms.Button
+        Me.Button1 = New System.Windows.Forms.Button
+        Me.TextBox1 = New System.Windows.Forms.TextBox
+        Me.Label1 = New System.Windows.Forms.Label
+        Me.ColorDialog1 = New System.Windows.Forms.ColorDialog
+        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip
+        Me.ToolStripProgressBar1 = New System.Windows.Forms.ToolStripProgressBar
+        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel
+        Me.Panel2 = New System.Windows.Forms.Panel
+        Me.TextRes = New System.Windows.Forms.TextBox
+        Me.HScrollBar1 = New System.Windows.Forms.HScrollBar
+        Me.ListBox1 = New System.Windows.Forms.ListBox
+        Me.Label2 = New System.Windows.Forms.Label
+        Me.TextBox2 = New System.Windows.Forms.TextBox
         Me.Panel1.SuspendLayout()
-        Me.StatusStrip1.SuspendLayout()
         Me.Panel3.SuspendLayout()
+        Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'OpenFileDialog1
@@ -77,6 +77,137 @@ Partial Class Form1
         Me.Panel1.Controls.Add(Me.Label1)
         resources.ApplyResources(Me.Panel1, "Panel1")
         Me.Panel1.Name = "Panel1"
+        '
+        'Panel3
+        '
+        Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel3.Controls.Add(Me.CheckBox11)
+        Me.Panel3.Controls.Add(Me.CheckBox10)
+        Me.Panel3.Controls.Add(Me.CheckBox9)
+        Me.Panel3.Controls.Add(Me.CheckBox8)
+        Me.Panel3.Controls.Add(Me.CheckBox7)
+        Me.Panel3.Controls.Add(Me.CheckBox6)
+        Me.Panel3.Controls.Add(Me.CheckBox5)
+        Me.Panel3.Controls.Add(Me.CheckBox4)
+        Me.Panel3.Controls.Add(Me.CheckBox3)
+        Me.Panel3.Controls.Add(Me.CheckBox1)
+        Me.Panel3.Controls.Add(Me.CheckBox2)
+        Me.Panel3.Controls.Add(Me.RadioButton6)
+        Me.Panel3.Controls.Add(Me.RadioButton3)
+        Me.Panel3.Controls.Add(Me.RadioButton2)
+        Me.Panel3.Controls.Add(Me.RadioButton1)
+        resources.ApplyResources(Me.Panel3, "Panel3")
+        Me.Panel3.Name = "Panel3"
+        '
+        'CheckBox11
+        '
+        resources.ApplyResources(Me.CheckBox11, "CheckBox11")
+        Me.CheckBox11.Checked = True
+        Me.CheckBox11.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBox11.Name = "CheckBox11"
+        Me.CheckBox11.UseVisualStyleBackColor = True
+        '
+        'CheckBox10
+        '
+        resources.ApplyResources(Me.CheckBox10, "CheckBox10")
+        Me.CheckBox10.Checked = True
+        Me.CheckBox10.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBox10.Name = "CheckBox10"
+        Me.CheckBox10.UseVisualStyleBackColor = True
+        '
+        'CheckBox9
+        '
+        resources.ApplyResources(Me.CheckBox9, "CheckBox9")
+        Me.CheckBox9.Checked = True
+        Me.CheckBox9.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBox9.Name = "CheckBox9"
+        Me.CheckBox9.UseVisualStyleBackColor = True
+        '
+        'CheckBox8
+        '
+        resources.ApplyResources(Me.CheckBox8, "CheckBox8")
+        Me.CheckBox8.Checked = True
+        Me.CheckBox8.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBox8.Name = "CheckBox8"
+        Me.CheckBox8.UseVisualStyleBackColor = True
+        '
+        'CheckBox7
+        '
+        resources.ApplyResources(Me.CheckBox7, "CheckBox7")
+        Me.CheckBox7.Checked = True
+        Me.CheckBox7.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBox7.Name = "CheckBox7"
+        Me.CheckBox7.UseVisualStyleBackColor = True
+        '
+        'CheckBox6
+        '
+        resources.ApplyResources(Me.CheckBox6, "CheckBox6")
+        Me.CheckBox6.Checked = True
+        Me.CheckBox6.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBox6.Name = "CheckBox6"
+        Me.CheckBox6.UseVisualStyleBackColor = True
+        '
+        'CheckBox5
+        '
+        resources.ApplyResources(Me.CheckBox5, "CheckBox5")
+        Me.CheckBox5.Checked = True
+        Me.CheckBox5.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBox5.Name = "CheckBox5"
+        Me.CheckBox5.UseVisualStyleBackColor = True
+        '
+        'CheckBox4
+        '
+        resources.ApplyResources(Me.CheckBox4, "CheckBox4")
+        Me.CheckBox4.Checked = True
+        Me.CheckBox4.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBox4.Name = "CheckBox4"
+        Me.CheckBox4.UseVisualStyleBackColor = True
+        '
+        'CheckBox3
+        '
+        resources.ApplyResources(Me.CheckBox3, "CheckBox3")
+        Me.CheckBox3.Checked = True
+        Me.CheckBox3.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBox3.Name = "CheckBox3"
+        Me.CheckBox3.UseVisualStyleBackColor = True
+        '
+        'CheckBox1
+        '
+        resources.ApplyResources(Me.CheckBox1, "CheckBox1")
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.UseVisualStyleBackColor = True
+        '
+        'CheckBox2
+        '
+        resources.ApplyResources(Me.CheckBox2, "CheckBox2")
+        Me.CheckBox2.Name = "CheckBox2"
+        Me.CheckBox2.UseVisualStyleBackColor = True
+        '
+        'RadioButton6
+        '
+        resources.ApplyResources(Me.RadioButton6, "RadioButton6")
+        Me.RadioButton6.Name = "RadioButton6"
+        Me.RadioButton6.UseVisualStyleBackColor = True
+        '
+        'RadioButton3
+        '
+        resources.ApplyResources(Me.RadioButton3, "RadioButton3")
+        Me.RadioButton3.Name = "RadioButton3"
+        Me.RadioButton3.UseVisualStyleBackColor = True
+        '
+        'RadioButton2
+        '
+        resources.ApplyResources(Me.RadioButton2, "RadioButton2")
+        Me.RadioButton2.Checked = True
+        Me.RadioButton2.Name = "RadioButton2"
+        Me.RadioButton2.TabStop = True
+        Me.RadioButton2.UseVisualStyleBackColor = True
+        '
+        'RadioButton1
+        '
+        resources.ApplyResources(Me.RadioButton1, "RadioButton1")
+        Me.RadioButton1.Name = "RadioButton1"
+        Me.RadioButton1.UseVisualStyleBackColor = True
         '
         'Button3
         '
@@ -163,129 +294,6 @@ Partial Class Form1
         resources.ApplyResources(Me.TextBox2, "TextBox2")
         Me.TextBox2.Name = "TextBox2"
         '
-        'Panel3
-        '
-        Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel3.Controls.Add(Me.CheckBox11)
-        Me.Panel3.Controls.Add(Me.CheckBox10)
-        Me.Panel3.Controls.Add(Me.CheckBox9)
-        Me.Panel3.Controls.Add(Me.CheckBox8)
-        Me.Panel3.Controls.Add(Me.CheckBox7)
-        Me.Panel3.Controls.Add(Me.CheckBox6)
-        Me.Panel3.Controls.Add(Me.CheckBox5)
-        Me.Panel3.Controls.Add(Me.CheckBox4)
-        Me.Panel3.Controls.Add(Me.CheckBox3)
-        Me.Panel3.Controls.Add(Me.CheckBox1)
-        Me.Panel3.Controls.Add(Me.CheckBox2)
-        Me.Panel3.Controls.Add(Me.RadioButton6)
-        Me.Panel3.Controls.Add(Me.RadioButton3)
-        Me.Panel3.Controls.Add(Me.RadioButton2)
-        Me.Panel3.Controls.Add(Me.RadioButton1)
-        resources.ApplyResources(Me.Panel3, "Panel3")
-        Me.Panel3.Name = "Panel3"
-        '
-        'CheckBox11
-        '
-        resources.ApplyResources(Me.CheckBox11, "CheckBox11")
-        Me.CheckBox11.Name = "CheckBox11"
-        Me.CheckBox11.UseVisualStyleBackColor = True
-        '
-        'CheckBox10
-        '
-        resources.ApplyResources(Me.CheckBox10, "CheckBox10")
-        Me.CheckBox10.Name = "CheckBox10"
-        Me.CheckBox10.UseVisualStyleBackColor = True
-        '
-        'CheckBox9
-        '
-        resources.ApplyResources(Me.CheckBox9, "CheckBox9")
-        Me.CheckBox9.Name = "CheckBox9"
-        Me.CheckBox9.UseVisualStyleBackColor = True
-        '
-        'CheckBox8
-        '
-        resources.ApplyResources(Me.CheckBox8, "CheckBox8")
-        Me.CheckBox8.Name = "CheckBox8"
-        Me.CheckBox8.UseVisualStyleBackColor = True
-        '
-        'CheckBox7
-        '
-        resources.ApplyResources(Me.CheckBox7, "CheckBox7")
-        Me.CheckBox7.Checked = True
-        Me.CheckBox7.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox7.Name = "CheckBox7"
-        Me.CheckBox7.UseVisualStyleBackColor = True
-        '
-        'CheckBox6
-        '
-        resources.ApplyResources(Me.CheckBox6, "CheckBox6")
-        Me.CheckBox6.Checked = True
-        Me.CheckBox6.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox6.Name = "CheckBox6"
-        Me.CheckBox6.UseVisualStyleBackColor = True
-        '
-        'CheckBox5
-        '
-        resources.ApplyResources(Me.CheckBox5, "CheckBox5")
-        Me.CheckBox5.Checked = True
-        Me.CheckBox5.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox5.Name = "CheckBox5"
-        Me.CheckBox5.UseVisualStyleBackColor = True
-        '
-        'CheckBox4
-        '
-        resources.ApplyResources(Me.CheckBox4, "CheckBox4")
-        Me.CheckBox4.Checked = True
-        Me.CheckBox4.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox4.Name = "CheckBox4"
-        Me.CheckBox4.UseVisualStyleBackColor = True
-        '
-        'CheckBox3
-        '
-        resources.ApplyResources(Me.CheckBox3, "CheckBox3")
-        Me.CheckBox3.Checked = True
-        Me.CheckBox3.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox3.Name = "CheckBox3"
-        Me.CheckBox3.UseVisualStyleBackColor = True
-        '
-        'CheckBox1
-        '
-        resources.ApplyResources(Me.CheckBox1, "CheckBox1")
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.UseVisualStyleBackColor = True
-        '
-        'CheckBox2
-        '
-        resources.ApplyResources(Me.CheckBox2, "CheckBox2")
-        Me.CheckBox2.Name = "CheckBox2"
-        Me.CheckBox2.UseVisualStyleBackColor = True
-        '
-        'RadioButton6
-        '
-        resources.ApplyResources(Me.RadioButton6, "RadioButton6")
-        Me.RadioButton6.Name = "RadioButton6"
-        Me.RadioButton6.UseVisualStyleBackColor = True
-        '
-        'RadioButton3
-        '
-        resources.ApplyResources(Me.RadioButton3, "RadioButton3")
-        Me.RadioButton3.Name = "RadioButton3"
-        Me.RadioButton3.UseVisualStyleBackColor = True
-        '
-        'RadioButton2
-        '
-        resources.ApplyResources(Me.RadioButton2, "RadioButton2")
-        Me.RadioButton2.Checked = True
-        Me.RadioButton2.Name = "RadioButton2"
-        Me.RadioButton2.TabStop = True
-        Me.RadioButton2.UseVisualStyleBackColor = True
-        '
-        'RadioButton1
-        '
-        resources.ApplyResources(Me.RadioButton1, "RadioButton1")
-        Me.RadioButton1.Name = "RadioButton1"
-        Me.RadioButton1.UseVisualStyleBackColor = True
-        '
         'Form1
         '
         resources.ApplyResources(Me, "$this")
@@ -304,10 +312,10 @@ Partial Class Form1
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        Me.StatusStrip1.ResumeLayout(False)
-        Me.StatusStrip1.PerformLayout()
         Me.Panel3.ResumeLayout(False)
         Me.Panel3.PerformLayout()
+        Me.StatusStrip1.ResumeLayout(False)
+        Me.StatusStrip1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
