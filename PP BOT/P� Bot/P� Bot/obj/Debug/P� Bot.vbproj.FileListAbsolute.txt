@@ -1,0 +1,20 @@
+C:\Users\patrick.schmolz\AppData\Local\Temporary Projects\P² Bot\bin\Debug\P² Bot.exe
+C:\Users\patrick.schmolz\AppData\Local\Temporary Projects\P² Bot\bin\Debug\P² Bot.pdb
+C:\Users\patrick.schmolz\AppData\Local\Temporary Projects\P² Bot\bin\Debug\P² Bot.xml
+C:\Users\patrick.schmolz\AppData\Local\Temporary Projects\P² Bot\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\patrick.schmolz\AppData\Local\Temporary Projects\P² Bot\obj\Debug\P__Bot.Form1.resources
+C:\Users\patrick.schmolz\AppData\Local\Temporary Projects\P² Bot\obj\Debug\P__Bot.Resources.resources
+C:\Users\patrick.schmolz\AppData\Local\Temporary Projects\P² Bot\obj\Debug\P² Bot.vbproj.GenerateResource.Cache
+C:\Users\patrick.schmolz\AppData\Local\Temporary Projects\P² Bot\obj\Debug\P² Bot.exe
+C:\Users\patrick.schmolz\AppData\Local\Temporary Projects\P² Bot\obj\Debug\P² Bot.xml
+C:\Users\patrick.schmolz\AppData\Local\Temporary Projects\P² Bot\obj\Debug\P² Bot.pdb
+D:\Patrick\JustMyProgs\PP BOT\P² Bot\P² Bot\obj\Debug\P² Bot.exe
+D:\Patrick\JustMyProgs\PP BOT\P² Bot\P² Bot\obj\Debug\P² Bot.xml
+D:\Patrick\JustMyProgs\PP BOT\P² Bot\P² Bot\obj\Debug\P² Bot.pdb
+D:\Patrick\JustMyProgs\PP BOT\P² Bot\P² Bot\bin\Debug\P² Bot.exe
+D:\Patrick\JustMyProgs\PP BOT\P² Bot\P² Bot\bin\Debug\P² Bot.pdb
+D:\Patrick\JustMyProgs\PP BOT\P² Bot\P² Bot\bin\Debug\P² Bot.xml
+D:\Patrick\JustMyProgs\PP BOT\P² Bot\P² Bot\obj\Debug\ResolveAssemblyReference.cache
+D:\Patrick\JustMyProgs\PP BOT\P² Bot\P² Bot\obj\Debug\P__Bot.Form1.resources
+D:\Patrick\JustMyProgs\PP BOT\P² Bot\P² Bot\obj\Debug\P__Bot.Resources.resources
+D:\Patrick\JustMyProgs\PP BOT\P² Bot\P² Bot\obj\Debug\P² Bot.vbproj.GenerateResource.Cache
