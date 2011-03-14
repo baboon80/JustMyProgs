@@ -96,7 +96,7 @@ Public Class Form1
         ToolStripProgressBar1.Visible = False
         loaded = True
 
-        Me.Text = "Biotop V2 Version: 2.09"
+        Me.Text = "Biotop V2 Version: 2.10"
     End Sub
 
     Private Sub StartAuswertung()
@@ -768,217 +768,229 @@ Public Class Form1
                             Ser = cCoupData.TPS
                             Int = cCoupData.TPI
 
-                            If SatzPlus = "X" And Ser <> "" Then
+                            If SerInt = "ISS" Then
                                 'Serienstrang
                                 Strang = "Serie"
-                            ElseIf SatzPlus = "X" And Int <> "" Then
+                            ElseIf SerInt = "SII" Then
                                 'Intermittenztstrang
-                                Strang = "Int"
-                            ElseIf SatzPlus = "O" And Ser <> "" Then
-                                'Intermittenztstrang
-                                Strang = "Int"
-                            ElseIf SatzPlus = "O" And Int <> "" Then
-                                'Serienstrang
-                                Strang = "Serie"
-                            End If                            
+                                Strang = "Int"                            
+                            End If
 
-                            For Z As Integer = 2 To arraylistCnt - 1
-                                localInstanceofMyClass = CType(arrayPartie(arraylistCnt - Z), clsCoupData)
-                                Rap = localInstanceofMyClass.TPR
+                            If CheckBox7.Checked = True Or CheckBox8.Checked = True Or CheckBox9.Checked = True Or CheckBox10.Checked = True Or CheckBox11.Checked = True Then
+                                For Z As Integer = 2 To arraylistCnt - 1
+                                    localInstanceofMyClass = CType(arrayPartie(arraylistCnt - Z), clsCoupData)
+                                    Rap = localInstanceofMyClass.TPR
 
-                                If Rap <> "" Then
-                                    nextRap = False
-                                    If Strang = "Serie" Then
-                                        If Rap = "X" Then
-                                            If localInstanceofMyClass.TPS <> "" Then
-                                                StrangRap = StrangRap & "X"
-                                                StrangRapCnt = StrangRapCnt + 1
-                                                nextRap = True
-                                            Else
-                                                If firstRap = True Then
-                                                    LastIsNotPlayingRange = True
-                                                    firstRap = False
-                                                End If
-                                            End If
-                                        ElseIf Rap = "O" Then
-                                            If localInstanceofMyClass.TPI <> "" Then
-                                                StrangRap = StrangRap & "O"
-                                                StrangRapCnt = StrangRapCnt + 1
-                                                nextRap = True
-                                            Else
-                                                If firstRap = True Then
-                                                    LastIsNotPlayingRange = True
-                                                    firstRap = False
-                                                End If
-                                            End If
-                                        End If
-                                    ElseIf Strang = "Int" Then
-                                        If Rap = "X" Then
-                                            If localInstanceofMyClass.TPI <> "" Then
-                                                StrangRap = StrangRap & "X"
-                                                StrangRapCnt = StrangRapCnt + 1
-                                                nextRap = True
-                                            Else
-                                                If firstRap = True Then
-                                                    LastIsNotPlayingRange = True
-                                                    firstRap = False
-                                                End If
-                                            End If
-                                        ElseIf Rap = "O" Then
-                                            If localInstanceofMyClass.TPS <> "" Then
-                                                StrangRap = StrangRap & "O"
-                                                StrangRapCnt = StrangRapCnt + 1
-                                                nextRap = True
-                                            Else
-                                                If firstRap = True Then
-                                                    LastIsNotPlayingRange = True
-                                                    firstRap = False
-                                                End If
-                                            End If
-                                        End If
-                                    End If
-                                    firstRap = False
-
-                                    If nextRap = True Then
-
-                                        If SatzPlusRegel = "R11" And CheckBox7.Checked = True Then 'Check R14'
-                                            If StrangRapCnt < 3 Then
-                                                tmpCopyStruct.TPRS = "KS: R14"
-
-                                            ElseIf StrangRapCnt = 3 Then
-                                                If SatzPlus = "X" Then
-                                                    If (StrangRap(0) = "O" And StrangRap(1) = "X") Then
-                                                        tmpCopyStruct.TPRS = tmpSatz
-                                                        Exit For
+                                    If Rap <> "" Then
+                                        nextRap = False
+                                        If Strang = "Serie" Then
+                                            If Rap = "X" Then
+                                                If localInstanceofMyClass.TPS <> "" Then
+                                                    StrangRap = StrangRap & "X"
+                                                    StrangRapCnt = StrangRapCnt + 1
+                                                    nextRap = True
+                                                Else
+                                                    If firstRap = True Then
+                                                        LastIsNotPlayingRange = True
+                                                        firstRap = False
                                                     End If
-                                                ElseIf SatzPlus = "O" Then
-                                                    If (StrangRap(0) = "X" And StrangRap(1) = "O") Then
-                                                        tmpCopyStruct.TPRS = tmpSatz
-                                                        Exit For
+                                                End If
+                                            ElseIf Rap = "O" Then
+                                                If localInstanceofMyClass.TPI <> "" Then
+                                                    StrangRap = StrangRap & "O"
+                                                    StrangRapCnt = StrangRapCnt + 1
+                                                    nextRap = True
+                                                Else
+                                                    If firstRap = True Then
+                                                        LastIsNotPlayingRange = True
+                                                        firstRap = False
                                                     End If
                                                 End If
                                             End If
-                                        Else
-                                            If CheckBox8.Checked = True And LastIsNotPlayingRange = True And StrangRap.Length >= 3 Then 'Check R15
-                                                If SatzPlus = "X" Then
+                                        ElseIf Strang = "Int" Then
+                                            If Rap = "X" Then
+                                                If localInstanceofMyClass.TPI <> "" Then
+                                                    StrangRap = StrangRap & "X"
+                                                    StrangRapCnt = StrangRapCnt + 1
+                                                    nextRap = True
+                                                Else
+                                                    If firstRap = True Then
+                                                        LastIsNotPlayingRange = True
+                                                        firstRap = False
+                                                    End If
+                                                End If
+                                            ElseIf Rap = "O" Then
+                                                If localInstanceofMyClass.TPS <> "" Then
+                                                    StrangRap = StrangRap & "O"
+                                                    StrangRapCnt = StrangRapCnt + 1
+                                                    nextRap = True
+                                                Else
+                                                    If firstRap = True Then
+                                                        LastIsNotPlayingRange = True
+                                                        firstRap = False
+                                                    End If
+                                                End If
+                                            End If
+                                        End If
+                                        firstRap = False
+
+                                        If nextRap = True Then
+                                            If SatzPlusRegel = "R11" And CheckBox7.Checked = True Then 'Check R14'
+                                                If StrangRapCnt < 3 Then
+                                                    tmpCopyStruct.TPRS = "KS: R14"
+
+                                                ElseIf StrangRapCnt = 3 Then
+                                                    If SatzPlus = "X" Then
+                                                        If (StrangRap(0) = "O" And StrangRap(1) = "X") Then
+                                                            tmpCopyStruct.TPRS = tmpSatz
+                                                            Exit For
+                                                        End If
+                                                    ElseIf SatzPlus = "O" Then
+                                                        If (StrangRap(0) = "X" And StrangRap(1) = "O") Then
+                                                            tmpCopyStruct.TPRS = tmpSatz
+                                                            Exit For
+                                                        End If
+                                                    End If
+                                                End If
+                                            Else
+                                                If CheckBox8.Checked = True And LastIsNotPlayingRange = True And StrangRap.Length >= 3 Then 'Check R15
                                                     If StrangRap.Substring(0, 2) = "XO" Then 'R15= 1er = jetzt prüfen ob danach 2er
                                                         If StrangRap.Substring(StrangRap.Length - 1, 1) = "X" And StrangRap2 = "" Then
                                                             StrangRap2 = "X"
                                                         ElseIf StrangRap2 <> "" Then
-                                                            If (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "XO" Then
+                                                            If (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "XX" And SatzPlus = "O" Then
                                                                 tmpCopyStruct.TPRS = "KS: R15"
-                                                            Else
+                                                                Exit For
+                                                            ElseIf (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "XO" And SatzPlus = "X" Then
+                                                                tmpCopyStruct.TPRS = "KS: R15"
                                                                 Exit For
                                                             End If
                                                         End If
-                                                    End If
-                                                ElseIf SatzPlus = "O" Then 'R15= 1er = jetzt prüfen ob danach 2er
-                                                    If StrangRap.Substring(0, 2) = "OX" Then
+                                                    ElseIf StrangRap.Substring(0, 2) = "OX" Then
                                                         If StrangRap.Substring(StrangRap.Length - 1, 1) = "O" And StrangRap2 = "" Then
                                                             StrangRap2 = "O"
                                                         ElseIf StrangRap2 <> "" Then
-                                                            If (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "OX" Then
+                                                            If (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "OO" And SatzPlus = "X" Then
                                                                 tmpCopyStruct.TPRS = "KS: R15"
-                                                            Else
+                                                                Exit For
+                                                            ElseIf (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "OX" And SatzPlus = "O" Then
+                                                                tmpCopyStruct.TPRS = "KS: R15"
                                                                 Exit For
                                                             End If
                                                         End If
                                                     End If
                                                 End If
-                                            End If
 
-                                            If CheckBox9.Checked = True Then 'Check R16
-                                                If StrangRap.Length = 3 Then
-                                                    If StrangRap = "XXO" Then
-                                                        If SatzPlus = "O" Then
-                                                            tmpCopyStruct.TPRS = "KS: R16"
+                                                If CheckBox9.Checked = True Then 'Check R16
+                                                    If StrangRap.Length = 3 Then
+                                                        If StrangRap = "XXO" Then
+                                                            If SatzPlus = "O" Then
+                                                                tmpCopyStruct.TPRS = "KS: R16"
+                                                            End If
+                                                            Exit For
+                                                        ElseIf StrangRap = "OOX" Then
+                                                            If SatzPlus = "X" Then
+                                                                tmpCopyStruct.TPRS = "KS: R16"
+                                                            End If
+                                                            Exit For
                                                         End If
-                                                        Exit For
-                                                    ElseIf StrangRap = "OOX" Then
-                                                        If SatzPlus = "X" Then
-                                                            tmpCopyStruct.TPRS = "KS: R16"
+                                                    ElseIf StrangRap.Length = 5 Then
+                                                        If StrangRap = "XXXXO" Then
+                                                            If SatzPlus = "O" Then
+                                                                tmpCopyStruct.TPRS = "KS: R16"
+                                                            End If
+                                                            Exit For
+                                                        ElseIf StrangRap = "OOOOX" Then
+                                                            If SatzPlus = "X" Then
+                                                                tmpCopyStruct.TPRS = "KS: R16"
+                                                            End If
+                                                            Exit For
                                                         End If
-                                                        Exit For
-                                                    End If
-                                                ElseIf StrangRap.Length = 5 Then
-                                                    If StrangRap = "XXXXO" Then
-                                                        If SatzPlus = "O" Then
-                                                            tmpCopyStruct.TPRS = "KS: R16"
-                                                        End If
-                                                        Exit For
-                                                    ElseIf StrangRap = "OOOOX" Then
-                                                        If SatzPlus = "X" Then
-                                                            tmpCopyStruct.TPRS = "KS: R16"
-                                                        End If
-                                                        Exit For
-                                                    End If
-                                                End If
-                                            End If
-
-                                            If CheckBox10.Checked = True Then 'Check R17
-                                                If StrangRap.Length = 4 Then
-                                                    If StrangRap = "XXXO" Then
-                                                        If SatzPlus = "X" Then
-                                                            tmpCopyStruct.TPRS = "KS: R17"
-                                                        End If
-                                                        Exit For
-                                                    ElseIf StrangRap = "OOOX" Then
-                                                        If SatzPlus = "O" Then
-                                                            tmpCopyStruct.TPRS = "KS: R17"
-                                                        End If
-                                                        Exit For
                                                     End If
                                                 End If
-                                            End If
 
-                                            If CheckBox11.Checked = True Then 'Check R18
-                                                If StrangRap.Length = 5 Then
-                                                    If StrangRap = "XXXXX" Or StrangRap = "OOOOO" Then
-                                                        tmpCopyStruct.TPRS = "KS: R18"
-                                                        Exit For
+                                                If CheckBox10.Checked = True Then 'Check R17
+                                                    If StrangRap.Length = 4 Then
+                                                        If StrangRap = "XXXO" Then
+                                                            If SatzPlus = "X" Then
+                                                                tmpCopyStruct.TPRS = "KS: R17"
+                                                            End If
+                                                            Exit For
+                                                        ElseIf StrangRap = "OOOX" Then
+                                                            If SatzPlus = "O" Then
+                                                                tmpCopyStruct.TPRS = "KS: R17"
+                                                            End If
+                                                            Exit For
+                                                        End If
+                                                    End If
+                                                End If
+
+                                                If CheckBox11.Checked = True Then 'Check R18
+                                                    If StrangRap.Length = 5 Then
+                                                        If StrangRap = "XXXXX" Or StrangRap = "OOOOO" Then
+                                                            tmpCopyStruct.TPRS = "KS: R18"
+                                                            Exit For
+                                                        End If
                                                     End If
                                                 End If
                                             End If
                                         End If
+                                    End If
+                                Next Z
+
+                                If CheckBox7.Checked = True And SatzPlusRegel = "R11" Then
+                                    If StrangRap.Length < 3 Then
+                                        tmpCopyStruct.TPRS = "Vl. zu klein"
                                     End If
                                 End If
-                            Next Z
 
-                            If CheckBox7.Checked = False And SatzPlusRegel = "R11" Then
-                                If CheckBox8.Checked = True And LastIsNotPlayingRange = True And StrangRap2.Length < 2 Then 'R15 fehlt Vorlauf
-                                    tmpCopyStruct.TPRS = "Vl. zu klein"
-                                Else
-                                    If CheckBox9.Checked = True Then
-                                        If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Or StrangRap = "XXXX" Then
-                                            If SatzPlus = "O" Then
-                                                tmpCopyStruct.TPRS = "Vl. zu klein"
-                                            End If
-                                        ElseIf StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Or StrangRap = "OOO" Then
-                                            If SatzPlus = "O" Then
+                                If CheckBox8.Checked = True And LastIsNotPlayingRange = True Then 'R15 fehlt Vorlauf
+                                    If StrangRap.Length = 1 Then
+                                        If tmpCopyStruct.TPRS <> "KS: R15" Then
+                                            tmpCopyStruct.TPRS = "Vl. zu klein"
+                                        End If
+                                    ElseIf StrangRap.Length >= 2 Then
+                                        If StrangRap.Substring(0, 2) = "OX" Or StrangRap.Substring(0, 2) = "XO" Then
+                                            If tmpCopyStruct.TPRS <> "KS: R15" Then
                                                 tmpCopyStruct.TPRS = "Vl. zu klein"
                                             End If
                                         End If
+                                    Else
+                                        tmpCopyStruct.TPRS = "Vl. zu klein"
                                     End If
+                                End If
 
-                                    If CheckBox10.Checked = True Then
-                                        If StrangRap = "XXX" Then
-                                            If SatzPlus = "X" Then
-                                                tmpCopyStruct.TPRS = "Vl. zu klein"
-                                            End If
-                                        ElseIf StrangRap = "OOO" Then
-                                            If SatzPlus = "O" Then
-                                                tmpCopyStruct.TPRS = "Vl. zu klein"
-                                            End If
+                                If CheckBox9.Checked = True Then
+                                    If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Or StrangRap = "XXXX" Then
+                                        If SatzPlus = "O" Then
+                                            tmpCopyStruct.TPRS = "Vl. zu klein"
                                         End If
-                                    End If
-
-                                    If CheckBox11.Checked = True Then
-                                        If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Or StrangRap = "XXXX" Or StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Or StrangRap = "OOOO" Then
+                                    ElseIf StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Or StrangRap = "OOO" Then
+                                        If SatzPlus = "O" Then
                                             tmpCopyStruct.TPRS = "Vl. zu klein"
                                         End If
                                     End If
                                 End If
+
+                                If CheckBox10.Checked = True Then
+                                    If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Then
+                                        If SatzPlus = "X" Then
+                                            tmpCopyStruct.TPRS = "Vl. zu klein"
+                                        End If
+                                    ElseIf StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Then
+                                        If SatzPlus = "O" Then
+                                            tmpCopyStruct.TPRS = "Vl. zu klein"
+                                        End If
+                                    End If
+                                End If
+
+                                If CheckBox11.Checked = True Then
+                                    If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Or StrangRap = "XXXX" Or StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Or StrangRap = "OOOO" Then
+                                        tmpCopyStruct.TPRS = "Vl. zu klein"
+                                    End If
+                                End If
                             End If
+
 
                             DeletelastDummyCoup()
                             ''zurückschreiben
@@ -1079,214 +1091,225 @@ Public Class Form1
                             Ser = cCoupData.TmS
                             Int = cCoupData.TmI
 
-                            If SatzMinus = "X" And Ser <> "" Then
+                            If SerInt = "ISS" Then
                                 'Serienstrang
                                 Strang = "Serie"
-                            ElseIf SatzMinus = "X" And Int <> "" Then
+                            ElseIf SerInt = "SII" Then
                                 'Intermittenztstrang
                                 Strang = "Int"
-                            ElseIf SatzMinus = "O" And Ser <> "" Then
-                                'Intermittenztstrang
-                                Strang = "Int"
-                            ElseIf SatzMinus = "O" And Int <> "" Then
-                                'Serienstrang
-                                Strang = "Serie"
                             End If
 
-                            For Z As Integer = 2 To arraylistCnt - 1
-                                localInstanceofMyClass = CType(arrayPartie(arraylistCnt - Z), clsCoupData)
-                                Rap = localInstanceofMyClass.TmR
+                            If CheckBox7.Checked = True Or CheckBox8.Checked = True Or CheckBox9.Checked = True Or CheckBox10.Checked = True Or CheckBox11.Checked = True Then
+                                For Z As Integer = 2 To arraylistCnt - 1
+                                    localInstanceofMyClass = CType(arrayPartie(arraylistCnt - Z), clsCoupData)
+                                    Rap = localInstanceofMyClass.TmR
 
-                                If Rap <> "" Then
-                                    nextRap = False
-                                    If Strang = "Serie" Then
-                                        If Rap = "X" Then
-                                            If localInstanceofMyClass.TmS <> "" Then
-                                                StrangRap = StrangRap & "X"
-                                                StrangRapCnt = StrangRapCnt + 1
-                                                nextRap = True
-                                            Else
-                                                If firstRap = True Then
-                                                    LastIsNotPlayingRange = True
-                                                    firstRap = False
-                                                End If
-                                            End If
-                                        ElseIf Rap = "O" Then
-                                            If localInstanceofMyClass.TmI <> "" Then
-                                                StrangRap = StrangRap & "O"
-                                                StrangRapCnt = StrangRapCnt + 1
-                                                nextRap = True
-                                            Else
-                                                If firstRap = True Then
-                                                    LastIsNotPlayingRange = True
-                                                    firstRap = False
-                                                End If
-                                            End If
-                                        End If
-                                    ElseIf Strang = "Int" Then
-                                        If Rap = "X" Then
-                                            If localInstanceofMyClass.TmI <> "" Then
-                                                StrangRap = StrangRap & "X"
-                                                StrangRapCnt = StrangRapCnt + 1
-                                                nextRap = True
-                                            Else
-                                                If firstRap = True Then
-                                                    LastIsNotPlayingRange = True
-                                                    firstRap = False
-                                                End If
-                                            End If
-                                        ElseIf Rap = "O" Then
-                                            If localInstanceofMyClass.TmS <> "" Then
-                                                StrangRap = StrangRap & "O"
-                                                StrangRapCnt = StrangRapCnt + 1
-                                                nextRap = True
-                                            Else
-                                                If firstRap = True Then
-                                                    LastIsNotPlayingRange = True
-                                                    firstRap = False
-                                                End If
-                                            End If
-                                        End If
-                                    End If
-                                    firstRap = False
-
-                                    If nextRap = True Then
-
-                                        If SatzMinusRegel = "R11" And CheckBox7.Checked = True Then 'Check R14'
-                                            If StrangRapCnt < 3 Then
-                                                tmpCopyStruct.TmRS = "KS: R14"
-
-                                            ElseIf StrangRapCnt = 3 Then
-                                                If SatzMinus = "X" Then
-                                                    If (StrangRap(0) = "O" And StrangRap(1) = "X") Then
-                                                        tmpCopyStruct.TmRS = tmpSatz
-                                                        Exit For
+                                    If Rap <> "" Then
+                                        nextRap = False
+                                        If Strang = "Serie" Then
+                                            If Rap = "X" Then
+                                                If localInstanceofMyClass.TmS <> "" Then
+                                                    StrangRap = StrangRap & "X"
+                                                    StrangRapCnt = StrangRapCnt + 1
+                                                    nextRap = True
+                                                Else
+                                                    If firstRap = True Then
+                                                        LastIsNotPlayingRange = True
+                                                        firstRap = False
                                                     End If
-                                                ElseIf SatzMinus = "O" Then
-                                                    If (StrangRap(0) = "X" And StrangRap(1) = "O") Then
-                                                        tmpCopyStruct.TmRS = tmpSatz
-                                                        Exit For
+                                                End If
+                                            ElseIf Rap = "O" Then
+                                                If localInstanceofMyClass.TmI <> "" Then
+                                                    StrangRap = StrangRap & "O"
+                                                    StrangRapCnt = StrangRapCnt + 1
+                                                    nextRap = True
+                                                Else
+                                                    If firstRap = True Then
+                                                        LastIsNotPlayingRange = True
+                                                        firstRap = False
                                                     End If
                                                 End If
                                             End If
-                                        Else
-                                            If CheckBox8.Checked = True And LastIsNotPlayingRange = True And StrangRap.Length >= 3 Then 'Check R15
-                                                If SatzMinus = "X" Then
+                                        ElseIf Strang = "Int" Then
+                                            If Rap = "X" Then
+                                                If localInstanceofMyClass.TmI <> "" Then
+                                                    StrangRap = StrangRap & "X"
+                                                    StrangRapCnt = StrangRapCnt + 1
+                                                    nextRap = True
+                                                Else
+                                                    If firstRap = True Then
+                                                        LastIsNotPlayingRange = True
+                                                        firstRap = False
+                                                    End If
+                                                End If
+                                            ElseIf Rap = "O" Then
+                                                If localInstanceofMyClass.TmS <> "" Then
+                                                    StrangRap = StrangRap & "O"
+                                                    StrangRapCnt = StrangRapCnt + 1
+                                                    nextRap = True
+                                                Else
+                                                    If firstRap = True Then
+                                                        LastIsNotPlayingRange = True
+                                                        firstRap = False
+                                                    End If
+                                                End If
+                                            End If
+                                        End If
+                                        firstRap = False
+
+                                        If nextRap = True Then
+                                            If SatzMinusRegel = "R11" And CheckBox7.Checked = True Then 'Check R14'
+                                                If StrangRapCnt < 3 Then
+                                                    tmpCopyStruct.TmRS = "KS: R14"
+
+                                                ElseIf StrangRapCnt = 3 Then
+                                                    If SatzMinus = "X" Then
+                                                        If (StrangRap(0) = "O" And StrangRap(1) = "X") Then
+                                                            tmpCopyStruct.TmRS = tmpSatz
+                                                            Exit For
+                                                        End If
+                                                    ElseIf SatzMinus = "O" Then
+                                                        If (StrangRap(0) = "X" And StrangRap(1) = "O") Then
+                                                            tmpCopyStruct.TmRS = tmpSatz
+                                                            Exit For
+                                                        End If
+                                                    End If
+                                                End If
+                                            Else
+                                                If CheckBox8.Checked = True And LastIsNotPlayingRange = True And StrangRap.Length >= 3 Then 'Check R15
                                                     If StrangRap.Substring(0, 2) = "XO" Then 'R15= 1er = jetzt prüfen ob danach 2er
                                                         If StrangRap.Substring(StrangRap.Length - 1, 1) = "X" And StrangRap2 = "" Then
                                                             StrangRap2 = "X"
                                                         ElseIf StrangRap2 <> "" Then
-                                                            If (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "XO" Then
+                                                            If (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "XX" And SatzMinus = "O" Then
                                                                 tmpCopyStruct.TmRS = "KS: R15"
-                                                            Else
+                                                                Exit For
+                                                            ElseIf (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "XO" And SatzMinus = "X" Then
+                                                                tmpCopyStruct.TmRS = "KS: R15"
                                                                 Exit For
                                                             End If
                                                         End If
-                                                    End If
-                                                ElseIf SatzMinus = "O" Then 'R15= 1er = jetzt prüfen ob danach 2er
-                                                    If StrangRap.Substring(0, 2) = "OX" Then
+                                                    ElseIf StrangRap.Substring(0, 2) = "OX" Then
                                                         If StrangRap.Substring(StrangRap.Length - 1, 1) = "O" And StrangRap2 = "" Then
                                                             StrangRap2 = "O"
                                                         ElseIf StrangRap2 <> "" Then
-                                                            If (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "OX" Then
+                                                            If (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "OO" And SatzMinus = "X" Then
                                                                 tmpCopyStruct.TmRS = "KS: R15"
-                                                            Else
+                                                                Exit For
+                                                            ElseIf (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "OX" And SatzMinus = "O" Then
+                                                                tmpCopyStruct.TmRS = "KS: R15"
                                                                 Exit For
                                                             End If
                                                         End If
                                                     End If
                                                 End If
-                                            End If
 
-                                            If CheckBox9.Checked = True Then 'Check R16
-                                                If StrangRap.Length = 3 Then
-                                                    If StrangRap = "XXO" Then
-                                                        If SatzMinus = "O" Then
-                                                            tmpCopyStruct.TmRS = "KS: R16"
+                                                If CheckBox9.Checked = True Then 'Check R16
+                                                    If StrangRap.Length = 3 Then
+                                                        If StrangRap = "XXO" Then
+                                                            If SatzMinus = "O" Then
+                                                                tmpCopyStruct.TmRS = "KS: R16"
+                                                            End If
+                                                            Exit For
+                                                        ElseIf StrangRap = "OOX" Then
+                                                            If SatzMinus = "X" Then
+                                                                tmpCopyStruct.TmRS = "KS: R16"
+                                                            End If
+                                                            Exit For
                                                         End If
-                                                        Exit For
-                                                    ElseIf StrangRap = "OOX" Then
-                                                        If SatzMinus = "X" Then
-                                                            tmpCopyStruct.TmRS = "KS: R16"
+                                                    ElseIf StrangRap.Length = 5 Then
+                                                        If StrangRap = "XXXXO" Then
+                                                            If SatzMinus = "O" Then
+                                                                tmpCopyStruct.TmRS = "KS: R16"
+                                                            End If
+                                                            Exit For
+                                                        ElseIf StrangRap = "OOOOX" Then
+                                                            If SatzMinus = "X" Then
+                                                                tmpCopyStruct.TmRS = "KS: R16"
+                                                            End If
+                                                            Exit For
                                                         End If
-                                                        Exit For
                                                     End If
-                                                ElseIf StrangRap.Length = 5 Then
-                                                    If StrangRap = "XXXXO" Then
-                                                        If SatzMinus = "O" Then
-                                                            tmpCopyStruct.TmRS = "KS: R16"
+                                                End If
+
+                                                If CheckBox10.Checked = True Then 'Check R17
+                                                    If StrangRap.Length = 4 Then
+                                                        If StrangRap = "XXXO" Then
+                                                            If SatzMinus = "X" Then
+                                                                tmpCopyStruct.TmRS = "KS: R17"
+                                                            End If
+                                                            Exit For
+                                                        ElseIf StrangRap = "OOOX" Then
+                                                            If SatzMinus = "O" Then
+                                                                tmpCopyStruct.TmRS = "KS: R17"
+                                                            End If
+                                                            Exit For
                                                         End If
-                                                        Exit For
-                                                    ElseIf StrangRap = "OOOOX" Then
-                                                        If SatzMinus = "X" Then
-                                                            tmpCopyStruct.TmRS = "KS: R16"
+                                                    End If
+                                                End If
+
+                                                If CheckBox11.Checked = True Then 'Check R18
+                                                    If StrangRap.Length = 5 Then
+                                                        If StrangRap = "XXXXX" Or StrangRap = "OOOOO" Then
+                                                            tmpCopyStruct.TmRS = "KS: R18"
+                                                            Exit For
                                                         End If
-                                                        Exit For
                                                     End If
                                                 End If
                                             End If
+                                        End If
+                                    End If
+                                Next Z
 
-                                            If CheckBox10.Checked = True Then 'Check R17
-                                                If StrangRap.Length = 4 Then
-                                                    If StrangRap = "XXXO" Then
-                                                        If SatzMinus = "X" Then
-                                                            tmpCopyStruct.TmRS = "KS: R17"
-                                                        End If
-                                                        Exit For
-                                                    ElseIf StrangRap = "OOOX" Then
-                                                        If SatzMinus = "O" Then
-                                                            tmpCopyStruct.TmRS = "KS: R17"
-                                                        End If
-                                                        Exit For
-                                                    End If
-                                                End If
-                                            End If
+                                If CheckBox7.Checked = True And SatzMinusRegel = "R11" Then
+                                    If StrangRap.Length < 3 Then
+                                        tmpCopyStruct.TmRS = "Vl. zu klein"
+                                    End If
+                                End If
 
-                                            If CheckBox11.Checked = True Then 'Check R18
-                                                If StrangRap.Length = 5 Then
-                                                    If StrangRap = "XXXXX" Or StrangRap = "OOOOO" Then
-                                                        tmpCopyStruct.TmRS = "KS: R18"
-                                                        Exit For
-                                                    End If
-                                                End If
+                                If CheckBox8.Checked = True And LastIsNotPlayingRange = True Then 'R15 fehlt Vorlauf
+                                    If StrangRap.Length = 1 Then
+                                        If tmpCopyStruct.TmRS <> "KS: R15" Then
+                                            tmpCopyStruct.TmRS = "Vl. zu klein"
+                                        End If
+                                    ElseIf StrangRap.Length >= 2 Then
+                                        If StrangRap.Substring(0, 2) = "OX" Or StrangRap.Substring(0, 2) = "XO" Then
+                                            If tmpCopyStruct.TmRS <> "KS: R15" Then
+                                                tmpCopyStruct.TmRS = "Vl. zu klein"
                                             End If
+                                        End If
+                                    Else
+                                        tmpCopyStruct.TmRS = "Vl. zu klein"
+                                    End If
+                                End If
+
+                                If CheckBox9.Checked = True Then
+                                    If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Or StrangRap = "XXXX" Then
+                                        If SatzMinus = "O" Then
+                                            tmpCopyStruct.TmRS = "Vl. zu klein"
+                                        End If
+                                    ElseIf StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Or StrangRap = "OOO" Then
+                                        If SatzMinus = "O" Then
+                                            tmpCopyStruct.TmRS = "Vl. zu klein"
                                         End If
                                     End If
                                 End If
-                            Next Z
 
-                            If CheckBox7.Checked = False And SatzMinusRegel = "R11" Then
-                                If CheckBox8.Checked = True And LastIsNotPlayingRange = True And StrangRap2.Length < 2 Then 'R15 fehlt Vorlauf
-                                    tmpCopyStruct.TmRS = "Vl. zu klein"
-                                Else
-                                    If CheckBox9.Checked = True Then
-                                        If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Or StrangRap = "XXXX" Then
-                                            If SatzMinus = "O" Then
-                                                tmpCopyStruct.TmRS = "Vl. zu klein"
-                                            End If
-                                        ElseIf StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Or StrangRap = "OOO" Then
-                                            If SatzMinus = "O" Then
-                                                tmpCopyStruct.TmRS = "Vl. zu klein"
-                                            End If
-                                        End If
-                                    End If
-
-                                    If CheckBox10.Checked = True Then
-                                        If StrangRap = "XXX" Then
-                                            If SatzMinus = "X" Then
-                                                tmpCopyStruct.TmRS = "Vl. zu klein"
-                                            End If
-                                        ElseIf StrangRap = "OOO" Then
-                                            If SatzMinus = "O" Then
-                                                tmpCopyStruct.TmRS = "Vl. zu klein"
-                                            End If
-                                        End If
-                                    End If
-
-                                    If CheckBox11.Checked = True Then
-                                        If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Or StrangRap = "XXXX" Or StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Or StrangRap = "OOOO" Then
+                                If CheckBox10.Checked = True Then
+                                    If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Then
+                                        If SatzMinus = "X" Then
                                             tmpCopyStruct.TmRS = "Vl. zu klein"
                                         End If
+                                    ElseIf StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Then
+                                        If SatzMinus = "O" Then
+                                            tmpCopyStruct.TmRS = "Vl. zu klein"
+                                        End If
+                                    End If
+                                End If
+
+                                If CheckBox11.Checked = True Then
+                                    If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Or StrangRap = "XXXX" Or StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Or StrangRap = "OOOO" Then
+                                        tmpCopyStruct.TmRS = "Vl. zu klein"
                                     End If
                                 End If
                             End If
@@ -1385,217 +1408,229 @@ Public Class Form1
                             Ser = cCoupData.SS
                             Int = cCoupData.SI
 
-                            If SatzSchwarz = "X" And Ser <> "" Then
+                            If SerInt = "ISS" Then
                                 'Serienstrang
                                 Strang = "Serie"
-                            ElseIf SatzSchwarz = "X" And Int <> "" Then
+                            ElseIf SerInt = "SII" Then
                                 'Intermittenztstrang
                                 Strang = "Int"
-                            ElseIf SatzSchwarz = "O" And Ser <> "" Then
-                                'Intermittenztstrang
-                                Strang = "Int"
-                            ElseIf SatzSchwarz = "O" And Int <> "" Then
-                                'Serienstrang
-                                Strang = "Serie"
                             End If
 
-                            For Z As Integer = 2 To arraylistCnt - 1
-                                localInstanceofMyClass = CType(arrayPartie(arraylistCnt - Z), clsCoupData)
-                                Rap = localInstanceofMyClass.SR
+                            If CheckBox7.Checked = True Or CheckBox8.Checked = True Or CheckBox9.Checked = True Or CheckBox10.Checked = True Or CheckBox11.Checked = True Then
+                                For Z As Integer = 2 To arraylistCnt - 1
+                                    localInstanceofMyClass = CType(arrayPartie(arraylistCnt - Z), clsCoupData)
+                                    Rap = localInstanceofMyClass.SR
 
-                                If Rap <> "" Then
-                                    nextRap = False
-                                    If Strang = "Serie" Then
-                                        If Rap = "X" Then
-                                            If localInstanceofMyClass.SS <> "" Then
-                                                StrangRap = StrangRap & "X"
-                                                StrangRapCnt = StrangRapCnt + 1
-                                                nextRap = True
-                                            Else
-                                                If firstRap = True Then
-                                                    LastIsNotPlayingRange = True
-                                                    firstRap = False
-                                                End If
-                                            End If
-                                        ElseIf Rap = "O" Then
-                                            If localInstanceofMyClass.SI <> "" Then
-                                                StrangRap = StrangRap & "O"
-                                                StrangRapCnt = StrangRapCnt + 1
-                                                nextRap = True
-                                            Else
-                                                If firstRap = True Then
-                                                    LastIsNotPlayingRange = True
-                                                    firstRap = False
-                                                End If
-                                            End If
-                                        End If
-                                    ElseIf Strang = "Int" Then
-                                        If Rap = "X" Then
-                                            If localInstanceofMyClass.SI <> "" Then
-                                                StrangRap = StrangRap & "X"
-                                                StrangRapCnt = StrangRapCnt + 1
-                                                nextRap = True
-                                            Else
-                                                If firstRap = True Then
-                                                    LastIsNotPlayingRange = True
-                                                    firstRap = False
-                                                End If
-                                            End If
-                                        ElseIf Rap = "O" Then
-                                            If localInstanceofMyClass.SS <> "" Then
-                                                StrangRap = StrangRap & "O"
-                                                StrangRapCnt = StrangRapCnt + 1
-                                                nextRap = True
-                                            Else
-                                                If firstRap = True Then
-                                                    LastIsNotPlayingRange = True
-                                                    firstRap = False
-                                                End If
-                                            End If
-                                        End If
-                                    End If
-                                    firstRap = False
-
-                                    If nextRap = True Then
-
-                                        If SatzSchwarzRegel = "R11" And CheckBox7.Checked = True Then 'Check R14'
-                                            If StrangRapCnt < 3 Then
-                                                tmpCopyStruct.SRS = "KS: R14"
-
-                                            ElseIf StrangRapCnt = 3 Then
-                                                If SatzSchwarz = "X" Then
-                                                    If (StrangRap(0) = "O" And StrangRap(1) = "X") Then
-                                                        tmpCopyStruct.SRS = tmpSatz
-                                                        Exit For
+                                    If Rap <> "" Then
+                                        nextRap = False
+                                        If Strang = "Serie" Then
+                                            If Rap = "X" Then
+                                                If localInstanceofMyClass.SS <> "" Then
+                                                    StrangRap = StrangRap & "X"
+                                                    StrangRapCnt = StrangRapCnt + 1
+                                                    nextRap = True
+                                                Else
+                                                    If firstRap = True Then
+                                                        LastIsNotPlayingRange = True
+                                                        firstRap = False
                                                     End If
-                                                ElseIf SatzSchwarz = "O" Then
-                                                    If (StrangRap(0) = "X" And StrangRap(1) = "O") Then
-                                                        tmpCopyStruct.SRS = tmpSatz
-                                                        Exit For
+                                                End If
+                                            ElseIf Rap = "O" Then
+                                                If localInstanceofMyClass.SI <> "" Then
+                                                    StrangRap = StrangRap & "O"
+                                                    StrangRapCnt = StrangRapCnt + 1
+                                                    nextRap = True
+                                                Else
+                                                    If firstRap = True Then
+                                                        LastIsNotPlayingRange = True
+                                                        firstRap = False
                                                     End If
                                                 End If
                                             End If
-                                        Else
-                                            If CheckBox8.Checked = True And LastIsNotPlayingRange = True And StrangRap.Length >= 3 Then 'Check R15
-                                                If SatzSchwarz = "X" Then
+                                        ElseIf Strang = "Int" Then
+                                            If Rap = "X" Then
+                                                If localInstanceofMyClass.SI <> "" Then
+                                                    StrangRap = StrangRap & "X"
+                                                    StrangRapCnt = StrangRapCnt + 1
+                                                    nextRap = True
+                                                Else
+                                                    If firstRap = True Then
+                                                        LastIsNotPlayingRange = True
+                                                        firstRap = False
+                                                    End If
+                                                End If
+                                            ElseIf Rap = "O" Then
+                                                If localInstanceofMyClass.SS <> "" Then
+                                                    StrangRap = StrangRap & "O"
+                                                    StrangRapCnt = StrangRapCnt + 1
+                                                    nextRap = True
+                                                Else
+                                                    If firstRap = True Then
+                                                        LastIsNotPlayingRange = True
+                                                        firstRap = False
+                                                    End If
+                                                End If
+                                            End If
+                                        End If
+                                        firstRap = False
+
+                                        If nextRap = True Then
+                                            If SatzSchwarzRegel = "R11" And CheckBox7.Checked = True Then 'Check R14'
+                                                If StrangRapCnt < 3 Then
+                                                    tmpCopyStruct.SRS = "KS: R14"
+
+                                                ElseIf StrangRapCnt = 3 Then
+                                                    If SatzSchwarz = "X" Then
+                                                        If (StrangRap(0) = "O" And StrangRap(1) = "X") Then
+                                                            tmpCopyStruct.SRS = tmpSatz
+                                                            Exit For
+                                                        End If
+                                                    ElseIf SatzSchwarz = "O" Then
+                                                        If (StrangRap(0) = "X" And StrangRap(1) = "O") Then
+                                                            tmpCopyStruct.SRS = tmpSatz
+                                                            Exit For
+                                                        End If
+                                                    End If
+                                                End If
+                                            Else
+                                                If CheckBox8.Checked = True And LastIsNotPlayingRange = True And StrangRap.Length >= 3 Then 'Check R15
                                                     If StrangRap.Substring(0, 2) = "XO" Then 'R15= 1er = jetzt prüfen ob danach 2er
                                                         If StrangRap.Substring(StrangRap.Length - 1, 1) = "X" And StrangRap2 = "" Then
                                                             StrangRap2 = "X"
                                                         ElseIf StrangRap2 <> "" Then
-                                                            If (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "XO" Then
+                                                            If (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "XX" And SatzSchwarz = "O" Then
                                                                 tmpCopyStruct.SRS = "KS: R15"
-                                                            Else
+                                                                Exit For
+                                                            ElseIf (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "XO" And SatzSchwarz = "X" Then
+                                                                tmpCopyStruct.SRS = "KS: R15"
                                                                 Exit For
                                                             End If
                                                         End If
-                                                    End If
-                                                ElseIf SatzSchwarz = "O" Then 'R15= 1er = jetzt prüfen ob danach 2er
-                                                    If StrangRap.Substring(0, 2) = "OX" Then
+                                                    ElseIf StrangRap.Substring(0, 2) = "OX" Then
                                                         If StrangRap.Substring(StrangRap.Length - 1, 1) = "O" And StrangRap2 = "" Then
                                                             StrangRap2 = "O"
                                                         ElseIf StrangRap2 <> "" Then
-                                                            If (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "OX" Then
+                                                            If (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "OO" And SatzSchwarz = "X" Then
                                                                 tmpCopyStruct.SRS = "KS: R15"
-                                                            Else
+                                                                Exit For
+                                                            ElseIf (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "OX" And SatzSchwarz = "O" Then
+                                                                tmpCopyStruct.SRS = "KS: R15"
                                                                 Exit For
                                                             End If
                                                         End If
                                                     End If
                                                 End If
-                                            End If
 
-                                            If CheckBox9.Checked = True Then 'Check R16
-                                                If StrangRap.Length = 3 Then
-                                                    If StrangRap = "XXO" Then
-                                                        If SatzSchwarz = "O" Then
-                                                            tmpCopyStruct.SRS = "KS: R16"
+                                                If CheckBox9.Checked = True Then 'Check R16
+                                                    If StrangRap.Length = 3 Then
+                                                        If StrangRap = "XXO" Then
+                                                            If SatzSchwarz = "O" Then
+                                                                tmpCopyStruct.SRS = "KS: R16"
+                                                            End If
+                                                            Exit For
+                                                        ElseIf StrangRap = "OOX" Then
+                                                            If SatzSchwarz = "X" Then
+                                                                tmpCopyStruct.SRS = "KS: R16"
+                                                            End If
+                                                            Exit For
                                                         End If
-                                                        Exit For
-                                                    ElseIf StrangRap = "OOX" Then
-                                                        If SatzSchwarz = "X" Then
-                                                            tmpCopyStruct.SRS = "KS: R16"
+                                                    ElseIf StrangRap.Length = 5 Then
+                                                        If StrangRap = "XXXXO" Then
+                                                            If SatzSchwarz = "O" Then
+                                                                tmpCopyStruct.SRS = "KS: R16"
+                                                            End If
+                                                            Exit For
+                                                        ElseIf StrangRap = "OOOOX" Then
+                                                            If SatzSchwarz = "X" Then
+                                                                tmpCopyStruct.SRS = "KS: R16"
+                                                            End If
+                                                            Exit For
                                                         End If
-                                                        Exit For
-                                                    End If
-                                                ElseIf StrangRap.Length = 5 Then
-                                                    If StrangRap = "XXXXO" Then
-                                                        If SatzSchwarz = "O" Then
-                                                            tmpCopyStruct.SRS = "KS: R16"
-                                                        End If
-                                                        Exit For
-                                                    ElseIf StrangRap = "OOOOX" Then
-                                                        If SatzSchwarz = "X" Then
-                                                            tmpCopyStruct.SRS = "KS: R16"
-                                                        End If
-                                                        Exit For
-                                                    End If
-                                                End If
-                                            End If
-
-                                            If CheckBox10.Checked = True Then 'Check R17
-                                                If StrangRap.Length = 4 Then
-                                                    If StrangRap = "XXXO" Then
-                                                        If SatzSchwarz = "X" Then
-                                                            tmpCopyStruct.SRS = "KS: R17"
-                                                        End If
-                                                        Exit For
-                                                    ElseIf StrangRap = "OOOX" Then
-                                                        If SatzSchwarz = "O" Then
-                                                            tmpCopyStruct.SRS = "KS: R17"
-                                                        End If
-                                                        Exit For
                                                     End If
                                                 End If
-                                            End If
 
-                                            If CheckBox11.Checked = True Then 'Check R18
-                                                If StrangRap.Length = 5 Then
-                                                    If StrangRap = "XXXXX" Or StrangRap = "OOOOO" Then
-                                                        tmpCopyStruct.SRS = "KS: R18"
-                                                        Exit For
+                                                If CheckBox10.Checked = True Then 'Check R17
+                                                    If StrangRap.Length = 4 Then
+                                                        If StrangRap = "XXXO" Then
+                                                            If SatzSchwarz = "X" Then
+                                                                tmpCopyStruct.SRS = "KS: R17"
+                                                            End If
+                                                            Exit For
+                                                        ElseIf StrangRap = "OOOX" Then
+                                                            If SatzSchwarz = "O" Then
+                                                                tmpCopyStruct.SRS = "KS: R17"
+                                                            End If
+                                                            Exit For
+                                                        End If
+                                                    End If
+                                                End If
+
+                                                If CheckBox11.Checked = True Then 'Check R18
+                                                    If StrangRap.Length = 5 Then
+                                                        If StrangRap = "XXXXX" Or StrangRap = "OOOOO" Then
+                                                            tmpCopyStruct.SRS = "KS: R18"
+                                                            Exit For
+                                                        End If
                                                     End If
                                                 End If
                                             End If
                                         End If
+                                    End If
+                                Next Z
+
+                                If CheckBox7.Checked = True And SatzSchwarzRegel = "R11" Then
+                                    If StrangRap.Length < 3 Then
+                                        tmpCopyStruct.SRS = "Vl. zu klein"
                                     End If
                                 End If
-                            Next Z
 
-                            If CheckBox7.Checked = False And SatzSchwarzRegel = "R11" Then
-                                If CheckBox8.Checked = True And LastIsNotPlayingRange = True And StrangRap2.Length < 2 Then 'R15 fehlt Vorlauf
-                                    tmpCopyStruct.SRS = "Vl. zu klein"
-                                Else
-                                    If CheckBox9.Checked = True Then
-                                        If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Or StrangRap = "XXXX" Then
-                                            If SatzSchwarz = "O" Then
-                                                tmpCopyStruct.SRS = "Vl. zu klein"
-                                            End If
-                                        ElseIf StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Or StrangRap = "OOO" Then
-                                            If SatzSchwarz = "O" Then
+                                If CheckBox8.Checked = True And LastIsNotPlayingRange = True Then 'R15 fehlt Vorlauf
+                                    If StrangRap.Length = 1 Then
+                                        If tmpCopyStruct.SRS <> "KS: R15" Then
+                                            tmpCopyStruct.SRS = "Vl. zu klein"
+                                        End If
+                                    ElseIf StrangRap.Length >= 2 Then
+                                        If StrangRap.Substring(0, 2) = "OX" Or StrangRap.Substring(0, 2) = "XO" Then
+                                            If tmpCopyStruct.SRS <> "KS: R15" Then
                                                 tmpCopyStruct.SRS = "Vl. zu klein"
                                             End If
                                         End If
+                                    Else
+                                        tmpCopyStruct.SRS = "Vl. zu klein"
                                     End If
+                                End If
 
-                                    If CheckBox10.Checked = True Then
-                                        If StrangRap = "XXX" Then
-                                            If SatzSchwarz = "X" Then
-                                                tmpCopyStruct.SRS = "Vl. zu klein"
-                                            End If
-                                        ElseIf StrangRap = "OOO" Then
-                                            If SatzSchwarz = "O" Then
-                                                tmpCopyStruct.SRS = "Vl. zu klein"
-                                            End If
+                                If CheckBox9.Checked = True Then
+                                    If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Or StrangRap = "XXXX" Then
+                                        If SatzSchwarz = "O" Then
+                                            tmpCopyStruct.SRS = "Vl. zu klein"
                                         End If
-                                    End If
-
-                                    If CheckBox11.Checked = True Then
-                                        If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Or StrangRap = "XXXX" Or StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Or StrangRap = "OOOO" Then
+                                    ElseIf StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Or StrangRap = "OOO" Then
+                                        If SatzSchwarz = "O" Then
                                             tmpCopyStruct.SRS = "Vl. zu klein"
                                         End If
                                     End If
                                 End If
+
+                                If CheckBox10.Checked = True Then
+                                    If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Then
+                                        If SatzSchwarz = "X" Then
+                                            tmpCopyStruct.SRS = "Vl. zu klein"
+                                        End If
+                                    ElseIf StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Then
+                                        If SatzSchwarz = "O" Then
+                                            tmpCopyStruct.SRS = "Vl. zu klein"
+                                        End If
+                                    End If
+                                End If
+
+                                If CheckBox11.Checked = True Then
+                                    If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Or StrangRap = "XXXX" Or StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Or StrangRap = "OOOO" Then
+                                        tmpCopyStruct.SRS = "Vl. zu klein"
+                                    End If
+                                End If
                             End If
+
 
                             DeletelastDummyCoup()
                             ''zurückschreiben
@@ -1691,217 +1726,229 @@ Public Class Form1
                             Ser = cCoupData.RS
                             Int = cCoupData.RI
 
-                            If SatzRot = "X" And Ser <> "" Then
+                            If SerInt = "ISS" Then
                                 'Serienstrang
                                 Strang = "Serie"
-                            ElseIf SatzRot = "X" And Int <> "" Then
+                            ElseIf SerInt = "SII" Then
                                 'Intermittenztstrang
                                 Strang = "Int"
-                            ElseIf SatzRot = "O" And Ser <> "" Then
-                                'Intermittenztstrang
-                                Strang = "Int"
-                            ElseIf SatzRot = "O" And Int <> "" Then
-                                'Serienstrang
-                                Strang = "Serie"
                             End If
 
-                            For Z As Integer = 2 To arraylistCnt - 1
-                                localInstanceofMyClass = CType(arrayPartie(arraylistCnt - Z), clsCoupData)
-                                Rap = localInstanceofMyClass.RR
+                            If CheckBox7.Checked = True Or CheckBox8.Checked = True Or CheckBox9.Checked = True Or CheckBox10.Checked = True Or CheckBox11.Checked = True Then
+                                For Z As Integer = 2 To arraylistCnt - 1
+                                    localInstanceofMyClass = CType(arrayPartie(arraylistCnt - Z), clsCoupData)
+                                    Rap = localInstanceofMyClass.RR
 
-                                If Rap <> "" Then
-                                    nextRap = False
-                                    If Strang = "Serie" Then
-                                        If Rap = "X" Then
-                                            If localInstanceofMyClass.RS <> "" Then
-                                                StrangRap = StrangRap & "X"
-                                                StrangRapCnt = StrangRapCnt + 1
-                                                nextRap = True
-                                            Else
-                                                If firstRap = True Then
-                                                    LastIsNotPlayingRange = True
-                                                    firstRap = False
-                                                End If
-                                            End If
-                                        ElseIf Rap = "O" Then
-                                            If localInstanceofMyClass.RI <> "" Then
-                                                StrangRap = StrangRap & "O"
-                                                StrangRapCnt = StrangRapCnt + 1
-                                                nextRap = True
-                                            Else
-                                                If firstRap = True Then
-                                                    LastIsNotPlayingRange = True
-                                                    firstRap = False
-                                                End If
-                                            End If
-                                        End If
-                                    ElseIf Strang = "Int" Then
-                                        If Rap = "X" Then
-                                            If localInstanceofMyClass.RI <> "" Then
-                                                StrangRap = StrangRap & "X"
-                                                StrangRapCnt = StrangRapCnt + 1
-                                                nextRap = True
-                                            Else
-                                                If firstRap = True Then
-                                                    LastIsNotPlayingRange = True
-                                                    firstRap = False
-                                                End If
-                                            End If
-                                        ElseIf Rap = "O" Then
-                                            If localInstanceofMyClass.RS <> "" Then
-                                                StrangRap = StrangRap & "O"
-                                                StrangRapCnt = StrangRapCnt + 1
-                                                nextRap = True
-                                            Else
-                                                If firstRap = True Then
-                                                    LastIsNotPlayingRange = True
-                                                    firstRap = False
-                                                End If
-                                            End If
-                                        End If
-                                    End If
-                                    firstRap = False
-
-                                    If nextRap = True Then
-
-                                        If SatzRotRegel = "R11" And CheckBox7.Checked = True Then 'Check R14'
-                                            If StrangRapCnt < 3 Then
-                                                tmpCopyStruct.RRS = "KS: R14"
-
-                                            ElseIf StrangRapCnt = 3 Then
-                                                If SatzRot = "X" Then
-                                                    If (StrangRap(0) = "O" And StrangRap(1) = "X") Then
-                                                        tmpCopyStruct.RRS = tmpSatz
-                                                        Exit For
+                                    If Rap <> "" Then
+                                        nextRap = False
+                                        If Strang = "Serie" Then
+                                            If Rap = "X" Then
+                                                If localInstanceofMyClass.RS <> "" Then
+                                                    StrangRap = StrangRap & "X"
+                                                    StrangRapCnt = StrangRapCnt + 1
+                                                    nextRap = True
+                                                Else
+                                                    If firstRap = True Then
+                                                        LastIsNotPlayingRange = True
+                                                        firstRap = False
                                                     End If
-                                                ElseIf SatzRot = "O" Then
-                                                    If (StrangRap(0) = "X" And StrangRap(1) = "O") Then
-                                                        tmpCopyStruct.RRS = tmpSatz
-                                                        Exit For
+                                                End If
+                                            ElseIf Rap = "O" Then
+                                                If localInstanceofMyClass.RI <> "" Then
+                                                    StrangRap = StrangRap & "O"
+                                                    StrangRapCnt = StrangRapCnt + 1
+                                                    nextRap = True
+                                                Else
+                                                    If firstRap = True Then
+                                                        LastIsNotPlayingRange = True
+                                                        firstRap = False
                                                     End If
                                                 End If
                                             End If
-                                        Else
-                                            If CheckBox8.Checked = True And LastIsNotPlayingRange = True And StrangRap.Length >= 3 Then 'Check R15
-                                                If SatzRot = "X" Then
+                                        ElseIf Strang = "Int" Then
+                                            If Rap = "X" Then
+                                                If localInstanceofMyClass.RI <> "" Then
+                                                    StrangRap = StrangRap & "X"
+                                                    StrangRapCnt = StrangRapCnt + 1
+                                                    nextRap = True
+                                                Else
+                                                    If firstRap = True Then
+                                                        LastIsNotPlayingRange = True
+                                                        firstRap = False
+                                                    End If
+                                                End If
+                                            ElseIf Rap = "O" Then
+                                                If localInstanceofMyClass.RS <> "" Then
+                                                    StrangRap = StrangRap & "O"
+                                                    StrangRapCnt = StrangRapCnt + 1
+                                                    nextRap = True
+                                                Else
+                                                    If firstRap = True Then
+                                                        LastIsNotPlayingRange = True
+                                                        firstRap = False
+                                                    End If
+                                                End If
+                                            End If
+                                        End If
+                                        firstRap = False
+
+                                        If nextRap = True Then
+                                            If SatzRotRegel = "R11" And CheckBox7.Checked = True Then 'Check R14'
+                                                If StrangRapCnt < 3 Then
+                                                    tmpCopyStruct.RRS = "KS: R14"
+
+                                                ElseIf StrangRapCnt = 3 Then
+                                                    If SatzRot = "X" Then
+                                                        If (StrangRap(0) = "O" And StrangRap(1) = "X") Then
+                                                            tmpCopyStruct.RRS = tmpSatz
+                                                            Exit For
+                                                        End If
+                                                    ElseIf SatzRot = "O" Then
+                                                        If (StrangRap(0) = "X" And StrangRap(1) = "O") Then
+                                                            tmpCopyStruct.RRS = tmpSatz
+                                                            Exit For
+                                                        End If
+                                                    End If
+                                                End If
+                                            Else
+                                                If CheckBox8.Checked = True And LastIsNotPlayingRange = True And StrangRap.Length >= 3 Then 'Check R15
                                                     If StrangRap.Substring(0, 2) = "XO" Then 'R15= 1er = jetzt prüfen ob danach 2er
                                                         If StrangRap.Substring(StrangRap.Length - 1, 1) = "X" And StrangRap2 = "" Then
                                                             StrangRap2 = "X"
                                                         ElseIf StrangRap2 <> "" Then
-                                                            If (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "XO" Then
+                                                            If (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "XX" And SatzRot = "O" Then
                                                                 tmpCopyStruct.RRS = "KS: R15"
-                                                            Else
+                                                                Exit For
+                                                            ElseIf (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "XO" And SatzRot = "X" Then
+                                                                tmpCopyStruct.RRS = "KS: R15"
                                                                 Exit For
                                                             End If
                                                         End If
-                                                    End If
-                                                ElseIf SatzRot = "O" Then 'R15= 1er = jetzt prüfen ob danach 2er
-                                                    If StrangRap.Substring(0, 2) = "OX" Then
+                                                    ElseIf StrangRap.Substring(0, 2) = "OX" Then
                                                         If StrangRap.Substring(StrangRap.Length - 1, 1) = "O" And StrangRap2 = "" Then
                                                             StrangRap2 = "O"
                                                         ElseIf StrangRap2 <> "" Then
-                                                            If (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "OX" Then
+                                                            If (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "OO" And SatzRot = "X" Then
                                                                 tmpCopyStruct.RRS = "KS: R15"
-                                                            Else
+                                                                Exit For
+                                                            ElseIf (StrangRap2 & StrangRap.Substring(StrangRap.Length - 1, 1)) = "OX" And SatzRot = "O" Then
+                                                                tmpCopyStruct.RRS = "KS: R15"
                                                                 Exit For
                                                             End If
                                                         End If
                                                     End If
                                                 End If
-                                            End If
 
-                                            If CheckBox9.Checked = True Then 'Check R16
-                                                If StrangRap.Length = 3 Then
-                                                    If StrangRap = "XXO" Then
-                                                        If SatzRot = "O" Then
-                                                            tmpCopyStruct.RRS = "KS: R16"
+                                                If CheckBox9.Checked = True Then 'Check R16
+                                                    If StrangRap.Length = 3 Then
+                                                        If StrangRap = "XXO" Then
+                                                            If SatzRot = "O" Then
+                                                                tmpCopyStruct.RRS = "KS: R16"
+                                                            End If
+                                                            Exit For
+                                                        ElseIf StrangRap = "OOX" Then
+                                                            If SatzRot = "X" Then
+                                                                tmpCopyStruct.RRS = "KS: R16"
+                                                            End If
+                                                            Exit For
                                                         End If
-                                                        Exit For
-                                                    ElseIf StrangRap = "OOX" Then
-                                                        If SatzRot = "X" Then
-                                                            tmpCopyStruct.RRS = "KS: R16"
+                                                    ElseIf StrangRap.Length = 5 Then
+                                                        If StrangRap = "XXXXO" Then
+                                                            If SatzRot = "O" Then
+                                                                tmpCopyStruct.RRS = "KS: R16"
+                                                            End If
+                                                            Exit For
+                                                        ElseIf StrangRap = "OOOOX" Then
+                                                            If SatzRot = "X" Then
+                                                                tmpCopyStruct.RRS = "KS: R16"
+                                                            End If
+                                                            Exit For
                                                         End If
-                                                        Exit For
-                                                    End If
-                                                ElseIf StrangRap.Length = 5 Then
-                                                    If StrangRap = "XXXXO" Then
-                                                        If SatzRot = "O" Then
-                                                            tmpCopyStruct.RRS = "KS: R16"
-                                                        End If
-                                                        Exit For
-                                                    ElseIf StrangRap = "OOOOX" Then
-                                                        If SatzRot = "X" Then
-                                                            tmpCopyStruct.RRS = "KS: R16"
-                                                        End If
-                                                        Exit For
-                                                    End If
-                                                End If
-                                            End If
-
-                                            If CheckBox10.Checked = True Then 'Check R17
-                                                If StrangRap.Length = 4 Then
-                                                    If StrangRap = "XXXO" Then
-                                                        If SatzRot = "X" Then
-                                                            tmpCopyStruct.RRS = "KS: R17"
-                                                        End If
-                                                        Exit For
-                                                    ElseIf StrangRap = "OOOX" Then
-                                                        If SatzRot = "O" Then
-                                                            tmpCopyStruct.RRS = "KS: R17"
-                                                        End If
-                                                        Exit For
                                                     End If
                                                 End If
-                                            End If
 
-                                            If CheckBox11.Checked = True Then 'Check R18
-                                                If StrangRap.Length = 5 Then
-                                                    If StrangRap = "XXXXX" Or StrangRap = "OOOOO" Then
-                                                        tmpCopyStruct.RRS = "KS: R18"
-                                                        Exit For
+                                                If CheckBox10.Checked = True Then 'Check R17
+                                                    If StrangRap.Length = 4 Then
+                                                        If StrangRap = "XXXO" Then
+                                                            If SatzRot = "X" Then
+                                                                tmpCopyStruct.RRS = "KS: R17"
+                                                            End If
+                                                            Exit For
+                                                        ElseIf StrangRap = "OOOX" Then
+                                                            If SatzRot = "O" Then
+                                                                tmpCopyStruct.RRS = "KS: R17"
+                                                            End If
+                                                            Exit For
+                                                        End If
+                                                    End If
+                                                End If
+
+                                                If CheckBox11.Checked = True Then 'Check R18
+                                                    If StrangRap.Length = 5 Then
+                                                        If StrangRap = "XXXXX" Or StrangRap = "OOOOO" Then
+                                                            tmpCopyStruct.RRS = "KS: R18"
+                                                            Exit For
+                                                        End If
                                                     End If
                                                 End If
                                             End If
                                         End If
+                                    End If
+                                Next Z
+
+                                If CheckBox7.Checked = True And SatzRotRegel = "R11" Then
+                                    If StrangRap.Length < 3 Then
+                                        tmpCopyStruct.RRS = "Vl. zu klein"
                                     End If
                                 End If
-                            Next Z
 
-                            If CheckBox7.Checked = False And SatzRotRegel = "R11" Then
-                                If CheckBox8.Checked = True And LastIsNotPlayingRange = True And StrangRap2.Length < 2 Then 'R15 fehlt Vorlauf
-                                    tmpCopyStruct.RRS = "Vl. zu klein"
-                                Else
-                                    If CheckBox9.Checked = True Then
-                                        If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Or StrangRap = "XXXX" Then
-                                            If SatzRot = "O" Then
-                                                tmpCopyStruct.RRS = "Vl. zu klein"
-                                            End If
-                                        ElseIf StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Or StrangRap = "OOO" Then
-                                            If SatzRot = "O" Then
+                                If CheckBox8.Checked = True And LastIsNotPlayingRange = True Then 'R15 fehlt Vorlauf
+                                    If StrangRap.Length = 1 Then
+                                        If tmpCopyStruct.RRS <> "KS: R15" Then
+                                            tmpCopyStruct.RRS = "Vl. zu klein"
+                                        End If
+                                    ElseIf StrangRap.Length >= 2 Then
+                                        If StrangRap.Substring(0, 2) = "OX" Or StrangRap.Substring(0, 2) = "XO" Then
+                                            If tmpCopyStruct.RRS <> "KS: R15" Then
                                                 tmpCopyStruct.RRS = "Vl. zu klein"
                                             End If
                                         End If
+                                    Else
+                                        tmpCopyStruct.RRS = "Vl. zu klein"
                                     End If
+                                End If
 
-                                    If CheckBox10.Checked = True Then
-                                        If StrangRap = "XXX" Then
-                                            If SatzRot = "X" Then
-                                                tmpCopyStruct.RRS = "Vl. zu klein"
-                                            End If
-                                        ElseIf StrangRap = "OOO" Then
-                                            If SatzRot = "O" Then
-                                                tmpCopyStruct.RRS = "Vl. zu klein"
-                                            End If
+                                If CheckBox9.Checked = True Then
+                                    If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Or StrangRap = "XXXX" Then
+                                        If SatzRot = "O" Then
+                                            tmpCopyStruct.RRS = "Vl. zu klein"
                                         End If
-                                    End If
-
-                                    If CheckBox11.Checked = True Then
-                                        If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Or StrangRap = "XXXX" Or StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Or StrangRap = "OOOO" Then
+                                    ElseIf StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Or StrangRap = "OOO" Then
+                                        If SatzRot = "O" Then
                                             tmpCopyStruct.RRS = "Vl. zu klein"
                                         End If
                                     End If
                                 End If
+
+                                If CheckBox10.Checked = True Then
+                                    If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Then
+                                        If SatzRot = "X" Then
+                                            tmpCopyStruct.RRS = "Vl. zu klein"
+                                        End If
+                                    ElseIf StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Then
+                                        If SatzRot = "O" Then
+                                            tmpCopyStruct.RRS = "Vl. zu klein"
+                                        End If
+                                    End If
+                                End If
+
+                                If CheckBox11.Checked = True Then
+                                    If StrangRap = "X" Or StrangRap = "XX" Or StrangRap = "XXX" Or StrangRap = "XXXX" Or StrangRap = "O" Or StrangRap = "OO" Or StrangRap = "OOO" Or StrangRap = "OOOO" Then
+                                        tmpCopyStruct.RRS = "Vl. zu klein"
+                                    End If
+                                End If
                             End If
+
                             DeletelastDummyCoup()
                             ''zurückschreiben
                             cCoupData = tmpCopyStruct
