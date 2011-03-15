@@ -43,6 +43,11 @@ Public Class Form1
     Private Sel3Verlust As Integer
     Private Sel4Verlust As Integer
     Private SaldoWithOutZ As Double
+    Private NeunM1 As String
+    Private NeunM2 As String
+    Private NeunM3 As String
+    Private NeunMSaldo As Double
+    Private NeunMVerlauf As String
 
     Private zed As ZedGraph.ZedGraphControl
     Private myPane As ZedGraph.GraphPane
@@ -143,6 +148,12 @@ Public Class Form1
         gesSaldoVerlaufhalbZero = ""
         arrayPartie.Clear()
         arrayGlobal.Clear()
+        NeunM1 = ""
+        NeunM2 = ""
+        NeunM3 = ""
+        NeunMSaldo = 0
+        NeunMVerlauf = ""
+
 
         Sel1Verlust = 0
         Sel2Verlust = 0
@@ -159,6 +170,80 @@ Public Class Form1
                     If filterfound = True Then
                         lNewCoup = NewCoup
                         Call InsertNewCoup(NewCoup)
+
+                        If CheckBox12.Checked = True Then
+
+                            If NeunM1 <> "" And NeunM3 = "" And lNewCoup = 0 And (saldo > lastsaldo Or saldo < lastsaldo) Then
+                                NeunMVerlauf = NeunMVerlauf & "-"
+                                NeunMSaldo = NeunMSaldo - 1
+                            Else
+
+                                If (NeunM1 = "-" And NeunM2 = "-" And NeunM2 = "-") Or (NeunM1 = "+" And NeunM2 = "+" And NeunM2 = "+") Then
+                                    If (NeunM1 = "-" And NeunM2 = "-" And NeunM2 = "-") And saldo > lastsaldo Then
+                                        NeunM1 = ""
+                                        NeunM2 = ""
+                                        NeunM3 = ""
+                                    ElseIf (NeunM1 = "+" And NeunM2 = "+" And NeunM2 = "+") And saldo < lastsaldo Then
+                                        NeunM1 = ""
+                                        NeunM2 = ""
+                                        NeunM3 = ""
+                                    End If
+                                Else
+                                    If NeunM1 = "" Then
+                                        If saldo > lastsaldo Then
+                                            NeunM1 = "+"
+                                        ElseIf saldo < lastsaldo Then
+                                            NeunM1 = "-"
+                                        End If
+                                    ElseIf NeunM2 = "" Then
+                                        If saldo > lastsaldo And NeunM1 = "+" Then
+                                            NeunM2 = "+"
+                                            NeunMSaldo = NeunMSaldo - 1
+                                            NeunMVerlauf = NeunMVerlauf & "-"
+                                        ElseIf saldo > lastsaldo And NeunM1 = "-" Then
+                                            NeunMSaldo = NeunMSaldo + 1
+                                            NeunMVerlauf = NeunMVerlauf & "+"
+                                            NeunM1 = ""
+                                            NeunM2 = ""
+                                            NeunM3 = ""
+                                        ElseIf saldo < lastsaldo And NeunM1 = "+" Then
+                                            NeunMSaldo = NeunMSaldo + 1
+                                            NeunMVerlauf = NeunMVerlauf & "+"
+                                            NeunM1 = ""
+                                            NeunM2 = ""
+                                            NeunM3 = ""
+                                        ElseIf saldo < lastsaldo And NeunM1 = "-" Then
+                                            NeunMSaldo = NeunMSaldo - 1
+                                            NeunMVerlauf = NeunMVerlauf & "-"
+                                            NeunM2 = "-"
+                                        End If
+                                    ElseIf NeunM3 = "" Then
+                                        If saldo > lastsaldo And NeunM1 = "+" Then
+                                            NeunM3 = "+"
+                                            NeunMSaldo = NeunMSaldo - 1
+                                            NeunMVerlauf = NeunMVerlauf & "-"
+                                        ElseIf saldo > lastsaldo And NeunM1 = "-" Then
+                                            NeunMSaldo = NeunMSaldo + 1
+                                            NeunMVerlauf = NeunMVerlauf & "+"
+                                            NeunM1 = ""
+                                            NeunM2 = ""
+                                            NeunM3 = ""
+                                        ElseIf saldo < lastsaldo And NeunM1 = "+" Then
+                                            NeunMSaldo = NeunMSaldo + 1
+                                            NeunMVerlauf = NeunMVerlauf & "+"
+                                            NeunM1 = ""
+                                            NeunM2 = ""
+                                            NeunM3 = ""
+                                        ElseIf saldo < lastsaldo And NeunM1 = "-" Then
+                                            NeunMSaldo = NeunMSaldo - 1
+                                            NeunMVerlauf = NeunMVerlauf & "-"
+                                            NeunM3 = "-"
+                                        End If
+                                    End If
+                                End If
+                            End If
+                        End If
+
 
                         If saldo > lastsaldo Then
                             gesSaldoVerlaufhalbZero = gesSaldoVerlaufhalbZero & "+ "
@@ -287,6 +372,8 @@ Public Class Form1
                 Me.ListBox1.Items.Add("Es konnten keinen Sätze ermittelt werden")
             End If
 
+
+
             GesZero = GesZero + (zeroCnt / 2)
             GesSatzCnt = GesSatzCnt + SatzCnt
             If GlobalGesMaxloss < GesMaxloss Then
@@ -299,6 +386,13 @@ Public Class Form1
             ResTxt = ResTxt & " Zero Verlust: " & GesZero & vbNewLine
             ResTxt = ResTxt & " Gesamt Anzahl Sätze: " & GesSatzCnt & vbNewLine
             ResTxt = ResTxt & " Größte Verlust Serie: " & GlobalGesMaxloss & vbNewLine
+
+            If CheckBox12.Checked = True Then
+                Me.ListBox1.Items.Add("9M Saldo = " & NeunMVerlauf.Substring(0, 100) & "...")
+
+                ResTxt = ResTxt & vbNewLine & " 9M Saldo: " & NeunMSaldo & vbNewLine
+            End If
+
             TextRes.Text = ResTxt
         End Using
 
@@ -2584,8 +2678,8 @@ Public Class Form1
                     Exit Function
                 End If
 
-                ''Regel10 XXX(X) | OOO(O)
-                If (s7 = s6 And s7 = s5) Then
+                'Regel10 XXX(X) | OOO(O)
+                If (s7 = s6 And s7 = s5 And CheckBox3.Checked = True) Then
                     If (s7 <> s4) Then
                         ReturnStr = "R10: " & s7 & s6 & s5 & "(" & s7 & ")"
                         SatzCount = SatzCount + 1
@@ -2605,8 +2699,8 @@ Public Class Form1
                     End If
                 End If
 
-                ''Regel11 OO XOX(O) | XX OXO(X) 
-                If (s7 <> s6 And s7 = s5 And s5 <> s4) Then
+                'Regel11 OO XOX(O) | XX OXO(X) 
+                If (s7 <> s6 And s7 = s5 And s5 <> s4 And CheckBox4.Checked = True) Then
                     If s6 = s4 And s4 = s3 Then
                         ReturnStr = "R11: " & s5 & s6 & s7 & "(" & s6 & ")"
                         SatzCount = SatzCount + 1
@@ -2619,8 +2713,8 @@ Public Class Form1
                     Exit Function
                 End If
 
-                ''Regel12 XXO(O) | OOX(X)
-                If (s7 <> s6 And s6 = s5) Then
+                'Regel12 XXO(O) | OOX(X)
+                If (s7 <> s6 And s6 = s5 And CheckBox5.Checked = True) Then
                     If Not ((s4 = s7) And (s3 = s4)) Then
                         ReturnStr = "R12: " & s5 & s6 & s7 & "(" & s7 & ")"
                         SatzCount = SatzCount + 1
@@ -2633,21 +2727,23 @@ Public Class Form1
                     Exit Function
                 End If
 
-                ''If RapTmp.Length = 5 Then
-                'Regel13 OXXOX(X) | XOOXO(O)
-                If (s7 <> s6 And s6 <> s5 And s5 = s4 And s4 <> s3) Then
-                    ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s7 & ")"
-                    SatzCount = SatzCount + 1
-                    FillSatz = ReturnStr
-                    Call SetSatz(s7, SelektorCol, "R13")
-                    Exit Function
-                    'XXOXX(O) | OOXOO(X)
-                ElseIf (s7 = s6 And s6 <> s5 And s5 <> s4 And s4 = s3) Then
-                    ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s5 & ")"
-                    SatzCount = SatzCount + 1
-                    FillSatz = ReturnStr
-                    Call SetSatz(s5, SelektorCol, "R13")
-                    Exit Function
+                If CheckBox6.Checked = True Then
+                    ''If RapTmp.Length = 5 Then
+                    'Regel13 OXXOX(X) | XOOXO(O)
+                    If (s7 <> s6 And s6 <> s5 And s5 = s4 And s4 <> s3) Then
+                        ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s7 & ")"
+                        SatzCount = SatzCount + 1
+                        FillSatz = ReturnStr
+                        Call SetSatz(s7, SelektorCol, "R13")
+                        Exit Function
+                        'XXOXX(O) | OOXOO(X)
+                    ElseIf (s7 = s6 And s6 <> s5 And s5 <> s4 And s4 = s3) Then
+                        ReturnStr = "R13: " & s3 & s4 & s5 & s6 & s7 & "(" & s5 & ")"
+                        SatzCount = SatzCount + 1
+                        FillSatz = ReturnStr
+                        Call SetSatz(s5, SelektorCol, "R13")
+                        Exit Function
+                    End If
                 End If
             ElseIf RadioButton2.Checked = True Then 'Biotop Original
 
@@ -3454,6 +3550,10 @@ Public Class Form1
         Dim y3 As Integer
         Dim list3 As New ZedGraph.PointPairList
         Dim CntS3 As Integer = 0
+        Dim x4 As Integer = 0
+        Dim y4 As Integer
+        Dim list4 As New ZedGraph.PointPairList
+        Dim CntS4 As Integer = 0
 
 
         If Not gesSaldoVerlaufhalbZero = Nothing Then
@@ -3494,10 +3594,32 @@ Public Class Form1
                 Loop
             End If
 
+            Dim len4 As Integer = NeunMVerlauf.Length
+            If NeunMVerlauf <> "" Then
+                Do While CntS4 < len4
+                    If NeunMVerlauf.Substring(CntS4, 1) = "+" Then
+                        y4 = y4 + 1
+                        x4 = x4 + 1
+                        list4.Add(x4, y4)
+                    ElseIf NeunMVerlauf.Substring(CntS4, 1) = "-" Then
+                        y4 = y4 - 1
+                        x4 = x4 + 1
+                        list4.Add(x4, y4)
+                    ElseIf NeunMVerlauf.Substring(CntS4, 1) = "Z" Then
+                        y4 = y4 - 0.5
+                        x4 = x4 + 1
+                        list4.Add(x4, y4)
+                    End If
+                    CntS4 = CntS4 + 1
+                Loop
+            End If
+
             Dim myCurve1 As ZedGraph.LineItem
             Dim myCurve2 As ZedGraph.LineItem
+            Dim myCurve3 As ZedGraph.LineItem
             myCurve1 = myPane.AddCurve("Saldo mit Zero", list3, Color.Orange, ZedGraph.SymbolType.None)
             myCurve2 = myPane.AddCurve("Saldo ohne Zero", list1, Color.Green, ZedGraph.SymbolType.None)
+            myCurve3 = myPane.AddCurve("Saldo 9. Mechanismus", list4, Color.Blue, ZedGraph.SymbolType.None)
 
             myPane.Chart.Fill = New ZedGraph.Fill(Color.White, Color.LightGray, 90.0F)
             myPane.Fill = New ZedGraph.Fill(Color.AliceBlue)
