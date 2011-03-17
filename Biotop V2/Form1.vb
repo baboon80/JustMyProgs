@@ -35,6 +35,7 @@ Public Class Form1
     Private ResTxt As String
     Private InvertRegel As Boolean = False
     Private gesSaldoVerlaufhalbZero As String = ""
+    Private NeunMGesVerlauf As String = ""
     Public arrayPartie As New ArrayList
     Public arrayGlobal As New ArrayList
     Private cCoupData As clsCoupData
@@ -48,6 +49,7 @@ Public Class Form1
     Private NeunM3 As String
     Private NeunMSaldo As Double
     Private NeunMVerlauf As String
+    Private NeunMSaldoWithOutZ As Double
 
     Private zed As ZedGraph.ZedGraphControl
     Private myPane As ZedGraph.GraphPane
@@ -112,6 +114,7 @@ Public Class Form1
         Dim nextDay As Boolean
         Dim TmpMaxSaldo As Double = 0
         Dim GesSaldo As Double = 0
+        Dim NeunMGesSaldo As Double = 0
         Dim GesZero As Double = 0
         Dim GesSatzCnt As Integer = 0
         Dim GlobalGesMaxloss As Integer = 0
@@ -127,6 +130,7 @@ Public Class Form1
         SatzCount = 0
         saldo = 0
         SaldoWithOutZ = 0
+        NeunMSaldoWithOutZ = 0
         SatzPlus = ""
         SatzMinus = ""
         SatzSchwarz = ""
@@ -146,6 +150,7 @@ Public Class Form1
         GesSaldo = 0
         lastsaldo = 0
         gesSaldoVerlaufhalbZero = ""
+        NeunMGesVerlauf = ""
         arrayPartie.Clear()
         arrayGlobal.Clear()
         NeunM1 = ""
@@ -172,72 +177,93 @@ Public Class Form1
                         Call InsertNewCoup(NewCoup)
 
                         If CheckBox12.Checked = True Then
+                            If (saldo > lastsaldo Or saldo < lastsaldo) Then
 
-                            If NeunM1 <> "" And NeunM3 = "" And lNewCoup = 0 And (saldo > lastsaldo Or saldo < lastsaldo) Then
-                                NeunMVerlauf = NeunMVerlauf & "-"
-                                NeunMSaldo = NeunMSaldo - 1
-                            Else
-
-                                If (NeunM1 = "-" And NeunM2 = "-" And NeunM2 = "-") Or (NeunM1 = "+" And NeunM2 = "+" And NeunM2 = "+") Then
-                                    If (NeunM1 = "-" And NeunM2 = "-" And NeunM2 = "-") And saldo > lastsaldo Then
-                                        NeunM1 = ""
-                                        NeunM2 = ""
-                                        NeunM3 = ""
-                                    ElseIf (NeunM1 = "+" And NeunM2 = "+" And NeunM2 = "+") And saldo < lastsaldo Then
-                                        NeunM1 = ""
-                                        NeunM2 = ""
-                                        NeunM3 = ""
+                                If lNewCoup = 0 Then
+                                    If NeunM1 <> "" And NeunM3 = "" Then
+                                        NeunMVerlauf = NeunMVerlauf & "Z"
+                                        NeunMGesVerlauf = NeunMGesVerlauf & "Z"
+                                        NeunMSaldo = NeunMSaldo - 0.5
                                     End If
                                 Else
-                                    If NeunM1 = "" Then
-                                        If saldo > lastsaldo Then
-                                            NeunM1 = "+"
-                                        ElseIf saldo < lastsaldo Then
-                                            NeunM1 = "-"
+
+                                    If (NeunM1 = "-" And NeunM2 = "-" And NeunM3 = "-") Or (NeunM1 = "+" And NeunM2 = "+" And NeunM3 = "+") Then
+                                        If (NeunM1 = "-" And NeunM2 = "-" And NeunM3 = "-") And (saldo > lastsaldo) Then
+                                            NeunM1 = ""
+                                            NeunM2 = ""
+                                            NeunM3 = ""
+                                        ElseIf (NeunM1 = "+" And NeunM2 = "+" And NeunM3 = "+") And (saldo < lastsaldo) Then
+                                            NeunM1 = ""
+                                            NeunM2 = ""
+                                            NeunM3 = ""
                                         End If
-                                    ElseIf NeunM2 = "" Then
-                                        If saldo > lastsaldo And NeunM1 = "+" Then
-                                            NeunM2 = "+"
-                                            NeunMSaldo = NeunMSaldo - 1
-                                            NeunMVerlauf = NeunMVerlauf & "-"
-                                        ElseIf saldo > lastsaldo And NeunM1 = "-" Then
-                                            NeunMSaldo = NeunMSaldo + 1
-                                            NeunMVerlauf = NeunMVerlauf & "+"
-                                            NeunM1 = ""
-                                            NeunM2 = ""
-                                            NeunM3 = ""
-                                        ElseIf saldo < lastsaldo And NeunM1 = "+" Then
-                                            NeunMSaldo = NeunMSaldo + 1
-                                            NeunMVerlauf = NeunMVerlauf & "+"
-                                            NeunM1 = ""
-                                            NeunM2 = ""
-                                            NeunM3 = ""
-                                        ElseIf saldo < lastsaldo And NeunM1 = "-" Then
-                                            NeunMSaldo = NeunMSaldo - 1
-                                            NeunMVerlauf = NeunMVerlauf & "-"
-                                            NeunM2 = "-"
-                                        End If
-                                    ElseIf NeunM3 = "" Then
-                                        If saldo > lastsaldo And NeunM1 = "+" Then
-                                            NeunM3 = "+"
-                                            NeunMSaldo = NeunMSaldo - 1
-                                            NeunMVerlauf = NeunMVerlauf & "-"
-                                        ElseIf saldo > lastsaldo And NeunM1 = "-" Then
-                                            NeunMSaldo = NeunMSaldo + 1
-                                            NeunMVerlauf = NeunMVerlauf & "+"
-                                            NeunM1 = ""
-                                            NeunM2 = ""
-                                            NeunM3 = ""
-                                        ElseIf saldo < lastsaldo And NeunM1 = "+" Then
-                                            NeunMSaldo = NeunMSaldo + 1
-                                            NeunMVerlauf = NeunMVerlauf & "+"
-                                            NeunM1 = ""
-                                            NeunM2 = ""
-                                            NeunM3 = ""
-                                        ElseIf saldo < lastsaldo And NeunM1 = "-" Then
-                                            NeunMSaldo = NeunMSaldo - 1
-                                            NeunMVerlauf = NeunMVerlauf & "-"
-                                            NeunM3 = "-"
+                                    Else
+                                        If NeunM1 = "" Then
+                                            If saldo > lastsaldo Then
+                                                NeunM1 = "+"
+                                            ElseIf saldo < lastsaldo Then
+                                                NeunM1 = "-"
+                                            End If
+                                        ElseIf NeunM2 = "" Then
+                                            If saldo > lastsaldo And NeunM1 = "+" Then
+                                                NeunM2 = "+"
+                                                NeunMSaldo = NeunMSaldo - 1
+                                                NeunMSaldoWithOutZ = NeunMSaldoWithOutZ - 1
+                                                NeunMVerlauf = NeunMVerlauf & "-"
+                                                NeunMGesVerlauf = NeunMGesVerlauf & "-"
+                                            ElseIf saldo > lastsaldo And NeunM1 = "-" Then
+                                                NeunMSaldo = NeunMSaldo + 1
+                                                NeunMSaldoWithOutZ = NeunMSaldoWithOutZ + 1
+                                                NeunMVerlauf = NeunMVerlauf & "+"
+                                                NeunMGesVerlauf = NeunMGesVerlauf & "+"
+                                                NeunM1 = ""
+                                                NeunM2 = ""
+                                                NeunM3 = ""
+                                            ElseIf saldo < lastsaldo And NeunM1 = "+" Then
+                                                NeunMSaldo = NeunMSaldo + 1
+                                                NeunMSaldoWithOutZ = NeunMSaldoWithOutZ + 1
+                                                NeunMVerlauf = NeunMVerlauf & "+"
+                                                NeunMGesVerlauf = NeunMGesVerlauf & "+"
+                                                NeunM1 = ""
+                                                NeunM2 = ""
+                                                NeunM3 = ""
+                                            ElseIf saldo < lastsaldo And NeunM1 = "-" Then
+                                                NeunMSaldo = NeunMSaldo - 1
+                                                NeunMSaldoWithOutZ = NeunMSaldoWithOutZ - 1
+                                                NeunMVerlauf = NeunMVerlauf & "-"
+                                                NeunMGesVerlauf = NeunMGesVerlauf & "-"
+                                                NeunM2 = "-"
+                                            End If
+                                        ElseIf NeunM3 = "" Then
+                                            If saldo > lastsaldo And NeunM1 = "+" Then
+                                                NeunM3 = "+"
+                                                NeunMSaldo = NeunMSaldo - 1
+                                                NeunMSaldoWithOutZ = NeunMSaldoWithOutZ - 1
+                                                NeunMVerlauf = NeunMVerlauf & "-"
+                                                NeunMGesVerlauf = NeunMGesVerlauf & "-"
+                                            ElseIf saldo > lastsaldo And NeunM1 = "-" Then
+                                                NeunMSaldo = NeunMSaldo + 1
+                                                NeunMSaldoWithOutZ = NeunMSaldoWithOutZ + 1
+                                                NeunMVerlauf = NeunMVerlauf & "+"
+                                                NeunMGesVerlauf = NeunMGesVerlauf & "+"
+                                                NeunM1 = ""
+                                                NeunM2 = ""
+                                                NeunM3 = ""
+                                            ElseIf saldo < lastsaldo And NeunM1 = "+" Then
+                                                NeunMSaldo = NeunMSaldo + 1
+                                                NeunMSaldoWithOutZ = NeunMSaldoWithOutZ + 1
+                                                NeunMVerlauf = NeunMVerlauf & "+"
+                                                NeunMGesVerlauf = NeunMGesVerlauf & "+"
+                                                NeunM1 = ""
+                                                NeunM2 = ""
+                                                NeunM3 = ""
+                                            ElseIf saldo < lastsaldo And NeunM1 = "-" Then
+                                                NeunMSaldo = NeunMSaldo - 1
+                                                NeunMSaldoWithOutZ = NeunMSaldoWithOutZ - 1
+                                                NeunMVerlauf = NeunMVerlauf & "-"
+                                                NeunMGesVerlauf = NeunMGesVerlauf & "-"
+                                                NeunM3 = "-"
+                                            End If
                                         End If
                                     End If
                                 End If
@@ -260,27 +286,54 @@ Public Class Form1
                         End If
 
                         If CheckBox1.Checked = False Then
-                            If SaldoWithOutZ = 2 And TmpMaxSaldo >= 3 Then
-                                nextDay = True
-                            ElseIf SaldoWithOutZ = 3 And TmpMaxSaldo >= 5 Then
-                                nextDay = True
-                            ElseIf SaldoWithOutZ = 5 And TmpMaxSaldo >= 8 Then
-                                nextDay = True
-                            ElseIf SaldoWithOutZ = 8 And TmpMaxSaldo >= 11 Then
-                                nextDay = True
-                            ElseIf SaldoWithOutZ = 11 And TmpMaxSaldo >= 14 Then
-                                nextDay = True
-                            ElseIf SaldoWithOutZ = 14 And TmpMaxSaldo >= 17 Then
-                                nextDay = True
-                            ElseIf SaldoWithOutZ = 17 And TmpMaxSaldo >= 20 Then
-                                nextDay = True
-                            ElseIf SaldoWithOutZ = 20 Then
-                                nextDay = True
-                            ElseIf SaldoWithOutZ = -6 Then
-                                nextDay = True
+
+                            If CheckBox12.Checked = True Then
+                                If NeunMSaldoWithOutZ = 2 And TmpMaxSaldo >= 3 Then
+                                    nextDay = True
+                                ElseIf NeunMSaldoWithOutZ = 3 And TmpMaxSaldo >= 5 Then
+                                    nextDay = True
+                                ElseIf NeunMSaldoWithOutZ = 5 And TmpMaxSaldo >= 8 Then
+                                    nextDay = True
+                                ElseIf NeunMSaldoWithOutZ = 8 And TmpMaxSaldo >= 11 Then
+                                    nextDay = True
+                                ElseIf NeunMSaldoWithOutZ = 11 And TmpMaxSaldo >= 14 Then
+                                    nextDay = True
+                                ElseIf NeunMSaldoWithOutZ = 14 And TmpMaxSaldo >= 17 Then
+                                    nextDay = True
+                                ElseIf NeunMSaldoWithOutZ = 17 And TmpMaxSaldo >= 20 Then
+                                    nextDay = True
+                                ElseIf NeunMSaldoWithOutZ = 20 Then
+                                    nextDay = True
+                                ElseIf NeunMSaldoWithOutZ = -6 Then
+                                    nextDay = True
+                                End If
+
+                                If TmpMaxSaldo < NeunMSaldoWithOutZ Then TmpMaxSaldo = NeunMSaldoWithOutZ
+                            Else
+
+                                If SaldoWithOutZ = 2 And TmpMaxSaldo >= 3 Then
+                                    nextDay = True
+                                ElseIf SaldoWithOutZ = 3 And TmpMaxSaldo >= 5 Then
+                                    nextDay = True
+                                ElseIf SaldoWithOutZ = 5 And TmpMaxSaldo >= 8 Then
+                                    nextDay = True
+                                ElseIf SaldoWithOutZ = 8 And TmpMaxSaldo >= 11 Then
+                                    nextDay = True
+                                ElseIf SaldoWithOutZ = 11 And TmpMaxSaldo >= 14 Then
+                                    nextDay = True
+                                ElseIf SaldoWithOutZ = 14 And TmpMaxSaldo >= 17 Then
+                                    nextDay = True
+                                ElseIf SaldoWithOutZ = 17 And TmpMaxSaldo >= 20 Then
+                                    nextDay = True
+                                ElseIf SaldoWithOutZ = 20 Then
+                                    nextDay = True
+                                ElseIf SaldoWithOutZ = -6 Then
+                                    nextDay = True
+                                End If
+
+                                If TmpMaxSaldo < SaldoWithOutZ Then TmpMaxSaldo = SaldoWithOutZ
                             End If
 
-                            If TmpMaxSaldo < SaldoWithOutZ Then TmpMaxSaldo = SaldoWithOutZ
                         End If
                         lastsaldo = saldo
                     End If
@@ -292,9 +345,15 @@ Public Class Form1
 
                         If nextDay = True Then
                             GesSaldo = GesSaldo + saldo
+                            NeunMGesSaldo = NeunMGesSaldo + NeunMSaldo
 
-                            Me.ListBox1.Items.Add(datum & ": Saldo = " & saldo & vbTab & "Zero Verlust = " & (zeroCnt / 2) & vbTab & "Anz. Sätze = " & SatzCnt & vbTab & "Max. Verlustserie = " & GesMaxloss & vbTab & _
-                                                  "Saldoverlauf: " & saldoverlauf)
+                            If CheckBox12.Checked = True Then
+                                Me.ListBox1.Items.Add(datum & ": Saldo = " & NeunMSaldo & vbTab & "Saldoverlauf: " & NeunMVerlauf)
+                            Else
+
+                                Me.ListBox1.Items.Add(datum & ": Saldo = " & saldo & vbTab & "Zero Verlust = " & (zeroCnt / 2) & vbTab & "Anz. Sätze = " & SatzCnt & vbTab & "Max. Verlustserie = " & GesMaxloss & vbTab & _
+                                                      "Saldoverlauf: " & saldoverlauf)
+                            End If
 
                             If GlobalGesMaxloss < GesMaxloss Then
                                 GlobalGesMaxloss = GesMaxloss
@@ -304,8 +363,16 @@ Public Class Form1
 
                             saldo = 0
                             SaldoWithOutZ = 0
-                            lastsaldo = 0
+                            lastsaldo = 0                            
                             saldoverlauf = ""
+
+                            NeunMSaldo = 0
+                            NeunMSaldoWithOutZ = 0
+                            NeunM1 = ""
+                            NeunM2 = ""
+                            NeunM3 = ""
+                            NeunMVerlauf = ""
+
                             SatzPlus = ""
                             SatzMinus = ""
                             SatzSchwarz = ""
@@ -336,7 +403,7 @@ Public Class Form1
 
                             datum = Trim(line.Substring(6))
                         End If
-                    End If
+                        End If
                 End If
 
                 line = r.ReadLine
@@ -355,6 +422,7 @@ Public Class Form1
 
             If SatzCnt > 0 Then
                 GesSaldo = GesSaldo + saldo
+                NeunMGesSaldo = NeunMGesSaldo + NeunMSaldo
                 If CheckBox1.Checked = True Then
 
                     If saldoverlauf.Length > 100 Then
@@ -365,8 +433,12 @@ Public Class Form1
                                                       "Saldoverlauf: " & saldoverlauf)
                     End If
                 Else
-                    Me.ListBox1.Items.Add(datum & ": Saldo = " & saldo & vbTab & "Zero Verlust = " & (zeroCnt / 2) & vbTab & "Anz. Sätze = " & SatzCnt & vbTab & "Max. Verlustserie = " & GesMaxloss & vbTab & _
-                                                  "Saldoverlauf: " & saldoverlauf)
+                    If CheckBox12.Checked = True Then
+                        Me.ListBox1.Items.Add(datum & ": Saldo = " & NeunMSaldo & vbTab & "Saldoverlauf: " & NeunMVerlauf)
+                    Else
+                        Me.ListBox1.Items.Add(datum & ": Saldo = " & saldo & vbTab & "Zero Verlust = " & (zeroCnt / 2) & vbTab & "Anz. Sätze = " & SatzCnt & vbTab & "Max. Verlustserie = " & GesMaxloss & vbTab & _
+                                                      "Saldoverlauf: " & saldoverlauf)
+                    End If
                 End If
             Else
                 Me.ListBox1.Items.Add("Es konnten keinen Sätze ermittelt werden")
@@ -388,9 +460,9 @@ Public Class Form1
             ResTxt = ResTxt & " Größte Verlust Serie: " & GlobalGesMaxloss & vbNewLine
 
             If CheckBox12.Checked = True Then
-                Me.ListBox1.Items.Add("9M Saldo = " & NeunMVerlauf.Substring(0, 100) & "...")
+                If CheckBox1.Checked = True Then Me.ListBox1.Items.Add("9M Saldo = " & NeunMVerlauf.Substring(0, 100) & "...")
 
-                ResTxt = ResTxt & vbNewLine & " 9M Saldo: " & NeunMSaldo & vbNewLine
+                ResTxt = ResTxt & vbNewLine & " 9M Saldo: " & NeunMGesSaldo & vbNewLine
             End If
 
             TextRes.Text = ResTxt
@@ -3594,18 +3666,18 @@ Public Class Form1
                 Loop
             End If
 
-            Dim len4 As Integer = NeunMVerlauf.Length
-            If NeunMVerlauf <> "" Then
+            Dim len4 As Integer = NeunMGesVerlauf.Length
+            If NeunMGesVerlauf <> "" Then
                 Do While CntS4 < len4
-                    If NeunMVerlauf.Substring(CntS4, 1) = "+" Then
+                    If NeunMGesVerlauf.Substring(CntS4, 1) = "+" Then
                         y4 = y4 + 1
                         x4 = x4 + 1
                         list4.Add(x4, y4)
-                    ElseIf NeunMVerlauf.Substring(CntS4, 1) = "-" Then
+                    ElseIf NeunMGesVerlauf.Substring(CntS4, 1) = "-" Then
                         y4 = y4 - 1
                         x4 = x4 + 1
                         list4.Add(x4, y4)
-                    ElseIf NeunMVerlauf.Substring(CntS4, 1) = "Z" Then
+                    ElseIf NeunMGesVerlauf.Substring(CntS4, 1) = "Z" Then
                         y4 = y4 - 0.5
                         x4 = x4 + 1
                         list4.Add(x4, y4)
@@ -3698,7 +3770,7 @@ Public Class Form1
 
     Private Sub ListBox1_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ListBox1.SelectedIndexChanged
         Dim sItem As String = ListBox1.SelectedItem
-        Dim SaldoVerlauf As String
+        Dim SaldoVerlauf As String = ""
         Dim tmpverlauf As String = ""
 
         Me.Cursor = Cursors.WaitCursor
@@ -3706,7 +3778,13 @@ Public Class Form1
         If sItem = "" Then Exit Sub
 
         If CheckBox1.Checked = True Then
-            SaldoVerlauf = gesSaldoVerlaufhalbZero
+            If CheckBox12.Checked = True Then
+                If ListBox1.SelectedIndex > 0 Then
+                    SaldoVerlauf = NeunMVerlauf
+                Else
+                    SaldoVerlauf = gesSaldoVerlaufhalbZero
+                End If
+            End If
         Else
             Dim VerlPos As Integer = InStr(sItem, "Verlauf: ", CompareMethod.Text) + 8
             SaldoVerlauf = sItem.Substring(VerlPos, sItem.Length - VerlPos)
@@ -3799,5 +3877,14 @@ Public Class Form1
             CheckBox6.Checked = False
             CheckBox7.Checked = False
         End If
+    End Sub
+
+    Private Sub CheckBox12_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBox12.CheckedChanged
+        'If CheckBox12.Checked = True Then
+        '    CheckBox1.Checked = True
+        '    CheckBox1.Enabled = False
+        'Else
+        '    CheckBox1.Enabled = True
+        'End If
     End Sub
 End Class

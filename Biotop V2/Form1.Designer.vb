@@ -26,6 +26,7 @@ Partial Class Form1
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog
         Me.Panel1 = New System.Windows.Forms.Panel
         Me.Panel3 = New System.Windows.Forms.Panel
+        Me.CheckBox12 = New System.Windows.Forms.CheckBox
         Me.CheckBox11 = New System.Windows.Forms.CheckBox
         Me.CheckBox10 = New System.Windows.Forms.CheckBox
         Me.CheckBox9 = New System.Windows.Forms.CheckBox
@@ -56,7 +57,6 @@ Partial Class Form1
         Me.ListBox1 = New System.Windows.Forms.ListBox
         Me.Label2 = New System.Windows.Forms.Label
         Me.TextBox2 = New System.Windows.Forms.TextBox
-        Me.CheckBox12 = New System.Windows.Forms.CheckBox
         Me.Panel1.SuspendLayout()
         Me.Panel3.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
@@ -100,6 +100,14 @@ Partial Class Form1
         Me.Panel3.Controls.Add(Me.RadioButton1)
         resources.ApplyResources(Me.Panel3, "Panel3")
         Me.Panel3.Name = "Panel3"
+        '
+        'CheckBox12
+        '
+        resources.ApplyResources(Me.CheckBox12, "CheckBox12")
+        Me.CheckBox12.Checked = True
+        Me.CheckBox12.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBox12.Name = "CheckBox12"
+        Me.CheckBox12.UseVisualStyleBackColor = True
         '
         'CheckBox11
         '
@@ -295,14 +303,6 @@ Partial Class Form1
         '
         resources.ApplyResources(Me.TextBox2, "TextBox2")
         Me.TextBox2.Name = "TextBox2"
-        '
-        'CheckBox12
-        '
-        resources.ApplyResources(Me.CheckBox12, "CheckBox12")
-        Me.CheckBox12.Checked = True
-        Me.CheckBox12.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox12.Name = "CheckBox12"
-        Me.CheckBox12.UseVisualStyleBackColor = True
         '
         'Form1
         '
